@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="favicon.png">
+    <title>Blog Express - Don't Blog, Express It!!</title>
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/static/css/bootstrap/offcanvas.css" rel="stylesheet">
+	<link href="/static/css/fileuploader.css" rel="stylesheet">
+	<link href="/static/css/jstree/style.min.css" rel="stylesheet">
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="ie8-responsive-file-warning.js"></script><![endif]-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="/static/js/bootstrap/html5shiv.js"></script>
+      <script src="/static/js/bootstrap/respond.min.js"></script>
+    <![endif]-->
+<style>
+#editor {
+    /** Setting height is also important, otherwise editor wont showup**/
+     height: 350px; 
+     display: none;
+}
+
+.ace_active_line {
+background: #FFFFA3;
+}
+
+
+
+.ace_gutter-cell.ace_breakpoint{ 
+	border-radius: 20px 0px 0px 20px; 
+	box-shadow: 0px 0px 1px 1px red inset; 
+} 
+
+#board {
+	width: 300px;
+	height: 350px;
+	border: 1px dotted black;
+}
+
+.tc_containers {
+    float: left;
+    padding: 5px;
+    border: 1px dotted black;
+}
+
+.tc_box {
+    position: absolute;
+}
+
+#tc_tree_container{
+    display:none;
+}    
+
+
+#scrollbar1 { width: 250px; clear: both; margin: 20px 0 10px; }
+.viewport { width: 230px; height: 250px; overflow: hidden; position: relative; }
+.overview { width: 230px;list-style: none; position: absolute; left: 0; top: 0; }
+.thumb .end,
+.thumb { background-color: #003D5D; }
+.scrollbar { position: relative; float: right; width: 15px; }
+.track { background-color: #D8EEFD; height: 100%; width:13px; position: relative; padding: 0 1px; }
+.thumb { height: 20px; width: 13px; cursor: pointer; overflow: hidden; position: absolute; top: 0; }
+.thumb .end { overflow: hidden; height: 5px; width: 13px; }
+.disable{ display: none; }
+.noSelect { user-select: none; -o-user-select: none; -moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none; }
+
+</style>
+</head>
+<body>
+    <input type = "hidden" id = "treeData" value = {{treeData}} />
+    <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Blog Express</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <!-- /.nav-collapse -->
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.navbar -->
+	<div style="padding: 0 15px;">
+    <div class="container">
+        <div class="row row-offcanvas row-offcanvas-right">
+            <div id="tc_create_container">
+                <div id="tc_tree_container" class="tc_containers tc_adjust_ui" style="width:20%;">
+                    <div id="toc">
+                        <ul>
+                            <li>
+                                
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id = "tc_editor_container" class="tc_containers tc_adjust_ui" style="width:50%">
+                    <div id="tc_ec_step1">
+                        <input id="name" type="text" class="form-control" placeholder="name of the article" /><br>
+                        
+                        <input id="tags" type="text" class="form-control"  placeholder="tags for this article"/><br>
+                        
+                        <textarea class="form-control" rows="3" id="zist"  placeholder="brief zist of the article"></textarea>
+                        <br>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="javascript: return tc.onNameNextClick();">Next</button>
+                        
+                    </div>
+                    <div id="editor"></div>
+                </div>
+                <div id = "tc_watch_container" class="tc_containers tc_adjust_ui" style="width:30%">
+                    <div id="htmlWatch"></div>
+                </div>
+            </div>
+        </div>
+        <!--/row-->
+        <footer>
+            <div class="row">
+                <div class="col-xs-8 col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Cancel</button>
+                </div>
+                <!--/span-->
+                <div class="col-xs-8 col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" onClick= "javascript:return saveTree();">Save</button>
+                </div>
+                <!--/span-->
+            </div>
+            <!--/row-->
+            <hr>
+            <p>&copy; BlogExpress 2014</p>
+        </footer>
+    </div>
+    <!--/.container-->
+	</div>
+    <!-- Bootstrap core JavaScript
+
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type='text/javascript' src='/static/js/jquery/jquery.js'></script>
+    <script src="/static/js/bootstrap/bootstrap.min.js"></script>
+    <script src="/static/js/bootstrap/offcanvas.js"></script>
+	<script src="/static/js/ace-js/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/static/js/drag/drag.js"></script>
+	<script src="/static/js/drag/drag-live.js"></script>
+	<script src="/static/js/pubsub/pubsub.js"></script>
+	<script src="/static/js/jquery-plugins/tinyscrollbar.js"></script>
+	<script src="/static/js/fileuploader.js"></script>
+	<script src="/static/js/jstree/jstree.js"></script>
+	<script src="/static/js/ko/ko.js"></script>
+	<script src="/static/js/common.js"></script>
+	<script language="javascript">
+	$( document ).ready(function(){
+        createJSTrees();
+    });
+
+function createJSTrees() {
+        window.treeData = {{json|safe}};
+        treeData = $.parseJSON(treeData);
+
+         $('#tc_tree_container').show();
+
+     $('#toc').jstree({
+  "core" : {
+    "data" : treeData,
+    "check_callback" : true,
+    },
+  "types" : {
+    "#" : {
+      "max_depth" : 2, 
+      "valid_children" : ["root"]
+    },
+  },
+  "plugins" : [
+    "contextmenu", "dnd"
+  ],
+    "contextmenu": {
+        "items": function ($node) {
+            return {
+                "Create_Text_Slide": {
+                    "label": "Create Text Slide",
+                    "action": function (data) {
+                        tc.handleMenuClick(data);
+                    }
+                },
+                "Create_Code_Slide": {
+                    "label": "Create Code Slide",
+                    "action": function (data) {
+                        tc.handleMenuClick(data);
+                     }
+                },
+                "Create_Image_Slide": {
+                    "label": "Create Image Slide",
+                    "action": function (data) {
+                        tc.handleMenuClick(data);
+                        }
+                },
+                "Rename": {
+                    "label": "Rename Slide",
+                    "separator_before": true,
+                    "action": function (data) {
+                        tc.handleMenuClick(data);
+                    }
+                },
+                "Delete": {
+                    "label": "Delete Slide",
+                    "separator_before": true,
+                     "action": function (data) {
+                        tc.handleMenuClick(data);
+                    }
+                }
+            };
+        }
+    }
+});
+   
+}        
+    
+
+	</script>
+</body>
+</html>

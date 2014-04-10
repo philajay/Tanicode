@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="favicon.png">
+    <title>Blog Express - Don't Blog, Express It!!</title>
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/static/css/bootstrap/offcanvas.css" rel="stylesheet">
+	<link href="/static/css/fileuploader.css" rel="stylesheet">
+	<link href="/static/css/jstree/style.css" rel="stylesheet">
+	<link href="/static/css/slider/slider.css" rel="stylesheet">
+	<link href="/static/css/article.css" rel="stylesheet">
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="ie8-responsive-file-warning.js"></script><![endif]-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="/static/js/bootstrap/html5shiv.js"></script>
+      <script src="/static/js/bootstrap/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+    	window.metaData = {{ metadata|safe }}
+        window.aid = {{ aid|safe }}
+    </script>
+<style>
+/******************************* Overlay css properties ***************************************/
+#overlay {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    filter:alpha(opacity=50);
+    -moz-opacity:0.9;
+    -khtml-opacity: 0.9;
+    opacity: 0.9;
+    z-index: 10;
+}
+
+/******************************* Overlay css properties ***************************************/
+
+#text_editor {
+    /** Setting height is also important, otherwise editor wont showup**/
+     height: 350px; 
+     font-size: 16px;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+      line-height:1.0;
+}
+#editor {
+    /** Setting height is also important, otherwise editor wont showup**/
+     height: 350px; 
+}
+
+
+._jsPlumb_connector { z-index:100; }
+._jsPlumb_endpoint { z-index:100; }
+._jsPlumb_overlay { z-index:100; }
+
+
+.ace_active_line {
+background: #FFFFA3;
+}
+
+
+
+.ace_gutter-cell.ace_breakpoint{ 
+	border-radius: 20px 0px 0px 20px; 
+	box-shadow: 0px 0px 1px 1px red inset; 
+} 
+
+#board {
+	width: 300px;
+	height: 350px;
+	border: 1px dotted black;
+}
+
+.tc_containers {
+    float: left;
+    padding: 5px;
+    border: 1px dotted black;
+    overflow: scroll;
+}
+
+.tc_box {
+    position: absolute;
+}
+
+#tc_tree_container{
+    display:none;
+}    
+
+
+#scrollbar1 { width: 240px; clear: both; margin: 5px 0 2px; }
+.viewport { width: 225px; height: 200px; overflow: hidden; position: relative; }
+.overview { width: 225px;list-style: none; position: absolute; left: 0; top: 0; }
+.thumb .end,
+.thumb { background-color: #003D5D; }
+.scrollbar { position: relative; float: right; width: 15px; }
+.track { background-color: #D8EEFD; height: 100%; width:13px; position: relative; padding: 0 1px; }
+.thumb { height: 20px; width: 13px; cursor: pointer; overflow: hidden; position: absolute; top: 0; }
+.thumb .end { overflow: hidden; height: 5px; width: 13px; }
+.disable{ display: none; }
+.noSelect { user-select: none; -o-user-select: none; -moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none; }
+
+</style>
+</head>
+<body>
+		<div id="overlay"> 
+			<div class="header_wrapper">
+				<div class="top_wrapper">
+					<div class="header">
+                            <div class="slideName" ><span data-bind="text: previewCurrentSlide() ? previewCurrentSlide().data.name : '' "></span></div>
+							<div class="header_left">
+                                <a id="preview_close" href="#" >close</a>
+                            </div>
+					</div>
+				</div>
+			</div>
+			<div class="main-content-wrapper">
+					<div class="main-content-tree watch" style="padding:0px;background:white">
+                        <div id="jstreeHolder" >
+                        	<div id="jstree" >
+                          
+                        	</div>
+                    	</div>
+                    </div>
+                    <div class="main-content-section">
+						<span data-bind="visible: showPreviewTemplate('TEXT|CODE')">
+							<div id="editor"></div>
+						</span>
+						<span data-bind="visible: showPreviewTemplate('IMAGE')">
+							<div id="preview_board" data-bind="visible: previewCurrentSlide() ? previewCurrentSlide().data.src : false">
+								<img id = "preview_board_image" height="400" width="500" data-bind="imgSrc: previewCurrentSlide() ? previewCurrentSlide().data.src : '' "/>
+							</div>
+						</span>
+					</div>
+					<div class="main-content-section ">
+						<div id="overlay_watch" class="watch" data-bind="visible: showPreviewWatchTemplate()">
+								<span id="preview_watch" data-bind="text: previewWatch() ? previewWatch().text : '' "></span>
+						</div>
+					</div>
+			</div>
+			<div class="bottom_wrapper">
+				<div class="top_wrapper">
+					<div class="header">
+						<div class="header_right">
+								<div style="float:left"> <a href="#" onClick="javascript:tcp.UIManager.previous();">previous</a></div>
+								<!--<div class="well">
+            						<input type="text" class="span2" value="4" id="sl1" >
+          						</div>-->
+								<div style="float:left"> <a href="#" onClick="javascript:tcp.UIManager.next();">next</a></div>
+						</div>
+				    </div>
+			    </div>
+			</div>
+        </div>
+
+    <!-- Bootstrap core JavaScript
+
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type='text/javascript' src='/static/js/jquery/jquery.js'></script>
+    <script src="/static/js/bootstrap/bootstrap.min.js"></script>
+    <script src="/static/js/bootstrap/offcanvas.js"></script>
+	<script src="/static/js/ace-js/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/static/js/drag/drag.js"></script>
+	<script src="/static/js/drag/drag-live.js"></script>
+	<script src="/static/js/pubsub/pubsub.js"></script>
+	<script src="/static/js/jquery-plugins/tinyscrollbar.js"></script>
+	<script src="/static/js/fileuploader.js"></script>
+	<script src="/static/js/underscore/underscore.js"></script>
+    <script src="/static/js/jstree/jstree.js"></script>
+	<script src="/static/js/slider/bootstrap-slider.js"></script>
+	<script src="/static/js/ko/ko.js"></script>
+	<script src="/static/js/common.js"></script>
+	<script src="/static/js/article/article1.js"></script>
+	<script src="/static/js/create/preview1.js"></script>
+    <script src="http://jsplumbtoolkit.com/demo/js/jquery.jsPlumb-1.5.5-min.js"></script>
+	
+</body>
+</html>
