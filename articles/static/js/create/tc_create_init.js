@@ -170,7 +170,7 @@ myApp = myApp || (function () {
 				_.each(
 					tc.koModel.currentSlide().data.watches, 
 					function(w, i){
-							t = new tc.selectOptions(w.lineNumber,w)
+							t = new tc.selectOptions((w.lineNumber + 1),w)
 							ret.push(t)
 					}
 				);

@@ -2,112 +2,6 @@
 tcp = {};
 
 
-tcp.previewTree = {
-	'dataObj' : null,
-	'init' : function(s){
-		tcp.previewTree.previewTreeData(s);
-	},
-	'getData' : function(){
-		return tcp.previewTree.dataObj;
-	},
-
-	'previewTreeData' : function(slides){
-			dataArr = [];
-			_.each(slides, function(elem, i){
-					dataArr.push({
-						'id' : elem.data.uid,
-						'text' : tcp.previewTree.getMinText(elem.data.name()),
-						'data' : {'id':elem.data.uid, 'index' : i, 'd' : elem},
-					} )
-				}
-			)
-
-			dataObj = {
-				'text' : tc.koModel.articleDetails.data.name(),
-				'id' : -1,
-				'type' : "root",
-				'data' : {'id': -1, 'index': -1},
-				"children" : true,
-				"children" : dataArr,
-			}
-
-			tcp.previewTree.dataObj = dataObj;
-			return dataObj;
-	},
-
-	'getMinText' : function(s){
-		s1 = new String(s);
-		if(s1.length > 12){
-			return s1.substring(0, 11) + "..."
-		}
-		else{
-			return s;
-		}
-	} 
-
-
-}
-
-jsTree_Data = [
-  { "id" : "demo_root_1", "text" : "Root 1", "children" : true, "type" : "root", data: {'rainbow':true},
-	"children" : ["Child 1", { "id" : "demo_child_1", data: {'rainbow':true},"text" : "Child 2", "children" : [ { "id" : "demo_child_2", data: {'rainbow':true},"text" : "One more", "type" : "file" }] }, "child3"],
-  },
-]
-
-tcp.jstree = {
-	'firstTime' : true,
-	init : function(){
-			if(!this.firstTime){
-				$("#jstree").jstree('destroy');
-			}
-			this.firstTime = false;
-			$("#jstree").jstree({
-		 	"core" : {
-      				"animation" : 0,
-    				"check_callback" : false,
-    				'data' : tcp.previewTree.getData(),
-    			},
-    		"plugins" : ["search",
-    			"state", "types", "wholerow"
-    		]
-		});
-
-		$('#jstree').bind('select_node.jstree', function (e, data) {
-			if ( tcp.jstree.internal_trigger)
-			{
-				tcp.jstree.internal_trigger = false;
-				return;
-			}
-
-			d = data.node.data;
-			if( ! d ){
-				return;	
-			}
-
-			if( d.index == -1){
-				return
-			}
-			index = tcp.UIManager.idToIndexMap[d.id];
-			tcp.UIManager.moveTo(index)
-		});
-		window.setTimeout(function(){
-			//$("#jstree").jstree("refresh");		
-			tcp.jstree.select_node(tcp.previewTree.dataObj.children[0].data.id)
-		}, 10)
-	},
-
-	'internal_trigger' : false,
-
-	'select_node' : function(s){
-		tcp.jstree.internal_trigger = true;
-		$("#jstree").jstree('deselect_all', true);
-		$("#jstree").jstree("open_all");
-		$("#jstree").jstree("select_node", '#' + (s));	
-	},
-}
-
-
-
 
 tcp.offset = function(){
 	return $('#preview_board').offset();
@@ -406,7 +300,7 @@ tcp.UIManager = {
 	},
 
 	markNodeAsSelected : function(){
-		tcp.jstree.select_node( tcp.UIManager.currentSlide.data.uid );
+		//tcp.jstree.select_node( tcp.UIManager.currentSlide.data.uid );
 	},
 }
 
