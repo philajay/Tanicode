@@ -77,8 +77,17 @@ def article1(request):
 	except:
 		pass
 	a = Article.objects.get(pk=p)
+	metadata = a.metaData
+	slides = a.slides
+	html = a.html
+	aid = a.pk
 	template = loader.get_template('articles/article1.html')
-	context = RequestContext(request, { 'metadata': json.dumps(a.metaData), 'aid': a.pk})
+	context = RequestContext(request, {
+		'metadata': json.dumps(metadata),
+		'slides' : json.dumps(slides),
+		'html' : html,
+		'aid': aid
+	})
 	return HttpResponse(template.render(context))
 
 
@@ -99,6 +108,8 @@ def spad(request):
 def create(request):
     edit = request.GET.get('edit', None)
     metadata = ''
+    slides = ''
+    html = ''
     aid = 0
     if(edit):
 		p = 1
@@ -110,37 +121,43 @@ def create(request):
 			pass
 		a = Article.objects.get(pk=p)
 		metadata = a.metaData
+		slides = a.slides
+		html = a.html
 		aid = a.pk
 
     template = loader.get_template('articles/create.html')
     context = RequestContext(request, {
-    	'metadata': json.dumps(metadata)
-    	, 'aid': aid
+    	'metadata': json.dumps(metadata),
+    	'slides' : json.dumps(slides),
+    	'html' : html,
+    	'aid': aid
     })
     return HttpResponse(template.render(context))
     
+def createHTML(request):
+    template = loader.get_template('articles/articleInHTML.html')
+    context = RequestContext(request, {
+    	#metadata': json.dumps(metadata)
+    	#, 'aid': aid
+    })
+    return HttpResponse(template.render(context))
+
 
 @csrf_exempt
 def saveSlides(request):
 	s = request.POST.get('data', None)
 	#logger.debug(s)
 	obj = json.loads(s)
-	slides = json.loads(obj['slides'])
+	slides = obj['slides']
 	#logger.debug('slides are ' + str(type(slides)) + '     ---------- ---------   '  + str(slides))
 	metaData = obj['metaData']
 	#logger.debug('metaData is ' +  str(type(metaData)) + '     ---------- ---------   '  + str(metaData))
+	html = obj['html']
 	a = Article()
 	a.metaData = json.dumps( metaData )
+	a.slides = json.dumps( slides )
+	a.html = json.dumps( html )
 	a.save()
-	
-	for js in slides:
-		#logger.debug('slide is ' + str(type(js)) + '     ---------- ---------   '  + str(js))
-		s = Slides()
-		#logger.debug('BEHOLD ' + str(js))
-		s.uid = js['data']['uid']
-		s.slide = json.dumps( js )
-		s.aid = a
-		s.save()
 	
 	return HttpResponse( json.dumps( {'id': a.id} ) )
 	
@@ -156,14 +173,17 @@ def updateSlides(request):
 	except:
 		return HttpResponse( json.dumps( {'id': 'exception occurred'} ) )
 
-	slides = json.loads(obj['slides'])
+	slides = obj['slides']
 	#logger.debug('slides are ' + str(type(slides)) + '     ---------- ---------   '  + str(slides))
 	metaData = obj['metaData']
 	#logger.debug('metaData is ' +  str(type(metaData)) + '     ---------- ---------   '  + str(metaData))
+	html = obj['html']
 	a = Article.objects.get(pk=p)
 	a.metaData = json.dumps( metaData )
+	a.slides = json.dumps( slides )
+	a.html = json.dumps( html )
 	a.save()
-	
+	'''	
 	a.parent.all().delete()
 
 	for js in slides:
@@ -174,7 +194,7 @@ def updateSlides(request):
 		s.slide = json.dumps( js )
 		s.aid = a
 		s.save()
-	
+	'''
 	return HttpResponse( json.dumps( {'id': a.id} ) )
 
 

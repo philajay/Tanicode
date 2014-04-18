@@ -72,8 +72,9 @@ tc.koModel = {
 $( document ).ready(function(){
 	window.sj = $.parseJSON(metaData)
 	artDetailsData = $.parseJSON( sj['articleMetaData'] );
-	window.slides =  sj['slidesMetaData'] ;
-	window.firstSlide = sj['firstSlide'] ;
+	//window.slides =  sj['slidesMetaData'] ;
+	window.slides =  $.parseJSON($.parseJSON( window.savedSlides ));
+	//window.firstSlide = sj['firstSlide'] ;
 	tc.articleDetails.initFromJSON(artDetailsData);
 	tc.koModel.previewSlides = ko.observableArray();
 	tc.articleDetailsHolder.data = tc.articleDetails;
@@ -93,8 +94,9 @@ tc.preview = function(){
 
 tc.overlayInitArticle = function(){
 	dataSlides = []
+
 	_.each(window.slides, function(elem, i){
-			o =  elem;
+			o =  elem.data;
 			//o = o.data;
 			tcp.UIManager.idToIndexMap[o.uid] = i;
 			slide = new tcp.Slide(o);
@@ -105,7 +107,7 @@ tc.overlayInitArticle = function(){
 
 		}
 	);
-	tc.koModel.previewSlides()[0].data = firstSlide;
+	//tc.koModel.previewSlides()[0].data = firstSlide;
 
 	tcp.UIManager.index = 0;
 	tcp.InitUI.init();

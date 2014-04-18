@@ -218,34 +218,24 @@ tcp.Slide = function(data){
 			tcp.tcEditor.aceEditor.scrollToLine(n - 1, true);
 			tc.koModel.previewWatch(w);
 			tcp.tcEditor.setBreakPoint(n - 1);
-		}
-		$('#preview_watch').html(w.text);
-				/*
-					source: jsPlumb.makeSource("#jstreeHolder"), 
-			  		target: jsPlumb.makeSource('#overlay_watch'), 
-				
-				window.setTimeout(function(){
-						jsPlumb.connect(
+
+			/*window.setTimeout(function(){
+					jsPlumb.hide($('.ace_active-line'));
+					jsPlumb.connect(
 						{ 
-					  		source: $("#jstreeHolder"), 
-					  		target: $("#overlay_watch"), 
+						  	source: $('.ace_active-line'), 
+						  	target: $("#overlay_watch"), 
+						  	anchors:["BottomCenter", "Left"]
 						}, stateMachineConnector
 					);
 				}, 10);
-				*/	
-		/*jstreeHolder
-		window.setTimeout(function(){
-			jsPlumb.connect(
-				{ 
-			  		source: jsPlumb.makeSource($('.ace_active-line')), 
-			  		target: jsPlumb.makeSource($('#overlay_watch')), 
-				}
-			);
-		}, 10)*/
+			*/
+		}
+		$('#preview_watch').html(w.text);
 	};
 	
 	this.showImageWatch = function(){
-		
+				
 		w = tcp.UIManager.currentSlide.data.watches[tcp.UIManager.currentSlide.index];
 		if( w.attached ){
 			xoffset = parseInt(w.rect.x.replace('px', ''), 10)
@@ -262,6 +252,18 @@ tcp.Slide = function(data){
 				"height": w.rect.height,
 			});	
 			tcp.UIManager.imageWatchDiv.show();
+
+			window.setTimeout(function(){
+				jsPlumb.hide(tcp.UIManager.imageWatchDiv);
+				jsPlumb.connect(
+					{ 
+					  	source: tcp.UIManager.imageWatchDiv, 
+					  	target: $("#overlay_watch"), 
+					  	anchors:["Right", "Left"]
+					}, stateMachineConnector
+				);
+			}, 10);
+		
 		}
 		else{
 			tcp.UIManager.imageWatchDiv.hide();	
@@ -314,6 +316,9 @@ tcp.Slide = function(data){
 	};
 
 	this.hide = function(){
+		if(this.data.TYPE == "IMAGE"){
+			jsPlumb.hide(tcp.UIManager.imageWatchDiv);
+		}//jsPlumb.hide($('.ace_active-line'));
 	};
 	
 	this.changeSlide = function(){
@@ -354,8 +359,8 @@ tcp.UIManager = {
 			this.currentSlide.hide();
 		}
 		this.currentSlide = t;
-
-		if (tcp.UIManager.currentSlide.data.text){
+		tcp.UIManager.changeTextSlideHelper();
+		/*if (tcp.UIManager.currentSlide.data.text){
 			var deferred = $.Deferred();
 
 			deferred.resolve(null);
@@ -366,14 +371,11 @@ tcp.UIManager = {
 			var post = $.ajax({
 				  dataType: "json",
 				  url: 'getSlide?uid='+ tcp.UIManager.currentSlide.data.uid + "&aid=" + getParameterByName('aid'),
-				  success: function(res){/*
-				  		d = $.parseJSON(res)
-				  		tcp.UIManager.currentSlide.data = d.data
-				  */}
+				  success: function(res){}
 			});
 
 			post.done(tcp.UIManager.changeTextSlideHelper)
-		}
+		}*/
 	},
 
 	changeTextSlideHelper : function (res) {

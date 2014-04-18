@@ -61,7 +61,7 @@
 .main-content-tree{ width:18%; float:left; background: white}
 .main-content-section{ width:50%; float:left; padding: 20px;}
 
-.watch {border:2px solid;border-radius:25px; background:#FFFFA3; color:black; padding:20px}
+.watch {border-radius:5px; background:#FFFFA3; color:black; padding:20px}
 
 .centered {
     position: absolute;
@@ -70,4 +70,9 @@
     margin: -100px 0 0 -200px;
     top: 50%;
     left: 50%;
+}
+
+
+.seo {
+  display: none;
 }

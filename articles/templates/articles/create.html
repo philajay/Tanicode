@@ -17,6 +17,7 @@
     
     <script type="text/javascript">
         window.metadata = {{ metadata|safe }}
+        window.savedSlides = {{ slides|safe }}
         window.aid = {{ aid|safe }}
 
     </script>
@@ -278,7 +279,7 @@ background: #FFFFA3;
         </div>
     </div>
     <!--/.container-->
-	
+
 	<!--------------------- OVERLAY STARTS HERE ----------------------------------------->
 		<div id="overlay"> 
 			<div >
@@ -333,6 +334,8 @@ background: #FFFFA3;
 			</div>
         </div>
     <!--------------------- OVERLAY ENDS HERE ----------------------------------------->	
+
+
 
     <!-- Bootstrap core JavaScript
 

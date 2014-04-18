@@ -3,6 +3,8 @@ from django.db import models
 # Create your models here.
 class Article(models.Model):
 	metaData = models.TextField()
+	slides = models.TextField()
+	html =  models.TextField()
 	last_saved = models.DateField(auto_now=True)
 
 class Slides(models.Model):
@@ -13,3 +15,8 @@ class Slides(models.Model):
 
 class Tree(models.Model):
 	js = models.TextField()
+
+
+'''
+
+'''

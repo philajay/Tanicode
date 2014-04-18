@@ -2,6 +2,16 @@
 tcp = {};
 
 
+var stateMachineConnector = {				
+				connector:"StateMachine",
+				paintStyle:{lineWidth:3,strokeStyle:"yellow"},
+				hoverPaintStyle:{strokeStyle:"yellow"},
+				endpoint:"Blank",
+				anchor:"Continuous",
+				overlays:[ ["PlainArrow", {location:1, width:15, length:12} ]]
+			};
+			
+
 tcp.previewTree = {
 	'dataObj' : null,
 	'init' : function(s){
@@ -23,7 +33,7 @@ tcp.previewTree = {
 			)
 
 			dataObj = {
-				'text' : tc.koModel.articleDetails.data.name(),
+				'text' : tcp.previewTree.getMinText(tc.koModel.articleDetails.data.name()),
 				'id' : -1,
 				'type' : "root",
 				'data' : {'id': -1, 'index': -1},
@@ -117,7 +127,7 @@ tcp.tcEditor = {
 
 	init : function(){
 		var editor = ace.edit("editor");
-		editor.setTheme("ace/theme/monokai");
+		editor.setTheme("ace/theme/eclipse");
 		editor.getSession().setMode("ace/mode/html");
 		editor.setReadOnly(true);
 		this.defaultStyle	= editor.container.style.fontFamily;	
@@ -136,6 +146,10 @@ tcp.tcEditor = {
 
 	},
 
+	setBreakPoint : function(lno){
+		editor.session.setBreakpoints([lno]);
+	},
+
 	setTextMode : function(){
 		editor = this.aceEditor ;
 		editor.container.style.fontFamily = "'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace";
@@ -143,7 +157,7 @@ tcp.tcEditor = {
         editor.setBehavioursEnabled(false);
         editor.renderer.setShowGutter(false);
         editor.session.setUseWrapMode(true);
-
+        $('#editor').css('background', '#FFFFA3');
 	},
 
 	setCodeMode : function(){
@@ -153,7 +167,7 @@ tcp.tcEditor = {
         editor.setBehavioursEnabled(true);
         editor.renderer.setShowGutter(true);
         editor.session.setUseWrapMode(false);
-
+        $('#editor').css('background', 'white');
 	},
 
 }
@@ -170,6 +184,7 @@ tcp.Slide = function(data){
 		tc.koModel.previewCurrentSlide( this )
 		this.index = 0;
 		tcp.UIManager.imageWatchDiv.hide();
+		tc.koModel.previewWatch(null);
 		if(this.data.TYPE != "IMAGE")
 			{
 				//tc.tcEditor.resetLang(this.data.TYPE);
@@ -184,7 +199,7 @@ tcp.Slide = function(data){
 				}
 				else {
 					tcp.tcEditor.setTextMode();
-					tc.koModel.previewWatch(null);			
+					
 				}
 			}
 		else{
@@ -197,29 +212,62 @@ tcp.Slide = function(data){
 	};
 
 	this.showCodeWatch = function(w){
-		n = w.lineNumber + 1
-		tcp.tcEditor.aceEditor.gotoLine(n)
-		tcp.tcEditor.aceEditor.scrollToLine(n - 1, true);
-		tc.koModel.previewWatch(w);
+		if( w.attached ){
+			n = w.lineNumber + 1
+			tcp.tcEditor.aceEditor.gotoLine(n)
+			tcp.tcEditor.aceEditor.scrollToLine(n - 1, true);
+			tc.koModel.previewWatch(w);
+			tcp.tcEditor.setBreakPoint(n - 1);
+
+			/*window.setTimeout(function(){
+					jsPlumb.hide($('.ace_active-line'));
+					jsPlumb.connect(
+						{ 
+						  	source: $('.ace_active-line'), 
+						  	target: $("#overlay_watch"), 
+						  	anchors:["BottomCenter", "Left"]
+						}, stateMachineConnector
+					);
+				}, 10);
+			*/
+		}
 		$('#preview_watch').html(w.text);
 	};
 	
 	this.showImageWatch = function(){
+				
 		w = tcp.UIManager.currentSlide.data.watches[tcp.UIManager.currentSlide.index];
-		xoffset = parseInt(w.rect.x.replace('px', ''), 10)
-		xoffset = xoffset + tcp.offset().left
-		x = xoffset + 'px'
-		yoffset = parseInt(w.rect.y.replace('px', ''), 10)
-		yoffset = yoffset + tcp.offset().top
-		y = yoffset + 'px'
+		if( w.attached ){
+			xoffset = parseInt(w.rect.x.replace('px', ''), 10)
+			xoffset = xoffset + tcp.offset().left
+			x = xoffset + 'px'
+			yoffset = parseInt(w.rect.y.replace('px', ''), 10)
+			yoffset = yoffset + tcp.offset().top
+			y = yoffset + 'px'
+			
+			tcp.UIManager.imageWatchDiv.css({
+				"left": x,
+				"top": y,
+				"width": w.rect.width,
+				"height": w.rect.height,
+			});	
+			tcp.UIManager.imageWatchDiv.show();
+
+			window.setTimeout(function(){
+				jsPlumb.hide(tcp.UIManager.imageWatchDiv);
+				jsPlumb.connect(
+					{ 
+					  	source: tcp.UIManager.imageWatchDiv, 
+					  	target: $("#overlay_watch"), 
+					  	anchors:["Right", "Left"]
+					}, stateMachineConnector
+				);
+			}, 10);
 		
-		tcp.UIManager.imageWatchDiv.css({
-			"left": x,
-			"top": y,
-			"width": w.rect.width,
-			"height": w.rect.height,
-		});	
-		tcp.UIManager.imageWatchDiv.show();
+		}
+		else{
+			tcp.UIManager.imageWatchDiv.hide();	
+		}
 		tc.koModel.previewWatch(w);
 	};
 
@@ -268,9 +316,13 @@ tcp.Slide = function(data){
 	};
 
 	this.hide = function(){
+		if(this.data.TYPE == "IMAGE"){
+			jsPlumb.hide(tcp.UIManager.imageWatchDiv);
+		}//jsPlumb.hide($('.ace_active-line'));
 	};
 	
 	this.changeSlide = function(){
+		tcp.tcEditor.setBreakPoint([])
 		tcp.UIManager.changeTextSlide(this)
 	};
 	
@@ -307,9 +359,38 @@ tcp.UIManager = {
 			this.currentSlide.hide();
 		}
 		this.currentSlide = t;
-		this.currentSlide.syncUI();
-		this.currentSlide.show();
+
+		if (tcp.UIManager.currentSlide.data.text){
+			var deferred = $.Deferred();
+
+			deferred.resolve(null);
+
+			deferred.done(tcp.UIManager.changeTextSlideHelper);
+		}
+		else{
+			var post = $.ajax({
+				  dataType: "json",
+				  url: 'getSlide?uid='+ tcp.UIManager.currentSlide.data.uid + "&aid=" + getParameterByName('aid'),
+				  success: function(res){/*
+				  		d = $.parseJSON(res)
+				  		tcp.UIManager.currentSlide.data = d.data
+				  */}
+			});
+
+			post.done(tcp.UIManager.changeTextSlideHelper)
+		}
 	},
+
+	changeTextSlideHelper : function (res) {
+		if( res ){
+			d = $.parseJSON(res)
+			tcp.UIManager.currentSlide.data = d.data
+		}
+		$('#pv_dd_a').html(tcp.UIManager.currentSlide.data.name + '<b class="caret"></b>');
+		tcp.UIManager.currentSlide.syncUI();
+		tcp.UIManager.currentSlide.show();
+	},
+	
 	moveTo : function(i){
 		this.index = i;
 		tcp.UIManager.changeTextSlide(tc.koModel.previewSlides()[this.index])
@@ -366,14 +447,27 @@ tcp.overlayInit = function(){
 		o = rawData[i].data;
 		tcp.UIManager.idToIndexMap[o.uid] = i;
 		slide = new tcp.Slide(o);
+
+		var elemStr = '<li><a href="#">'+ (i + 1) + '  ' + slide.data.name() +'</a></li>'
+		$('#pv_dd').append(elemStr)
+
 	}
+		$('#pv_dd > li' ).each(function(index){
+		$(this).find('a').each( function(index2){
+				
+				$(this).on('click', function(){
+					tcp.UIManager.moveTo(index)
+				});
+		});
+	});
+
 	tcp.UIManager.index = 0;
 	tcp.InitUI.init();
 	tcp.UIManager.init(tc.koModel.previewSlides()[0]);
 	$('#overlay').show();	
-	tcp.previewTree.init(rawData);
-	tcp.jstree.init();
-	//ko.applyBindings(tcp.vm);
+	//tcp.previewTree.init(rawData);
+	//tcp.jstree.init();
+
 }
 
 
@@ -385,7 +479,12 @@ tcp.InitUI = {
 		h = h + 'px'
 		$('#editor').css('height', h);
 		$('#overlay_watch').css('height', h);
+		$('#sl1').slider();
 	}
 	
 }
+
+
+
+
 

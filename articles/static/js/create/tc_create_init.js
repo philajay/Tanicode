@@ -1,24 +1,4 @@
 
-/*var myApp;
-myApp = myApp || (function () {
-    var pleaseWaitDiv = $('<div class="modal hide" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false"><div class="modal-header"><h1>Processing...</h1></div><div class="modal-body"><div class="progress progress-striped active"><div class="bar" style="width: 100%;"></div></div></div></div>');
-    return {
-        showPleaseWait: function() {
-            pleaseWaitDiv.modal();
-        },
-        hidePleaseWait: function () {
-            pleaseWaitDiv.modal('hide');
-        },
-
-    };
-})();
-
-/*function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}*/
 
 	var NewSlideOption = function(name){
 		this.name = name;
@@ -485,6 +465,11 @@ myApp = myApp || (function () {
 	        this.text = tc.textEditor.getValue()
 		};
 
+		this.cloneFrom = function(d){
+			this.name( d.name );
+			this.text = d.text;
+		};
+
 	}
 	tc.TextSlide.prototype = new tc.baseSlide();
 	tc.TextSlide.prototype.constructor = tc.TextSlide;
@@ -494,6 +479,20 @@ myApp = myApp || (function () {
 		this.name = ko.observable('Name for the new Image Slide');
 		this.src = ko.observable();;
 		this.watches = new Array();
+
+		this.cloneFrom = function(d){
+			this.name( d.name );
+			this.src( d.src );
+			if( d.watches ){
+				_.each(d.watches, function(elem, i){
+					w = new tc.ImageWatch();
+					w.cloneFrom(elem);
+					this.watches.push(w);
+				}, this)
+			}
+		};
+
+
 		this.addWatch = function(div){
 			rect = tc.UIManager.currentSlide.data.getRectFromDiv(div)
 			w = this.getWatch(div).w;
@@ -606,9 +605,42 @@ myApp = myApp || (function () {
 				a = d.data('watch')
 				tc.koModel.watch(a);
 			});
-		}
+		};
 		this.delete = function(){
 			tc.UIManager.currentSlide.data.deleteWatch(this);
+		};
+
+		this.cloneFrom = function(w){
+			//var temp = new tc.ImageWatch();
+			temp = this;
+			this.rect = w.rect;
+			temp.queued = function(temp){
+				w = temp;
+				elem = document.createElement('div');
+				xoffset = parseInt(w.rect.x.replace('px', ''), 10)
+				xoffset = xoffset + tc.board.offset().left
+				xoffset = xoffset + 'px'
+				yoffset = parseInt(w.rect.y.replace('px', ''), 10)
+				yoffset = yoffset + tc.board.offset().top
+				yoffset = yoffset + 'px'
+
+				$(elem).css({border: '1px solid white', background: 'orange', padding: '0.5em'});
+				$(elem).css({
+						"z-index": 100,
+						"position": "absolute",
+						"left": xoffset,
+						"top": yoffset,
+						"width": 0,
+						"height": 0,
+						"opacity" : .5,
+					});	
+				$(elem).css('width', w.rect.width);
+				$(elem).css('height', w.rect.height);
+				document.body.appendChild(elem);
+				$(elem).hide();
+				temp.setDiv( $(elem) );
+			}
+			temp.text(  w.text );
 		}
 	}
 
@@ -618,6 +650,20 @@ myApp = myApp || (function () {
 		this.name = ko.observable('Name of the new code slide.');
 		this.text = '';
 		this.watches = new Array();
+
+		this.cloneFrom = function(d){
+			this.name( d.name );
+			this.text =  d.text;
+			if( d.watches ){
+				_.each(d.watches, function(elem, i){
+					w = new tc.CodeWatch();
+					w.cloneFrom(elem);
+					this.watches.push(w);
+				}, this)
+			}
+		};
+
+
 		this.addWatch = function(lineNumber){
 			w = this.getWatch(lineNumber).w;
 			if(  w == null ){
@@ -714,6 +760,10 @@ myApp = myApp || (function () {
 		this.lineNumber = 0;
 		this.text = ko.observable('Explain code here');
 		this.attached = ko.observable(true);
+		this.cloneFrom = function(w){
+			this.lineNumber = w.lineNumber;
+			this.text( w.text )
+		};
 		this.delete = function(){
 			tc.UIManager.currentSlide.data.deleteWatch(this);
 		}
@@ -1067,7 +1117,7 @@ myApp = myApp || (function () {
 		this.getMetaData = function(){
 			obj = {};
 			obj['articleMetaData'] = ko.toJSON(tc.articleDetails);
-			obj['slidesMetaData'] = [];
+			/*obj['slidesMetaData'] = [];
 			ko.utils.arrayForEach(tc.koModel.slides(), function(s) {
             	o = {};
             	o['name'] = s.data.name();
@@ -1075,7 +1125,7 @@ myApp = myApp || (function () {
             	o['TYPE'] = s.data.TYPE;
             	obj['slidesMetaData'].push(o)
         	});
-        	obj['firstSlide'] = ko.toJS( tc.koModel.slides()[0].data )
+        	obj['firstSlide'] = ko.toJS( tc.koModel.slides()[0].data )*/
 			return obj
 		};
 
@@ -1083,13 +1133,33 @@ myApp = myApp || (function () {
 			return ko.toJSON(tc.koModel.slides);
 		};
 
+		this.getSlidesHTML = function(){
+			html = ""			
+			ko.utils.arrayForEach(tc.koModel.slides(), function(s) {
+				//html += '<div id="' + s.data.uid + '">' 
+				if( s.data.TYPE == "TEXT"){
+					html += s.data.text;
+				}
+				else
+				{
+					for(var i = 0;i < s.data.watches.length; i++){
+						//html += '<p>' + s.data.watches[i].text() + '</p>'
+						html += s.data.watches[i].text()
+					}
+				}
+				//html += "</div>"
+        	});
+
+        	return html;
+		}
+
 		this.getData = function(){
 			if(tc.mode == "edit"){
-				obj = {'metaData' : this.getMetaData(), 'slides': this.getSlides(), 'aid': window.aid}
+				obj = {'metaData' : this.getMetaData(), 'slides': this.getSlides(), 'html': this.getSlidesHTML(), 'aid': window.aid}
 				return JSON.stringify(obj)
 			}
 			else{
-				obj = {'metaData' : this.getMetaData(), 'slides': this.getSlides()}
+				obj = {'metaData' : this.getMetaData(), 'slides': this.getSlides(), 'html': this.getSlidesHTML()}
 				return JSON.stringify(obj)
 			}
 		};
@@ -1115,6 +1185,7 @@ myApp = myApp || (function () {
 
 	}
 
+	/*
 	function saveSlides(){
 		$.ajax({
 		  type: "POST",
@@ -1127,7 +1198,7 @@ myApp = myApp || (function () {
 		
 		return false;
 	}
-
+	*/
 	tc.initHelpHandlers = function(){
 	    $('#name').on('focus', function(){
 	        tc.koModel.helpTemplateID('help_name');
@@ -1180,32 +1251,34 @@ myApp = myApp || (function () {
 	function edit_ready(){
 		window.sj = $.parseJSON(metadata)
 		artDetailsData = $.parseJSON( sj['articleMetaData'] );
-		window.slides =  sj['slidesMetaData'] ;
+		window.slides =  $.parseJSON($.parseJSON( window.savedSlides ));
 		window.firstSlide = sj['firstSlide'] ;
 		tc.articleDetails.prepopulate(artDetailsData.name, artDetailsData.tags, artDetailsData.zist, artDetailsData.initialSeed)
 		tc.getUID = getUniqueId();
 		tc.koModel.articleDetails  = new tc.Slide(tc.articleDetails);
 		dataSlides = []
+		//$Seo = $('#seo')
 		_.each(window.slides, function(elem, i){
-				o =  elem;
-				var copyTo = null;
-				if(o.TYPE == "CODE"){
-					copyTo = new tc.CodeSlide();
-				} else if(o.TYPE == "IMAGE" ){
-					copyTo = new tc.ImageSlide();
-					copyTo.src(o.src)
-				} else if(o.TYPE == "TEXT" ){
-					copyTo = new tc.TextSlide();
+				d = null;
+				if( elem.data.TYPE == "TEXT"){
+					d = new tc.TextSlide();
 				}
-				copyTo.name(o.name);
-				copyTo.text = o.text;
-				slide = new tc.Slide(copyTo);
-				copyTo.uid = o.uid;
-				tc.koModel.slides().push(slide);
-				tc.cacheManager.addSlide(slide, new tc.state(false, false))
+				else if( elem.data.TYPE == "CODE"){
+					d = new tc.CodeSlide();
+				}
+				else if( elem.data.TYPE == "IMAGE"){
+					d = new tc.ImageSlide();
+				}
+
+				d.cloneFrom(elem.data);
+
+				s = new tc.Slide(d);
+
+				tc.koModel.slides().push(s);
+				tc.cacheManager.addSlide(s, new tc.state(true, true))
 			}
 		);
-		//set the properties of the first slide from the article data
+		/*//set the properties of the first slide from the article data
 		tc.koModel.slides()[0].data.text = firstSlide.text;
 		if( firstSlide.watches){
 			tc.koModel.slides()[0].data.watches = firstSlide.watches;
@@ -1214,7 +1287,7 @@ myApp = myApp || (function () {
 		//tc.cc(firstSlide)
 
 		tc.cacheManager[firstSlide.uid].state.syncedWithServer = true;	
-
+		*/
 		$('#tc_tree_container').show();
 		//tc.UIManager.addNewSlide("Text Slide");
 		tc.UIManager.changeSlide(tc.koModel.slides()[0])
@@ -1284,50 +1357,3 @@ tc.cacheManager = {
 
 
 
-	/*
-
-
-	function createUploader(){            
-		var uploader = new qq.FileUploader({
-			element: document.getElementById('file-uploader'),
-			action: 'ajaxupload',
-			debug: true,
-			onComplete: function( id, fileName, responseJSON ) {
-				url = "/static/images/" + responseJSON.success
-				tc.UIManager.currentSlide.data.src(url)
-			},
-			onAllComplete: function( uploads ) {
-			// uploads is an array of maps
-			// the maps look like this: { file: FileObject, response: JSONServerResponse }
-			//alert( "All complete!" ) ;
-			}
-		});           
-	}
-
-
-
-	1) on create of the node create a slide.
-	2) slide relationship with the node of the tree.
-	3) the UI synchronization with the slide change
-
-
-
-
-
-	function saveTree(){
-	    jstree =ko.toJSON($('#toc').jstree('get_json', $('#toc'), -1));
-	    $.ajax({
-		  type: "POST",
-		  url: "saveTree",
-		  data: {js: jstree},
-		  success: function(result){
-				alert(result)
-		  },
-		});
-		
-		return false;
-
-	}
-	9416062008
-	143999416
-	*/
