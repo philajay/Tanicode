@@ -1,3 +1,7 @@
+tc.tempVariables = {
+	custom : true,
+}
+
 tc.articleDetails = {
     'TYPE' : 'METADATA',
     'name' : ko.observable(''),

@@ -68,7 +68,7 @@ def getSlide(request):
 	s = Slides.objects.get(aid = a , uid=p)
 	return HttpResponse(json.dumps(s.slide))
 
-def article1(request):
+def viewArticle(request):
 	p = 1
 	try:
 		x = request.GET.get('aid', None)
@@ -81,7 +81,7 @@ def article1(request):
 	slides = a.slides
 	html = a.html
 	aid = a.pk
-	template = loader.get_template('articles/article1.html')
+	template = loader.get_template('articles/viewArticle.html')
 	context = RequestContext(request, {
 		'metadata': json.dumps(metadata),
 		'slides' : json.dumps(slides),

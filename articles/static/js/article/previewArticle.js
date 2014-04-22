@@ -378,6 +378,7 @@ tcp.InitUI = {
 	init : function(){
 		h = $( window ).height();
 		h = h - 46 - 46 - 10;
+		//h = h / 2;
 		h = h + 'px'
 		$('#editor').css('height', h);
 		$('#overlay_watch').css('height', h);
