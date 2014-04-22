@@ -12,111 +12,6 @@ var stateMachineConnector = {
 			};
 			
 
-tcp.previewTree = {
-	'dataObj' : null,
-	'init' : function(s){
-		tcp.previewTree.previewTreeData(s);
-	},
-	'getData' : function(){
-		return tcp.previewTree.dataObj;
-	},
-
-	'previewTreeData' : function(slides){
-			dataArr = [];
-			_.each(slides, function(elem, i){
-					dataArr.push({
-						'id' : elem.data.uid,
-						'text' : tcp.previewTree.getMinText(elem.data.name),
-						'data' : {'id':elem.data.uid, 'index' : i, 'd' : elem},
-					} )
-				}
-			)
-
-			dataObj = {
-				'text' : tcp.previewTree.getMinText(tc.koModel.articleDetails.data.name()),
-				'id' : -1,
-				'type' : "root",
-				'data' : {'id': -1, 'index': -1},
-				"children" : true,
-				"children" : dataArr,
-			}
-
-			tcp.previewTree.dataObj = dataObj;
-			return dataObj;
-	},
-
-	'getMinText' : function(s){
-		s1 = new String(s);
-		if(s1.length > 12){
-			return s1.substring(0, 11) + "..."
-		}
-		else{
-			return s;
-		}
-	} 
-
-
-}
-
-jsTree_Data = [
-  { "id" : "demo_root_1", "text" : "Root 1", "children" : true, "type" : "root", data: {'rainbow':true},
-	"children" : ["Child 1", { "id" : "demo_child_1", data: {'rainbow':true},"text" : "Child 2", "children" : [ { "id" : "demo_child_2", data: {'rainbow':true},"text" : "One more", "type" : "file" }] }, "child3"],
-  },
-]
-
-tcp.jstree = {
-	'firstTime' : true,
-	init : function(){
-			if(!this.firstTime){
-				$("#jstree").jstree('destroy');
-			}
-			this.firstTime = false;
-			$("#jstree").jstree({
-		 	"core" : {
-      				"animation" : 0,
-    				"check_callback" : false,
-    				'data' : tcp.previewTree.getData(),
-    			},
-    		"plugins" : ["search",
-    			"state", "types", "wholerow"
-    		]
-		});
-
-		$('#jstree').bind('select_node.jstree', function (e, data) {
-			if ( tcp.jstree.internal_trigger)
-			{
-				tcp.jstree.internal_trigger = false;
-				return;
-			}
-
-			d = data.node.data;
-			if( ! d ){
-				return;	
-			}
-
-			if( d.index == -1){
-				return
-			}
-			index = tcp.UIManager.idToIndexMap[d.id];
-			tcp.UIManager.moveTo(index)
-		});
-		window.setTimeout(function(){
-			//$("#jstree").jstree("refresh");		
-			tcp.jstree.select_node(tcp.previewTree.dataObj.children[0].data.id)
-		}, 10)
-	},
-
-	'internal_trigger' : false,
-
-	'select_node' : function(s){
-		tcp.jstree.internal_trigger = true;
-		$("#jstree").jstree('deselect_all', true);
-		$("#jstree").jstree("open_all");
-		$("#jstree").jstree("select_node", '#' + (s));	
-	},
-}
-
-
 
 
 tcp.offset = function(){
@@ -169,7 +64,6 @@ tcp.tcEditor = {
         editor.session.setUseWrapMode(false);
         $('#editor').css('background', 'white');
 	},
-
 }
 
 
@@ -183,7 +77,7 @@ tcp.Slide = function(data){
 	this.syncUI = function(){
 		tc.koModel.previewCurrentSlide( this )
 		this.index = 0;
-		tcp.UIManager.imageWatchDiv.hide();
+		tcp.UIManager.manager.imageWatchDiv.hide();
 		tc.koModel.previewWatch(null);
 		if(this.data.TYPE != "IMAGE")
 			{
@@ -236,7 +130,7 @@ tcp.Slide = function(data){
 	
 	this.showImageWatch = function(){
 				
-		w = tcp.UIManager.currentSlide.data.watches[tcp.UIManager.currentSlide.index];
+		w = tcp.UIManager.manager.currentSlide.data.watches[tcp.UIManager.manager.currentSlide.index];
 		if( w.attached ){
 			xoffset = parseInt(w.rect.x.replace('px', ''), 10)
 			xoffset = xoffset + tcp.offset().left
@@ -245,19 +139,19 @@ tcp.Slide = function(data){
 			yoffset = yoffset + tcp.offset().top
 			y = yoffset + 'px'
 			
-			tcp.UIManager.imageWatchDiv.css({
+			tcp.UIManager.manager.imageWatchDiv.css({
 				"left": x,
 				"top": y,
 				"width": w.rect.width,
 				"height": w.rect.height,
 			});	
-			tcp.UIManager.imageWatchDiv.show();
+			tcp.UIManager.manager.imageWatchDiv.show();
 
 			window.setTimeout(function(){
-				jsPlumb.hide(tcp.UIManager.imageWatchDiv);
+				jsPlumb.hide(tcp.UIManager.manager.imageWatchDiv);
 				jsPlumb.connect(
 					{ 
-					  	source: tcp.UIManager.imageWatchDiv, 
+					  	source: tcp.UIManager.manager.imageWatchDiv, 
 					  	target: $("#overlay_watch"), 
 					  	anchors:["Right", "Left"]
 					}, stateMachineConnector
@@ -266,7 +160,7 @@ tcp.Slide = function(data){
 		
 		}
 		else{
-			tcp.UIManager.imageWatchDiv.hide();	
+			tcp.UIManager.manager.imageWatchDiv.hide();	
 		}
 		tc.koModel.previewWatch(w);
 	};
@@ -317,7 +211,7 @@ tcp.Slide = function(data){
 
 	this.hide = function(){
 		if(this.data.TYPE == "IMAGE"){
-			jsPlumb.hide(tcp.UIManager.imageWatchDiv);
+			jsPlumb.hide(tcp.UIManager.manager.imageWatchDiv);
 		}//jsPlumb.hide($('.ace_active-line'));
 	};
 	
@@ -328,9 +222,9 @@ tcp.Slide = function(data){
 	
 }
 
-tcp.UIManager = {
+tcp.StandardUIManager = {
 	currentSlide : null,
-	idToIndexMap : {},
+	//idToIndexMap : {},
 	that : this,
 	index : 0,
 	imageWatchDiv : null,
@@ -359,38 +253,20 @@ tcp.UIManager = {
 			this.currentSlide.hide();
 		}
 		this.currentSlide = t;
-		tcp.UIManager.changeTextSlideHelper();
-		/*if (tcp.UIManager.currentSlide.data.text){
-			var deferred = $.Deferred();
-
-			deferred.resolve(null);
-
-			deferred.done(tcp.UIManager.changeTextSlideHelper);
-		}
-		else{
-			var post = $.ajax({
-				  dataType: "json",
-				  url: 'getSlide?uid='+ tcp.UIManager.currentSlide.data.uid + "&aid=" + getParameterByName('aid'),
-				  success: function(res){}
-			});
-
-			post.done(tcp.UIManager.changeTextSlideHelper)
-		}*/
+		this.changeTextSlideHelper();
 	},
-
 	changeTextSlideHelper : function (res) {
 		if( res ){
 			d = $.parseJSON(res)
-			tcp.UIManager.currentSlide.data = d.data
+			this.currentSlide.data = d.data
 		}
-		$('#pv_dd_a').html(tcp.UIManager.currentSlide.data.name + '<b class="caret"></b>');
-		tcp.UIManager.currentSlide.syncUI();
-		tcp.UIManager.currentSlide.show();
+		$('#pv_dd_a').html(this.currentSlide.data.name + '<b class="caret"></b>');
+		this.currentSlide.syncUI();
+		this.currentSlide.show();
 	},
-	
 	moveTo : function(i){
 		this.index = i;
-		tcp.UIManager.changeTextSlide(tc.koModel.previewSlides()[this.index])
+		this.changeTextSlide(tc.koModel.previewSlides()[this.index])
 	},
 	next : function(){
 		o = this.currentSlide.next();
@@ -402,8 +278,7 @@ tcp.UIManager = {
 			return
 		}
 		this.index++;
-		tcp.UIManager.changeTextSlide(tc.koModel.previewSlides()[this.index])
-		tcp.jstree.select_node( tcp.UIManager.currentSlide.data.uid );
+		this.changeTextSlide(tc.koModel.previewSlides()[this.index])
 	},
 	
 	previous : function(){
@@ -416,11 +291,41 @@ tcp.UIManager = {
 			return
 		}
 		this.index--;
-		tcp.UIManager.changeTextSlide(tc.koModel.previewSlides()[this.index])
-		tcp.jstree.select_node( tcp.UIManager.currentSlide.data.uid );
+		this.changeTextSlide(tc.koModel.previewSlides()[this.index])
+	}
+}
+
+tcp.UIManager = {
+	manager : null,
+	register : function( manager ){
+		this.manager = manager;
+	},
+	init : function(t){
+		this.manager.init(t);
+	},
+	changeTextSlide : function(t){
+		this.manager.changeTextSlide(t);
+	},
+
+	/*
+	changeTextSlideHelper : function (res) {
+		self.manager.changeTextSlideHelper();	
+	},
+	*/
+	moveTo : function(i){
+		this.manager.moveTo(i);
+	},
+	next : function(){
+		this.manager.next();
+	},
+	
+	previous : function(){
+		this.manager.previous();
 	},
 }
 
+
+tcp.UIManager.register( tcp.StandardUIManager );
 /*
 	this data must be set before we can call init of 
 	preview
@@ -434,7 +339,7 @@ tcp.previewData = {
 
 tcp.close = function(){
 	$('#overlay').hide();
-	tcp.UIManager.imageWatchDiv.hide();
+	tcp.UIManager.manager.imageWatchDiv.hide();
 }
 
 tcp.overlayInit = function(){
@@ -442,7 +347,7 @@ tcp.overlayInit = function(){
 	tc.koModel.previewSlides = ko.observableArray();
 	for(var i = 0; i <rawData.length; i++){
 		o = rawData[i].data;
-		tcp.UIManager.idToIndexMap[o.uid] = i;
+		//tcp.UIManager.idToIndexMap[o.uid] = i;
 		slide = new tcp.Slide(o);
 
 		var elemStr = '<li><a href="#">'+ (i + 1) + '  ' + slide.data.name() +'</a></li>'

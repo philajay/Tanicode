@@ -79,14 +79,12 @@ $( document ).ready(function(){
 	tc.koModel.previewSlides = ko.observableArray();
 	tc.articleDetailsHolder.data = tc.articleDetails;
 	tc.koModel.articleDetails = tc.articleDetailsHolder;
-	//tc.koModel.articleDetails  = new tcp.Slide(tc.articleDetails);
     ko.applyBindings(tc.koModel);
     tc.preview();
 })
 
 
 tc.preview = function(){
-   //tcp.previewData['slidesJSON'] =  ko.toJSON(tc.koModel.slides);
    tc.overlayInitArticle();
    $('#jstreejstreeHolder').css('height', $('#editor').css('height'));
 }
@@ -97,8 +95,6 @@ tc.overlayInitArticle = function(){
 
 	_.each(window.slides, function(elem, i){
 			o =  elem.data;
-			//o = o.data;
-			tcp.UIManager.idToIndexMap[o.uid] = i;
 			slide = new tcp.Slide(o);
 			dataSlides.push(slide);
 
@@ -107,7 +103,6 @@ tc.overlayInitArticle = function(){
 
 		}
 	);
-	//tc.koModel.previewSlides()[0].data = firstSlide;
 
 	tcp.UIManager.index = 0;
 	tcp.InitUI.init();
@@ -121,33 +116,5 @@ tc.overlayInitArticle = function(){
 		});
 	});
 	$('#overlay').show();	
-
-
-	//tcp.previewTree.init(dataSlides);
-	//tcp.jstree.init();
-	//ko.applyBindings(tcp.vm);
 }
 
-
-
-/*
-function async (fn) {
-    setTimeout(fn, 20);
-}
-
-function sometimeWhen (test ,then) {
-    async(function () {
-        if ( test() ) {
-            then();
-        } else {
-            async(arguments.callee);
-        }
-    });
-}
-
-function initAndSometimeWhen(init, test, then){
-	if( !test() ){
-		init();
-	};
-	sometimeWhen(test, then);
-}*/
