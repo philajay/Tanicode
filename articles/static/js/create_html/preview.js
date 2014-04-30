@@ -2,17 +2,6 @@
 tcp = {};
 
 
-var stateMachineConnector = {				
-				connector:"StateMachine",
-				paintStyle:{lineWidth:3,strokeStyle:"yellow"},
-				hoverPaintStyle:{strokeStyle:"yellow"},
-				endpoint:"Blank",
-				anchor:"Continuous",
-				overlays:[ ["PlainArrow", {location:1, width:15, length:12} ]]
-			};
-			
-
-
 
 tcp.offset = function(){
 	return $('#preview_board').offset();
@@ -22,7 +11,7 @@ tcp.tcEditor = {
 
 	init : function(){
 		var editor = ace.edit("editor");
-		editor.setTheme("ace/theme/eclipse");
+		editor.setTheme("ace/theme/monokai");
 		editor.getSession().setMode("ace/mode/html");
 		editor.setReadOnly(true);
 		this.defaultStyle	= editor.container.style.fontFamily;	
@@ -41,10 +30,6 @@ tcp.tcEditor = {
 
 	},
 
-	setBreakPoint : function(lno){
-		editor.session.setBreakpoints([lno]);
-	},
-
 	setTextMode : function(){
 		editor = this.aceEditor ;
 		editor.container.style.fontFamily = "'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace";
@@ -52,7 +37,7 @@ tcp.tcEditor = {
         editor.setBehavioursEnabled(false);
         editor.renderer.setShowGutter(false);
         editor.session.setUseWrapMode(true);
-        $('#editor').css('background', '#FFFFA3');
+
 	},
 
 	setCodeMode : function(){
@@ -62,23 +47,33 @@ tcp.tcEditor = {
         editor.setBehavioursEnabled(true);
         editor.renderer.setShowGutter(true);
         editor.session.setUseWrapMode(false);
-        $('#editor').css('background', 'white');
+
 	},
+
 }
 
 
 
 
-tcp.Slide = function(data){
+tcp.Slide = function(data, uid){
 	this.data = data;
+	this.uid = uid;
 	tc.koModel.previewSlides.push(this);
 	this.index = 0;
 
 	this.syncUI = function(){
-		tc.koModel.previewCurrentSlide( this )
 		this.index = 0;
-		tcp.UIManager.manager.imageWatchDiv.hide();
-		tc.koModel.previewWatch(null);
+		tcp.UIManager.imageWatchDiv.hide();
+		tc.koModel.previewWatch(null);	
+		this.syncUIDeferred();
+		//this.setsyncUIDeferredHandlers();
+		//tc.cacheManager.getSlideData(tcp.UIManager.currentSlide, tc.UIManager.syncUIDeferred, null);
+		//this.syncUIDeferred();
+	};
+	
+	this.syncUIDeferred = function(){
+		tc.koModel.previewCurrentSlide( this )
+		
 		if(this.data.TYPE != "IMAGE")
 			{
 				//tc.tcEditor.resetLang(this.data.TYPE);
@@ -93,7 +88,6 @@ tcp.Slide = function(data){
 				}
 				else {
 					tcp.tcEditor.setTextMode();
-					
 				}
 			}
 		else{
@@ -110,28 +104,14 @@ tcp.Slide = function(data){
 			n = w.lineNumber + 1
 			tcp.tcEditor.aceEditor.gotoLine(n)
 			tcp.tcEditor.aceEditor.scrollToLine(n - 1, true);
-			tc.koModel.previewWatch(w);
-			tcp.tcEditor.setBreakPoint(n - 1);
-
-			/*window.setTimeout(function(){
-					jsPlumb.hide($('.ace_active-line'));
-					jsPlumb.connect(
-						{ 
-						  	source: $('.ace_active-line'), 
-						  	target: $("#overlay_watch"), 
-						  	anchors:["BottomCenter", "Left"]
-						}, stateMachineConnector
-					);
-				}, 10);
-			*/
 		}
-		$('#preview_watch').html(w.text);
+		tc.koModel.previewWatch(w);
+		$('#preview_watch').html(w.text());
 	};
 	
 	this.showImageWatch = function(){
-				
-		w = tcp.UIManager.manager.currentSlide.data.watches[tcp.UIManager.manager.currentSlide.index];
 		if( w.attached ){
+			w = tcp.UIManager.currentSlide.data.watches[tcp.UIManager.currentSlide.index];
 			xoffset = parseInt(w.rect.x.replace('px', ''), 10)
 			xoffset = xoffset + tcp.offset().left
 			x = xoffset + 'px'
@@ -139,28 +119,16 @@ tcp.Slide = function(data){
 			yoffset = yoffset + tcp.offset().top
 			y = yoffset + 'px'
 			
-			tcp.UIManager.manager.imageWatchDiv.css({
+			tcp.UIManager.imageWatchDiv.css({
 				"left": x,
 				"top": y,
 				"width": w.rect.width,
 				"height": w.rect.height,
 			});	
-			tcp.UIManager.manager.imageWatchDiv.show();
-
-			window.setTimeout(function(){
-				jsPlumb.hide(tcp.UIManager.manager.imageWatchDiv);
-				jsPlumb.connect(
-					{ 
-					  	source: tcp.UIManager.manager.imageWatchDiv, 
-					  	target: $("#overlay_watch"), 
-					  	anchors:["Right", "Left"]
-					}, stateMachineConnector
-				);
-			}, 10);
-		
+			tcp.UIManager.imageWatchDiv.show();
 		}
 		else{
-			tcp.UIManager.manager.imageWatchDiv.hide();	
+			tcp.UIManager.imageWatchDiv.hide();	
 		}
 		tc.koModel.previewWatch(w);
 	};
@@ -210,21 +178,17 @@ tcp.Slide = function(data){
 	};
 
 	this.hide = function(){
-		if(this.data.TYPE == "IMAGE"){
-			jsPlumb.hide(tcp.UIManager.manager.imageWatchDiv);
-		}//jsPlumb.hide($('.ace_active-line'));
 	};
 	
 	this.changeSlide = function(){
-		tcp.tcEditor.setBreakPoint([])
 		tcp.UIManager.changeTextSlide(this)
 	};
 	
 }
 
-tcp.StandardUIManager = {
+tcp.UIManager = {
 	currentSlide : null,
-	//idToIndexMap : {},
+	idToIndexMap : {},
 	that : this,
 	index : 0,
 	imageWatchDiv : null,
@@ -248,25 +212,65 @@ tcp.StandardUIManager = {
 		tcp.tcEditor.init();
 		this.changeTextSlide(t);
 	},
+	attachEvents : function(){
+		$(document).on('tc.events.changeSlide_create', $.proxy(tcp.UIManager.changeTextSlide_preview, tcp.UIManager));
+		$(document).on('tc.events.imageWatchDefferred', $.proxy(tcp.UIManager.imageWatchDeffered, tcp.UIManager));
+		//markNodeAsSelected
+		$(document).on('tc.events.markNodeAsSelected', $.proxy(tcp.UIManager.markNodeAsSelected, tcp.UIManager));
+	},
+	detachEvents : function(){
+		$(document).off('tc.events.changeSlide_create');
+		$(document).off('tc.events.imageWatchDefferred');
+		$(document).off('tc.events.markNodeAsSelected');
+	},
+	imageWatchDeffered : function(e, s){
+		tc.UIManager.imageWatchDefferedEx(s);
+	},	
+	setsyncUIDeferredHandlers : function(t){
+			tc.getSlideDataEventBinder.currentSlide = t;
+			tc.getSlideDataEventBinder.postProcessing = function(){
+				var l = tc.koModel.slides().length;
+				for(var i = 0; i < l; i++){
+					c = tc.koModel.slides()[i];
+					if( c.data.uid == tcp.UIManager.currentSlide.uid){
+						c.data = tcp.UIManager.currentSlide.data;
+						break;
+					}
+				}
+				tcp.UIManager.currentSlide.syncUIDeferred();
+			};
+			tc.getSlideDataEventBinder.postJsonPopulation = function(obj){
+				tc.getSlideDataEventBinder.currentSlide.data = obj.copyTo;
+			};
+			tc.getSlideDataEventBinder.currentSlideSyncUI = function(){
+				
+			};
+
+			tc.getSlideDataEventBinder.imageSlidePostProcessing = tc.UIManager.imageWatchDeffered;
+			/*tc.getSlideDataEventBinder.customfunc = function(){
+
+			};*/
+		},
+
 	changeTextSlide : function(t){
+		tcp.UIManager.setsyncUIDeferredHandlers(t);
+		tc.cacheManager.getSlideData(t , tc.UIManager.syncUIDeferred, null);
+
+		//$(document).trigger('tc.events.changeSlide_create', t);
+	},
+	changeTextSlide_preview : function(e, t){
 		if( this.currentSlide ){
 			this.currentSlide.hide();
 		}
 		this.currentSlide = t;
-		this.changeTextSlideHelper();
-	},
-	changeTextSlideHelper : function (res) {
-		if( res ){
-			d = $.parseJSON(res)
-			this.currentSlide.data = d.data
-		}
-		$('#pv_dd_a').html(this.currentSlide.data.name + '<b class="caret"></b>');
+		$('#pv_dd_a').html(t.data.name() + '<b class="caret"></b>')
 		this.currentSlide.syncUI();
 		this.currentSlide.show();
+		$(document).trigger('tc.events.markNodeAsSelected');
 	},
 	moveTo : function(i){
 		this.index = i;
-		this.changeTextSlide(tc.koModel.previewSlides()[this.index])
+		tcp.UIManager.changeTextSlide(tc.koModel.previewSlides()[this.index])
 	},
 	next : function(){
 		o = this.currentSlide.next();
@@ -278,7 +282,7 @@ tcp.StandardUIManager = {
 			return
 		}
 		this.index++;
-		this.changeTextSlide(tc.koModel.previewSlides()[this.index])
+		tcp.UIManager.changeTextSlide(tc.koModel.previewSlides()[this.index])
 	},
 	
 	previous : function(){
@@ -291,41 +295,15 @@ tcp.StandardUIManager = {
 			return
 		}
 		this.index--;
-		this.changeTextSlide(tc.koModel.previewSlides()[this.index])
-	}
-}
-
-tcp.UIManager = {
-	manager : null,
-	register : function( manager ){
-		this.manager = manager;
-	},
-	init : function(t){
-		this.manager.init(t);
-	},
-	changeTextSlide : function(t){
-		this.manager.changeTextSlide(t);
+		tcp.UIManager.changeTextSlide(tc.koModel.previewSlides()[this.index])
+		
 	},
 
-	/*
-	changeTextSlideHelper : function (res) {
-		self.manager.changeTextSlideHelper();	
-	},
-	*/
-	moveTo : function(i){
-		this.manager.moveTo(i);
-	},
-	next : function(){
-		this.manager.next();
-	},
-	
-	previous : function(){
-		this.manager.previous();
+	markNodeAsSelected : function(){
+		//tcp.jstree.select_node( tcp.UIManager.currentSlide.data.uid );
 	},
 }
 
-
-tcp.UIManager.register( tcp.StandardUIManager );
 /*
 	this data must be set before we can call init of 
 	preview
@@ -339,22 +317,31 @@ tcp.previewData = {
 
 tcp.close = function(){
 	$('#overlay').hide();
-	tcp.UIManager.manager.imageWatchDiv.hide();
+	tcp.UIManager.imageWatchDiv.hide();
 }
 
 tcp.overlayInit = function(){
-	rawData = $.parseJSON(tcp.previewData['slidesJSON']);
+	//rawData = $.parseJSON(tcp.previewData['slidesJSON']);
 	tc.koModel.previewSlides = ko.observableArray();
+	rawData = tc.koModel.slides();
+	$('#pv_dd').html('');
 	for(var i = 0; i <rawData.length; i++){
 		o = rawData[i].data;
-		//tcp.UIManager.idToIndexMap[o.uid] = i;
-		slide = new tcp.Slide(o);
-
+		tcp.UIManager.idToIndexMap[o.uid] = i;
+		//tcp.slide constructor will add this slide to 
+		//previewSlides as side effect.
+		//At this given point tcpslide and tcslide has same data object
+		//However if we are 
+		//1) in edit
+		//2) slide x was not populated in normal screen
+		//3) user switches to preview and slide x is selected
+		//4) now when data will be populated after ajax new data object 
+		// is created and set to slide.. NOW DATA OBJECT WILL NOT BE SAME IN TCP AND TC SLIDES..
+		slide = new tcp.Slide(o, o.uid);
 		var elemStr = '<li><a href="#">'+ (i + 1) + '  ' + slide.data.name() +'</a></li>'
 		$('#pv_dd').append(elemStr)
-
 	}
-		$('#pv_dd > li' ).each(function(index){
+	$('#pv_dd > li' ).each(function(index){
 		$(this).find('a').each( function(index2){
 				
 				$(this).on('click', function(){
@@ -362,11 +349,13 @@ tcp.overlayInit = function(){
 				});
 		});
 	});
-
 	tcp.UIManager.index = 0;
 	tcp.InitUI.init();
 	tcp.UIManager.init(tc.koModel.previewSlides()[0]);
 	$('#overlay').show();	
+	//tcp.previewTree.init(rawData);
+	//tcp.jstree.init();
+	//ko.applyBindings(tcp.vm);
 }
 
 
@@ -375,16 +364,10 @@ tcp.InitUI = {
 	init : function(){
 		h = $( window ).height();
 		h = h - 46 - 46 - 10;
-		//h = h / 2;
 		h = h + 'px'
 		$('#editor').css('height', h);
 		$('#overlay_watch').css('height', h);
-		$('#sl1').slider();
 	}
 	
 }
-
-
-
-
 

@@ -155,11 +155,6 @@ background: #FFFFA3;
       								<img id = "preview_board_image" height="400" width="500" data-bind="imgSrc: previewCurrentSlide() ? previewCurrentSlide().data.src : '' "/>
       							</div>
       						</span>
-                  <span data-bind="visible: showPreviewTemplate('CANVAS')">
-                    <div id="canvas" style="border: 2px dotted">
-                      just show it to me...
-                    </div>
-                  </span>
                   
 
       					</div>
@@ -167,11 +162,7 @@ background: #FFFFA3;
       						<div id="overlay_watch" class="watch" data-bind="visible: showPreviewWatchTemplate()">
       								<span id="preview_watch" data-bind="text: previewWatch() ? previewWatch().text : '' "></span>
       						</div>
-                  <span data-bind="visible: showPreviewTemplate('VAR_WATCH')">
-                    <div id="vars_watch" style="border: 2px dotted">
-                        And vars go here!!!!!!!!!
-                    </div>
-                  </span>
+                  
       					</div>
            </div>
 			</div>

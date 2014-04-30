@@ -18,92 +18,12 @@ from articles.models import *
 logger = logging.getLogger('articles.views')
 
 
-def scrollspy(request):
-    template = loader.get_template('articles/scrollspy.html')
-    context = RequestContext(request, {
-    })
-    return HttpResponse(template.render(context))
-
-
 
 def index(request):
     template = loader.get_template('articles/index.html')
     context = RequestContext(request, {
     })
     return HttpResponse(template.render(context))
-
-def article(request):
-	p = 1
-	try:
-		x = request.GET.get('aid', None)
-		if x :
-			p = int(x)
-	except:
-		pass
-	a = Article.objects.get(pk=p)
-	s = a.parent.all()
-	sl = []
-	for s1 in s:
-		sl.append(s1.slide)
-	template = loader.get_template('articles/article.html')
-	context = RequestContext(request, { 'metadata': json.dumps(a.metaData), 'slides': json.dumps(sl)})
-	return HttpResponse(template.render(context))
-
-def getSlide(request):
-	a = 1
-	try:
-		x = request.GET.get('aid', None)
-		if x :
-			a = int(x)
-	except:
-		pass
-	
-	p = 1
-	try:
-		x = request.GET.get('uid', None)
-		if x :
-			p = int(x)
-	except:
-		pass
-	s = Slides.objects.get(aid = a , uid=p)
-	return HttpResponse(json.dumps(s.slide))
-
-def viewArticle(request):
-	p = 1
-	try:
-		x = request.GET.get('aid', None)
-		if x :
-			p = int(x)
-	except:
-		pass
-	a = Article.objects.get(pk=p)
-	metadata = a.metaData
-	slides = a.slides
-	html = a.html
-	aid = a.pk
-	template = loader.get_template('articles/viewArticle.html')
-	context = RequestContext(request, {
-		'metadata': json.dumps(metadata),
-		'slides' : json.dumps(slides),
-		'html' : html,
-		'aid': aid
-	})
-	return HttpResponse(template.render(context))
-
-
-def spad(request):
-	p = 1
-	try:
-		x = request.GET.get('aid', None)
-		if x :
-			p = int(x)
-	except:
-		pass
-	a = Tree.objects.get(pk=p)
-	template = loader.get_template('articles/spad.html')
-	context = RequestContext(request, { 'json': json.dumps(a.js)})
-	return HttpResponse(template.render(context))
-
 
 def create(request):
     edit = request.GET.get('edit', None)
@@ -134,13 +54,74 @@ def create(request):
     })
     return HttpResponse(template.render(context))
     
-def createHTML(request):
-    template = loader.get_template('articles/articleInHTML.html')
-    context = RequestContext(request, {
-    	#metadata': json.dumps(metadata)
-    	#, 'aid': aid
-    })
-    return HttpResponse(template.render(context))
+def edit(request, id):
+	a = Article.objects.get(pk=id)
+	metadata = a.metaData
+	slides = a.slides
+	html = a.html
+	aid = a.pk
+	template = loader.get_template('articles/create.html')
+	context = RequestContext(request, {
+		'metadata': json.dumps(metadata),
+		'slides' : json.dumps(slides),
+		'html' : html,
+		'aid': aid
+	})
+	return HttpResponse(template.render(context))
+
+
+def getSlide(request):
+	a = 1
+	try:
+		x = request.GET.get('aid', None)
+		if x :
+			a = int(x)
+	except:
+		pass
+	
+	p = 1
+	try:
+		x = request.GET.get('uid', None)
+		if x :
+			p = int(x)
+	except:
+		pass
+	s = Slides.objects.get(aid = a , uid=p)
+	return HttpResponse(json.dumps(s.slide))
+
+def viewArticle(request, id, slug):
+	print id
+	print slug
+	p = int(id)
+
+	'''
+	try:
+		x = request.GET.get('aid', None)
+		if x :
+			p = int(x)
+	except:
+		pass
+	'''
+	a = Article.objects.get(pk=p)
+	metadata = a.metaData
+	slides = a.slides
+	html = a.html
+	aid = a.pk
+	template = loader.get_template('articles/viewArticle.html')
+	context = RequestContext(request, {
+		'metadata': json.dumps(metadata),
+		'slides' : json.dumps(slides),
+		'html' : html,
+		'aid': aid
+	})
+	return HttpResponse(template.render(context))
+
+
+def viewAlgo(request):
+	template = loader.get_template('articles/viewAlgo.html')
+	context = RequestContext(request, {
+	})
+	return HttpResponse(template.render(context))
 
 
 @csrf_exempt
@@ -151,13 +132,22 @@ def saveSlides(request):
 	slides = obj['slides']
 	#logger.debug('slides are ' + str(type(slides)) + '     ---------- ---------   '  + str(slides))
 	metaData = obj['metaData']
+	obj1 = metaData['articleMetaData']
+	obj1 = json.loads(obj1)
+	#print str(obj1)
+	#obj1 = obj['articleMetaData']
+	name = obj1["name"]
+	tags = filter(None,  obj1["tags"].split())
 	#logger.debug('metaData is ' +  str(type(metaData)) + '     ---------- ---------   '  + str(metaData))
 	html = obj['html']
 	a = Article()
 	a.metaData = json.dumps( metaData )
 	a.slides = json.dumps( slides )
 	a.html = json.dumps( html )
+	a.title = name
 	a.save()
+	for tag in tags:
+		a.tags.add(tag) 
 	
 	return HttpResponse( json.dumps( {'id': a.id} ) )
 	
@@ -176,36 +166,26 @@ def updateSlides(request):
 	slides = obj['slides']
 	#logger.debug('slides are ' + str(type(slides)) + '     ---------- ---------   '  + str(slides))
 	metaData = obj['metaData']
+	obj1 = metaData['articleMetaData']
+	obj1 = json.loads(obj1)
+	#print str(obj1)
+	#obj1 = obj['articleMetaData']
+	name = obj1["name"]
+	tags = filter(None,  obj1["tags"].split())
+
 	#logger.debug('metaData is ' +  str(type(metaData)) + '     ---------- ---------   '  + str(metaData))
 	html = obj['html']
 	a = Article.objects.get(pk=p)
 	a.metaData = json.dumps( metaData )
 	a.slides = json.dumps( slides )
 	a.html = json.dumps( html )
+	a.title = name
 	a.save()
-	'''	
-	a.parent.all().delete()
-
-	for js in slides:
-		#logger.debug('slide is ' + str(type(js)) + '     ---------- ---------   '  + str(js))
-		s = Slides()
-		#logger.debug('BEHOLD ' + str(js))
-		s.uid = js['data']['uid']
-		s.slide = json.dumps( js )
-		s.aid = a
-		s.save()
-	'''
+	a.tags.clear()
+	for tag in tags:
+		a.tags.add(tag) 
 	return HttpResponse( json.dumps( {'id': a.id} ) )
 
-
-@csrf_exempt
-def saveTree(request):
-	s = request.POST.get('js', None)
-
-	a = Tree()
-	a.js = s
-	a.save()
-	return HttpResponse( json.dumps( {'id': a.id} ) )
 
 
 def save_upload( uploaded, filename, raw_data ):

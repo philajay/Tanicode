@@ -76,3 +76,26 @@
 .seo {
   display: none;
 }
+
+
+
+
+/****************************** simulation ******************************/
+.sim_table {
+    table-layout: fixed;
+}
+
+.sim_td {
+    border: 1px solid black;
+    overflow: hidden;
+    width: 35px;
+    align: center;
+}
+
+.div_box {
+  float: left;
+  width: 35px;
+  position: absolute;
+  padding: 3px;
+  border: 1px solid black;
+}

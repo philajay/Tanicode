@@ -1,124 +1,167 @@
-[01/Apr/2014 04:49:40] DEBUG [articles.views:137] slide is <type 'dict'>     ---------- ---------   {u'data': {u'text': u'from django.http import HttpResponse\nfrom django.http import HttpResponse\nfrom django.template import RequestContext, loader\nfrom django.shortcuts import render\n\nimport os\nimport traceback\nimport uuid\nimport sys\nfrom django.shortcuts import render_to_response\nfrom django.views.decorators.csrf import csrf_exempt\nfrom django.conf import settings\nimport logging\nimport json\nfrom articles.models import *\n\n# Create your views here.\nlogger = logging.getLogger(\'articles.views\')\n\n\ndef scrollspy(request):\n    template = loader.get_template(\'articles/scrollspy.html\')\n    context = RequestContext(request, {\n    })\n    return HttpResponse(template.render(context))\n\n\n\ndef index(request):\n    template = loader.get_template(\'articles/index.html\')\n    context = RequestContext(request, {\n    })\n    return HttpResponse(template.render(context))\n\ndef article(request):\n\tp = 1\n\ttry:\n\t\tx = request.GET.get(\'aid\', None)\n\t\tif x :\n\t\t\tp = int(x)\n\texcept:\n\t\tpass\n\ta = Article.objects.get(pk=p)\n\ts = a.parent.all()\n\tsl = []\n\tfor s1 in s:\n\t\tsl.append(s1.slide)\n\ttemplate = loader.get_template(\'articles/article.html\')\n\tcontext = RequestContext(request, { \'metadata\': json.dumps(a.metaData), \'slides\': json.dumps(sl)})\n\treturn HttpResponse(template.render(context))\n\ndef getSlide(request):\n\ta = 1\n\ttry:\n\t\tx = request.GET.get(\'aid\', None)\n\t\tif x :\n\t\t\ta = int(x)\n\texcept:\n\t\tpass\n\t\n\tp = 1\n\ttry:\n\t\tx = request.GET.get(\'uid\', None)\n\t\tif x :\n\t\t\tp = int(x)\n\texcept:\n\t\tpass\n\ts = Slides.objects.get(aid = a , uid=p)\n\treturn HttpResponse(json.dumps(s.slide))\n\ndef article1(request):\n\tp = 1\n\ttry:\n\t\tx = request.GET.get(\'aid\', None)\n\t\tif x :\n\t\t\tp = int(x)\n\texcept:\n\t\tpass\n\ta = Article.objects.get(pk=p)\n\ttemplate = loader.get_template(\'articles/article1.html\')\n\tcontext = RequestContext(request, { \'metadata\': json.dumps(a.metaData), \'aid\': a.pk})\n\treturn HttpResponse(template.render(context))\n\n\ndef spad(request):\n\tp = 1\n\ttry:\n\t\tx = request.GET.get(\'aid\', None)\n\t\tif x :\n\t\t\tp = int(x)\n\texcept:\n\t\tpass\n\ta = Tree.objects.get(pk=p)\n\ttemplate = loader.get_template(\'articles/spad.html\')\n\tcontext = RequestContext(request, { \'json\': json.dumps(a.js)})\n\treturn HttpResponse(template.render(context))\n\n\ndef create(request):\n    edit = request.GET.get(\'edit\', None)\n    metadata = \'\'\n    aid = 0\n    if(edit):\n\t\tp = 1\n\t\ttry:\n\t\t\tx = request.GET.get(\'aid\', None)\n\t\t\tif x :\n\t\t\t\tp = int(x)\n\t\texcept:\n\t\t\tpass\n\t\ta = Article.objects.get(pk=p)\n\t\tmetadata = a.metaData\n\t\taid = a.pk\n\n    template = loader.get_template(\'articles/create.html\')\n    context = RequestContext(request, {\n    \t\'metadata\': json.dumps(metadata)\n    \t, \'aid\': aid\n    })\n    return HttpResponse(template.render(context))\n    \n\n@csrf_exempt\ndef saveSlides(request):\n\ts = request.POST.get(\'data\', None)\n\t#logger.debug(s)\n\tobj = json.loads(s)\n\tslides = json.loads(obj[\'slides\'])\n\t#logger.debug(\'slides are \' + str(type(slides)) + \'     ---------- ---------   \'  + str(slides))\n\tmetaData = obj[\'metaData\']\n\t#logger.debug(\'metaData is \' +  str(type(metaData)) + \'     ---------- ---------   \'  + str(metaData))\n\ta = Article()\n\ta.metaData = json.dumps( metaData )\n\ta.save()\n\t\n\tfor js in slides:\n\t\tlogger.debug(\'slide is \' + str(type(js)) + \'     ---------- ---------   \'  + str(js))\n\t\ts = Slides()\n\t\tlogger.debug(\'BEHOLD \' + str(js))\n\t\ts.uid = js[\'data\'][\'uid\']\n\t\ts.slide = json.dumps( js )\n\t\ts.aid = a\n\t\ts.save()\n\t\n\treturn HttpResponse( json.dumps( {\'id\': a.id} ) )\n\t\n@csrf_exempt\ndef updateSlides(request):\n\ts = request.POST.get(\'data\', None)\n\t#logger.debug(s)\n\tobj = json.loads(s)\n\tp = obj[\'aid\']\n\ttry:\n\t\tp = int(pk)\n\texcept:\n\t\treturn HttpResponse( json.dumps( {\'id\': \'exception occurred\'} ) )\n\n\tslides = json.loads(obj[\'slides\'])\n\t#logger.debug(\'slides are \' + str(type(slides)) + \'     ---------- ---------   \'  + str(slides))\n\tmetaData = obj[\'metaData\']\n\t#logger.debug(\'metaData is \' +  str(type(metaData)) + \'     ---------- ---------   \'  + str(metaData))\n\ta = Article.objects.get(pk=p)\n\ta.metaData = json.dumps( metaData )\n\ta.save()\n\t\n\ta.slides_set.all().delete()\n\n\tfor js in slides:\n\t\tlogger.debug(\'slide is \' + str(type(js)) + \'     ---------- ---------   \'  + str(js))\n\t\ts = Slides()\n\t\tlogger.debug(\'BEHOLD \' + str(js))\n\t\ts.uid = js[\'data\'][\'uid\']\n\t\ts.slide = json.dumps( js )\n\t\ts.aid = a\n\t\ts.save()\n\t\n\treturn HttpResponse( json.dumps( {\'id\': a.id} ) )\n\n\n@csrf_exempt\ndef saveTree(request):\n\ts = request.POST.get(\'js\', None)\n\n\ta = Tree()\n\ta.js = s\n\ta.save()\n\treturn HttpResponse( json.dumps( {\'id\': a.id} ) )\n\n\ndef save_upload( uploaded, filename, raw_data ):\n\t\'\'\' \n\traw_data: if True, uploaded is an HttpRequest object with the file being\n\t\t\tthe raw post data \n\t\t\tif False, uploaded has been submitted via the basic form\n\t\t\tsubmission and is a regular Django UploadedFile in request.FILES\n\t\'\'\'\n\ttry:\n\t\tfrom io import FileIO, BufferedWriter\n\t\tsPath = os.path.join(settings.BASE_DIR, \'articles\', \'static\', \'images\')\n\t\text = filename.split(".")\n\t\tif not ext:\n\t\t\text = ".jpg"\n\t\telse :\n\t\t\text = "." + str(ext[-1])\n\t\tsname = str(uuid.uuid1()) + ext\n\t\tsPathimage = os.path.join(sPath,  sname)\n\t\twith BufferedWriter( FileIO( sPathimage, "wb" ) ) as dest:\n\t\t  # if the "advanced" upload, read directly from the HTTP request \n\t\t  # with the Django 1.3 functionality\n\t\t\tif raw_data:\n\t\t\t\tfoo = uploaded.read( 1024 )\n\t\t\t\twhile foo:\n\t\t\t\t  dest.write( foo )\n\t\t\t\t  foo = uploaded.read( 1024 ) \n\t\t\t  # if not raw, it was a form upload so read in the normal Django chunks fashion\n\t\t\telse:\n\t\t\t\tfor c in uploaded.chunks( ):\n\t\t\t\t  dest.write( c )\n\t\t\t# got through saving the upload, report success\n\t\t\treturn sname\n\texcept Exception, e:\n\t\t# could not open the file most likely\n\t\t# print \'Exception occurred \' + str(e)\n\t\tlogger.debug(\'something went wrong\')\n\t\tlogger.exception(e)\n\t\tpass\n\t\n\treturn \'\'\n\n\t\n@csrf_exempt\ndef ajaxupload( request ):\n\tif request.method == "POST":   \n\t\tif request.is_ajax( ):\n\t\t\t# the file is stored raw in the request\n\t\t\tupload = request\n\t\t\tis_raw = True\n\t\t\t# AJAX Upload will pass the filename in the querystring if it is the "advanced" ajax upload\n\t\t\ttry:\n\t\t\t\tfilename = request.GET[ \'qqfile\' ]\n\t\t\texcept KeyError: \n\t\t\t\treturn HttpResponseBadRequest( "AJAX request not valid" )\n\t\t# not an ajax upload, so it was the "basic" iframe version with submission via form\n\t\telse:\n\t\t\tis_raw = False\n\t\t\tif len( request.FILES ) == 1:\n\t\t\t\t# FILES is a dictionary in Django but Ajax Upload gives the uploaded file an\n\t\t\t\t# ID based on a random number, so it cannot be guessed here in the code.\n\t\t\t\t# Rather than editing Ajax Upload to pass the ID in the querystring,\n\t\t\t\t# observer that each upload is a separate request,\n\t\t\t\t# so FILES should only have one entry.\n\t\t\t\t# Thus, we can just grab the first (and only) value in the dict.\n\t\t\t\tupload = request.FILES.values( )[ 0 ]\n\t\t\telse:\n\t\t\t\traise Http404( "Bad Upload" )\n\t\t\tfilename = upload.name\n\telse:\n\t\treturn HttpResponse("You gotta be kidding me " + str(request.method)) \n\t\n\t\n\t#return HttpResponse( json.dumps( {\'success\': \'Before calling save_upload\'} ) )\n\t# save the file\n\tsuccess = save_upload( upload, filename, is_raw )\n\n\t# let Ajax Upload know whether we saved it or not\n\t\n\tret_json = { \'success\': success}\n\tlogger.debug(str(ret_json))\n\treturn HttpResponse( json.dumps( ret_json ) )\n\n\n\n', u'TYPE': u'CODE', u'name': u'second', u'watches': [{u'text': u'this method would be called.', u'lineNumber': 147}], u'uid': 4}}
-[01/Apr/2014 04:49:40] DEBUG [articles.views:137] slide is <type 'dict'>     ---------- ---------   {u'data': {u'text': u'from django.http import HttpResponse\nfrom django.http import HttpResponse\nfrom django.template import RequestContext, loader\nfrom django.shortcuts import render\n\nimport os\nimport traceback\nimport uuid\nimport sys\nfrom django.shortcuts import render_to_response\nfrom django.views.decorators.csrf import csrf_exempt\nfrom django.conf import settings\nimport logging\nimport json\nfrom articles.models import *\n\n# Create your views here.\nlogger = logging.getLogger(\'articles.views\')\n\n\ndef scrollspy(request):\n    template = loader.get_template(\'articles/scrollspy.html\')\n    context = RequestContext(request, {\n    })\n    return HttpResponse(template.render(context))\n\n\n\ndef index(request):\n    template = loader.get_template(\'articles/index.html\')\n    context = RequestContext(request, {\n    })\n    return HttpResponse(template.render(context))\n\ndef article(request):\n\tp = 1\n\ttry:\n\t\tx = request.GET.get(\'aid\', None)\n\t\tif x :\n\t\t\tp = int(x)\n\texcept:\n\t\tpass\n\ta = Article.objects.get(pk=p)\n\ts = a.parent.all()\n\tsl = []\n\tfor s1 in s:\n\t\tsl.append(s1.slide)\n\ttemplate = loader.get_template(\'articles/article.html\')\n\tcontext = RequestContext(request, { \'metadata\': json.dumps(a.metaData), \'slides\': json.dumps(sl)})\n\treturn HttpResponse(template.render(context))\n\ndef getSlide(request):\n\ta = 1\n\ttry:\n\t\tx = request.GET.get(\'aid\', None)\n\t\tif x :\n\t\t\ta = int(x)\n\texcept:\n\t\tpass\n\t\n\tp = 1\n\ttry:\n\t\tx = request.GET.get(\'uid\', None)\n\t\tif x :\n\t\t\tp = int(x)\n\texcept:\n\t\tpass\n\ts = Slides.objects.get(aid = a , uid=p)\n\treturn HttpResponse(json.dumps(s.slide))\n\ndef article1(request):\n\tp = 1\n\ttry:\n\t\tx = request.GET.get(\'aid\', None)\n\t\tif x :\n\t\t\tp = int(x)\n\texcept:\n\t\tpass\n\ta = Article.objects.get(pk=p)\n\ttemplate = loader.get_template(\'articles/article1.html\')\n\tcontext = RequestContext(request, { \'metadata\': json.dumps(a.metaData), \'aid\': a.pk})\n\treturn HttpResponse(template.render(context))\n\n\ndef spad(request):\n\tp = 1\n\ttry:\n\t\tx = request.GET.get(\'aid\', None)\n\t\tif x :\n\t\t\tp = int(x)\n\texcept:\n\t\tpass\n\ta = Tree.objects.get(pk=p)\n\ttemplate = loader.get_template(\'articles/spad.html\')\n\tcontext = RequestContext(request, { \'json\': json.dumps(a.js)})\n\treturn HttpResponse(template.render(context))\n\n\ndef create(request):\n    edit = request.GET.get(\'edit\', None)\n    metadata = \'\'\n    aid = 0\n    if(edit):\n\t\tp = 1\n\t\ttry:\n\t\t\tx = request.GET.get(\'aid\', None)\n\t\t\tif x :\n\t\t\t\tp = int(x)\n\t\texcept:\n\t\t\tpass\n\t\ta = Article.objects.get(pk=p)\n\t\tmetadata = a.metaData\n\t\taid = a.pk\n\n    template = loader.get_template(\'articles/create.html\')\n    context = RequestContext(request, {\n    \t\'metadata\': json.dumps(metadata)\n    \t, \'aid\': aid\n    })\n    return HttpResponse(template.render(context))\n    \n\n@csrf_exempt\ndef saveSlides(request):\n\ts = request.POST.get(\'data\', None)\n\t#logger.debug(s)\n\tobj = json.loads(s)\n\tslides = json.loads(obj[\'slides\'])\n\t#logger.debug(\'slides are \' + str(type(slides)) + \'     ---------- ---------   \'  + str(slides))\n\tmetaData = obj[\'metaData\']\n\t#logger.debug(\'metaData is \' +  str(type(metaData)) + \'     ---------- ---------   \'  + str(metaData))\n\ta = Article()\n\ta.metaData = json.dumps( metaData )\n\ta.save()\n\t\n\tfor js in slides:\n\t\tlogger.debug(\'slide is \' + str(type(js)) + \'     ---------- ---------   \'  + str(js))\n\t\ts = Slides()\n\t\tlogger.debug(\'BEHOLD \' + str(js))\n\t\ts.uid = js[\'data\'][\'uid\']\n\t\ts.slide = json.dumps( js )\n\t\ts.aid = a\n\t\ts.save()\n\t\n\treturn HttpResponse( json.dumps( {\'id\': a.id} ) )\n\t\n@csrf_exempt\ndef updateSlides(request):\n\ts = request.POST.get(\'data\', None)\n\t#logger.debug(s)\n\tobj = json.loads(s)\n\tp = obj[\'aid\']\n\ttry:\n\t\tp = int(pk)\n\texcept:\n\t\treturn HttpResponse( json.dumps( {\'id\': \'exception occurred\'} ) )\n\n\tslides = json.loads(obj[\'slides\'])\n\t#logger.debug(\'slides are \' + str(type(slides)) + \'     ---------- ---------   \'  + str(slides))\n\tmetaData = obj[\'metaData\']\n\t#logger.debug(\'metaData is \' +  str(type(metaData)) + \'     ---------- ---------   \'  + str(metaData))\n\ta = Article.objects.get(pk=p)\n\ta.metaData = json.dumps( metaData )\n\ta.save()\n\t\n\ta.slides_set.all().delete()\n\n\tfor js in slides:\n\t\tlogger.debug(\'slide is \' + str(type(js)) + \'     ---------- ---------   \'  + str(js))\n\t\ts = Slides()\n\t\tlogger.debug(\'BEHOLD \' + str(js))\n\t\ts.uid = js[\'data\'][\'uid\']\n\t\ts.slide = json.dumps( js )\n\t\ts.aid = a\n\t\ts.save()\n\t\n\treturn HttpResponse( json.dumps( {\'id\': a.id} ) )\n\n\n@csrf_exempt\ndef saveTree(request):\n\ts = request.POST.get(\'js\', None)\n\n\ta = Tree()\n\ta.js = s\n\ta.save()\n\treturn HttpResponse( json.dumps( {\'id\': a.id} ) )\n\n\ndef save_upload( uploaded, filename, raw_data ):\n\t\'\'\' \n\traw_data: if True, uploaded is an HttpRequest object with the file being\n\t\t\tthe raw post data \n\t\t\tif False, uploaded has been submitted via the basic form\n\t\t\tsubmission and is a regular Django UploadedFile in request.FILES\n\t\'\'\'\n\ttry:\n\t\tfrom io import FileIO, BufferedWriter\n\t\tsPath = os.path.join(settings.BASE_DIR, \'articles\', \'static\', \'images\')\n\t\text = filename.split(".")\n\t\tif not ext:\n\t\t\text = ".jpg"\n\t\telse :\n\t\t\text = "." + str(ext[-1])\n\t\tsname = str(uuid.uuid1()) + ext\n\t\tsPathimage = os.path.join(sPath,  sname)\n\t\twith BufferedWriter( FileIO( sPathimage, "wb" ) ) as dest:\n\t\t  # if the "advanced" upload, read directly from the HTTP request \n\t\t  # with the Django 1.3 functionality\n\t\t\tif raw_data:\n\t\t\t\tfoo = uploaded.read( 1024 )\n\t\t\t\twhile foo:\n\t\t\t\t  dest.write( foo )\n\t\t\t\t  foo = uploaded.read( 1024 ) \n\t\t\t  # if not raw, it was a form upload so read in the normal Django chunks fashion\n\t\t\telse:\n\t\t\t\tfor c in uploaded.chunks( ):\n\t\t\t\t  dest.write( c )\n\t\t\t# got through saving the upload, report success\n\t\t\treturn sname\n\texcept Exception, e:\n\t\t# could not open the file most likely\n\t\t# print \'Exception occurred \' + str(e)\n\t\tlogger.debug(\'something went wrong\')\n\t\tlogger.exception(e)\n\t\tpass\n\t\n\treturn \'\'\n\n\t\n@csrf_exempt\ndef ajaxupload( request ):\n\tif request.method == "POST":   \n\t\tif request.is_ajax( ):\n\t\t\t# the file is stored raw in the request\n\t\t\tupload = request\n\t\t\tis_raw = True\n\t\t\t# AJAX Upload will pass the filename in the querystring if it is the "advanced" ajax upload\n\t\t\ttry:\n\t\t\t\tfilename = request.GET[ \'qqfile\' ]\n\t\t\texcept KeyError: \n\t\t\t\treturn HttpResponseBadRequest( "AJAX request not valid" )\n\t\t# not an ajax upload, so it was the "basic" iframe version with submission via form\n\t\telse:\n\t\t\tis_raw = False\n\t\t\tif len( request.FILES ) == 1:\n\t\t\t\t# FILES is a dictionary in Django but Ajax Upload gives the uploaded file an\n\t\t\t\t# ID based on a random number, so it cannot be guessed here in the code.\n\t\t\t\t# Rather than editing Ajax Upload to pass the ID in the querystring,\n\t\t\t\t# observer that each upload is a separate request,\n\t\t\t\t# so FILES should only have one entry.\n\t\t\t\t# Thus, we can just grab the first (and only) value in the dict.\n\t\t\t\tupload = request.FILES.values( )[ 0 ]\n\t\t\telse:\n\t\t\t\traise Http404( "Bad Upload" )\n\t\t\tfilename = upload.name\n\telse:\n\t\treturn HttpResponse("You gotta be kidding me " + str(request.method)) \n\t\n\t\n\t#return HttpResponse( json.dumps( {\'success\': \'Before calling save_upload\'} ) )\n\t# save the file\n\tsuccess = save_upload( upload, filename, is_raw )\n\n\t# let Ajax Upload know whether we saved it or not\n\t\n\tret_json = { \'success\': success}\n\tlogger.debug(str(ret_json))\n\treturn HttpResponse( json.dumps( ret_json ) )\n\n\n\n', u'TYPE': u'CODE', u'name': u'second', u'watches': [{u'text': u'this method would be called.', u'lineNumber': 147}], u'uid': 4}}
-[01/Apr/2014 04:49:40] DEBUG [articles.views:139] BEHOLD {u'data': {u'text': u'from django.http import HttpResponse\nfrom django.http import HttpResponse\nfrom django.template import RequestContext, loader\nfrom django.shortcuts import render\n\nimport os\nimport traceback\nimport uuid\nimport sys\nfrom django.shortcuts import render_to_response\nfrom django.views.decorators.csrf import csrf_exempt\nfrom django.conf import settings\nimport logging\nimport json\nfrom articles.models import *\n\n# Create your views here.\nlogger = logging.getLogger(\'articles.views\')\n\n\ndef scrollspy(request):\n    template = loader.get_template(\'articles/scrollspy.html\')\n    context = RequestContext(request, {\n    })\n    return HttpResponse(template.render(context))\n\n\n\ndef index(request):\n    template = loader.get_template(\'articles/index.html\')\n    context = RequestContext(request, {\n    })\n    return HttpResponse(template.render(context))\n\ndef article(request):\n\tp = 1\n\ttry:\n\t\tx = request.GET.get(\'aid\', None)\n\t\tif x :\n\t\t\tp = int(x)\n\texcept:\n\t\tpass\n\ta = Article.objects.get(pk=p)\n\ts = a.parent.all()\n\tsl = []\n\tfor s1 in s:\n\t\tsl.append(s1.slide)\n\ttemplate = loader.get_template(\'articles/article.html\')\n\tcontext = RequestContext(request, { \'metadata\': json.dumps(a.metaData), \'slides\': json.dumps(sl)})\n\treturn HttpResponse(template.render(context))\n\ndef getSlide(request):\n\ta = 1\n\ttry:\n\t\tx = request.GET.get(\'aid\', None)\n\t\tif x :\n\t\t\ta = int(x)\n\texcept:\n\t\tpass\n\t\n\tp = 1\n\ttry:\n\t\tx = request.GET.get(\'uid\', None)\n\t\tif x :\n\t\t\tp = int(x)\n\texcept:\n\t\tpass\n\ts = Slides.objects.get(aid = a , uid=p)\n\treturn HttpResponse(json.dumps(s.slide))\n\ndef article1(request):\n\tp = 1\n\ttry:\n\t\tx = request.GET.get(\'aid\', None)\n\t\tif x :\n\t\t\tp = int(x)\n\texcept:\n\t\tpass\n\ta = Article.objects.get(pk=p)\n\ttemplate = loader.get_template(\'articles/article1.html\')\n\tcontext = RequestContext(request, { \'metadata\': json.dumps(a.metaData), \'aid\': a.pk})\n\treturn HttpResponse(template.render(context))\n\n\ndef spad(request):\n\tp = 1\n\ttry:\n\t\tx = request.GET.get(\'aid\', None)\n\t\tif x :\n\t\t\tp = int(x)\n\texcept:\n\t\tpass\n\ta = Tree.objects.get(pk=p)\n\ttemplate = loader.get_template(\'articles/spad.html\')\n\tcontext = RequestContext(request, { \'json\': json.dumps(a.js)})\n\treturn HttpResponse(template.render(context))\n\n\ndef create(request):\n    edit = request.GET.get(\'edit\', None)\n    metadata = \'\'\n    aid = 0\n    if(edit):\n\t\tp = 1\n\t\ttry:\n\t\t\tx = request.GET.get(\'aid\', None)\n\t\t\tif x :\n\t\t\t\tp = int(x)\n\t\texcept:\n\t\t\tpass\n\t\ta = Article.objects.get(pk=p)\n\t\tmetadata = a.metaData\n\t\taid = a.pk\n\n    template = loader.get_template(\'articles/create.html\')\n    context = RequestContext(request, {\n    \t\'metadata\': json.dumps(metadata)\n    \t, \'aid\': aid\n    })\n    return HttpResponse(template.render(context))\n    \n\n@csrf_exempt\ndef saveSlides(request):\n\ts = request.POST.get(\'data\', None)\n\t#logger.debug(s)\n\tobj = json.loads(s)\n\tslides = json.loads(obj[\'slides\'])\n\t#logger.debug(\'slides are \' + str(type(slides)) + \'     ---------- ---------   \'  + str(slides))\n\tmetaData = obj[\'metaData\']\n\t#logger.debug(\'metaData is \' +  str(type(metaData)) + \'     ---------- ---------   \'  + str(metaData))\n\ta = Article()\n\ta.metaData = json.dumps( metaData )\n\ta.save()\n\t\n\tfor js in slides:\n\t\tlogger.debug(\'slide is \' + str(type(js)) + \'     ---------- ---------   \'  + str(js))\n\t\ts = Slides()\n\t\tlogger.debug(\'BEHOLD \' + str(js))\n\t\ts.uid = js[\'data\'][\'uid\']\n\t\ts.slide = json.dumps( js )\n\t\ts.aid = a\n\t\ts.save()\n\t\n\treturn HttpResponse( json.dumps( {\'id\': a.id} ) )\n\t\n@csrf_exempt\ndef updateSlides(request):\n\ts = request.POST.get(\'data\', None)\n\t#logger.debug(s)\n\tobj = json.loads(s)\n\tp = obj[\'aid\']\n\ttry:\n\t\tp = int(pk)\n\texcept:\n\t\treturn HttpResponse( json.dumps( {\'id\': \'exception occurred\'} ) )\n\n\tslides = json.loads(obj[\'slides\'])\n\t#logger.debug(\'slides are \' + str(type(slides)) + \'     ---------- ---------   \'  + str(slides))\n\tmetaData = obj[\'metaData\']\n\t#logger.debug(\'metaData is \' +  str(type(metaData)) + \'     ---------- ---------   \'  + str(metaData))\n\ta = Article.objects.get(pk=p)\n\ta.metaData = json.dumps( metaData )\n\ta.save()\n\t\n\ta.slides_set.all().delete()\n\n\tfor js in slides:\n\t\tlogger.debug(\'slide is \' + str(type(js)) + \'     ---------- ---------   \'  + str(js))\n\t\ts = Slides()\n\t\tlogger.debug(\'BEHOLD \' + str(js))\n\t\ts.uid = js[\'data\'][\'uid\']\n\t\ts.slide = json.dumps( js )\n\t\ts.aid = a\n\t\ts.save()\n\t\n\treturn HttpResponse( json.dumps( {\'id\': a.id} ) )\n\n\n@csrf_exempt\ndef saveTree(request):\n\ts = request.POST.get(\'js\', None)\n\n\ta = Tree()\n\ta.js = s\n\ta.save()\n\treturn HttpResponse( json.dumps( {\'id\': a.id} ) )\n\n\ndef save_upload( uploaded, filename, raw_data ):\n\t\'\'\' \n\traw_data: if True, uploaded is an HttpRequest object with the file being\n\t\t\tthe raw post data \n\t\t\tif False, uploaded has been submitted via the basic form\n\t\t\tsubmission and is a regular Django UploadedFile in request.FILES\n\t\'\'\'\n\ttry:\n\t\tfrom io import FileIO, BufferedWriter\n\t\tsPath = os.path.join(settings.BASE_DIR, \'articles\', \'static\', \'images\')\n\t\text = filename.split(".")\n\t\tif not ext:\n\t\t\text = ".jpg"\n\t\telse :\n\t\t\text = "." + str(ext[-1])\n\t\tsname = str(uuid.uuid1()) + ext\n\t\tsPathimage = os.path.join(sPath,  sname)\n\t\twith BufferedWriter( FileIO( sPathimage, "wb" ) ) as dest:\n\t\t  # if the "advanced" upload, read directly from the HTTP request \n\t\t  # with the Django 1.3 functionality\n\t\t\tif raw_data:\n\t\t\t\tfoo = uploaded.read( 1024 )\n\t\t\t\twhile foo:\n\t\t\t\t  dest.write( foo )\n\t\t\t\t  foo = uploaded.read( 1024 ) \n\t\t\t  # if not raw, it was a form upload so read in the normal Django chunks fashion\n\t\t\telse:\n\t\t\t\tfor c in uploaded.chunks( ):\n\t\t\t\t  dest.write( c )\n\t\t\t# got through saving the upload, report success\n\t\t\treturn sname\n\texcept Exception, e:\n\t\t# could not open the file most likely\n\t\t# print \'Exception occurred \' + str(e)\n\t\tlogger.debug(\'something went wrong\')\n\t\tlogger.exception(e)\n\t\tpass\n\t\n\treturn \'\'\n\n\t\n@csrf_exempt\ndef ajaxupload( request ):\n\tif request.method == "POST":   \n\t\tif request.is_ajax( ):\n\t\t\t# the file is stored raw in the request\n\t\t\tupload = request\n\t\t\tis_raw = True\n\t\t\t# AJAX Upload will pass the filename in the querystring if it is the "advanced" ajax upload\n\t\t\ttry:\n\t\t\t\tfilename = request.GET[ \'qqfile\' ]\n\t\t\texcept KeyError: \n\t\t\t\treturn HttpResponseBadRequest( "AJAX request not valid" )\n\t\t# not an ajax upload, so it was the "basic" iframe version with submission via form\n\t\telse:\n\t\t\tis_raw = False\n\t\t\tif len( request.FILES ) == 1:\n\t\t\t\t# FILES is a dictionary in Django but Ajax Upload gives the uploaded file an\n\t\t\t\t# ID based on a random number, so it cannot be guessed here in the code.\n\t\t\t\t# Rather than editing Ajax Upload to pass the ID in the querystring,\n\t\t\t\t# observer that each upload is a separate request,\n\t\t\t\t# so FILES should only have one entry.\n\t\t\t\t# Thus, we can just grab the first (and only) value in the dict.\n\t\t\t\tupload = request.FILES.values( )[ 0 ]\n\t\t\telse:\n\t\t\t\traise Http404( "Bad Upload" )\n\t\t\tfilename = upload.name\n\telse:\n\t\treturn HttpResponse("You gotta be kidding me " + str(request.method)) \n\t\n\t\n\t#return HttpResponse( json.dumps( {\'success\': \'Before calling save_upload\'} ) )\n\t# save the file\n\tsuccess = save_upload( upload, filename, is_raw )\n\n\t# let Ajax Upload know whether we saved it or not\n\t\n\tret_json = { \'success\': success}\n\tlogger.debug(str(ret_json))\n\treturn HttpResponse( json.dumps( ret_json ) )\n\n\n\n', u'TYPE': u'CODE', u'name': u'second', u'watches': [{u'text': u'this method would be called.', u'lineNumber': 147}], u'uid': 4}}
-[01/Apr/2014 04:49:40] DEBUG [articles.views:139] BEHOLD {u'data': {u'text': u'from django.http import HttpResponse\nfrom django.http import HttpResponse\nfrom django.template import RequestContext, loader\nfrom django.shortcuts import render\n\nimport os\nimport traceback\nimport uuid\nimport sys\nfrom django.shortcuts import render_to_response\nfrom django.views.decorators.csrf import csrf_exempt\nfrom django.conf import settings\nimport logging\nimport json\nfrom articles.models import *\n\n# Create your views here.\nlogger = logging.getLogger(\'articles.views\')\n\n\ndef scrollspy(request):\n    template = loader.get_template(\'articles/scrollspy.html\')\n    context = RequestContext(request, {\n    })\n    return HttpResponse(template.render(context))\n\n\n\ndef index(request):\n    template = loader.get_template(\'articles/index.html\')\n    context = RequestContext(request, {\n    })\n    return HttpResponse(template.render(context))\n\ndef article(request):\n\tp = 1\n\ttry:\n\t\tx = request.GET.get(\'aid\', None)\n\t\tif x :\n\t\t\tp = int(x)\n\texcept:\n\t\tpass\n\ta = Article.objects.get(pk=p)\n\ts = a.parent.all()\n\tsl = []\n\tfor s1 in s:\n\t\tsl.append(s1.slide)\n\ttemplate = loader.get_template(\'articles/article.html\')\n\tcontext = RequestContext(request, { \'metadata\': json.dumps(a.metaData), \'slides\': json.dumps(sl)})\n\treturn HttpResponse(template.render(context))\n\ndef getSlide(request):\n\ta = 1\n\ttry:\n\t\tx = request.GET.get(\'aid\', None)\n\t\tif x :\n\t\t\ta = int(x)\n\texcept:\n\t\tpass\n\t\n\tp = 1\n\ttry:\n\t\tx = request.GET.get(\'uid\', None)\n\t\tif x :\n\t\t\tp = int(x)\n\texcept:\n\t\tpass\n\ts = Slides.objects.get(aid = a , uid=p)\n\treturn HttpResponse(json.dumps(s.slide))\n\ndef article1(request):\n\tp = 1\n\ttry:\n\t\tx = request.GET.get(\'aid\', None)\n\t\tif x :\n\t\t\tp = int(x)\n\texcept:\n\t\tpass\n\ta = Article.objects.get(pk=p)\n\ttemplate = loader.get_template(\'articles/article1.html\')\n\tcontext = RequestContext(request, { \'metadata\': json.dumps(a.metaData), \'aid\': a.pk})\n\treturn HttpResponse(template.render(context))\n\n\ndef spad(request):\n\tp = 1\n\ttry:\n\t\tx = request.GET.get(\'aid\', None)\n\t\tif x :\n\t\t\tp = int(x)\n\texcept:\n\t\tpass\n\ta = Tree.objects.get(pk=p)\n\ttemplate = loader.get_template(\'articles/spad.html\')\n\tcontext = RequestContext(request, { \'json\': json.dumps(a.js)})\n\treturn HttpResponse(template.render(context))\n\n\ndef create(request):\n    edit = request.GET.get(\'edit\', None)\n    metadata = \'\'\n    aid = 0\n    if(edit):\n\t\tp = 1\n\t\ttry:\n\t\t\tx = request.GET.get(\'aid\', None)\n\t\t\tif x :\n\t\t\t\tp = int(x)\n\t\texcept:\n\t\t\tpass\n\t\ta = Article.objects.get(pk=p)\n\t\tmetadata = a.metaData\n\t\taid = a.pk\n\n    template = loader.get_template(\'articles/create.html\')\n    context = RequestContext(request, {\n    \t\'metadata\': json.dumps(metadata)\n    \t, \'aid\': aid\n    })\n    return HttpResponse(template.render(context))\n    \n\n@csrf_exempt\ndef saveSlides(request):\n\ts = request.POST.get(\'data\', None)\n\t#logger.debug(s)\n\tobj = json.loads(s)\n\tslides = json.loads(obj[\'slides\'])\n\t#logger.debug(\'slides are \' + str(type(slides)) + \'     ---------- ---------   \'  + str(slides))\n\tmetaData = obj[\'metaData\']\n\t#logger.debug(\'metaData is \' +  str(type(metaData)) + \'     ---------- ---------   \'  + str(metaData))\n\ta = Article()\n\ta.metaData = json.dumps( metaData )\n\ta.save()\n\t\n\tfor js in slides:\n\t\tlogger.debug(\'slide is \' + str(type(js)) + \'     ---------- ---------   \'  + str(js))\n\t\ts = Slides()\n\t\tlogger.debug(\'BEHOLD \' + str(js))\n\t\ts.uid = js[\'data\'][\'uid\']\n\t\ts.slide = json.dumps( js )\n\t\ts.aid = a\n\t\ts.save()\n\t\n\treturn HttpResponse( json.dumps( {\'id\': a.id} ) )\n\t\n@csrf_exempt\ndef updateSlides(request):\n\ts = request.POST.get(\'data\', None)\n\t#logger.debug(s)\n\tobj = json.loads(s)\n\tp = obj[\'aid\']\n\ttry:\n\t\tp = int(pk)\n\texcept:\n\t\treturn HttpResponse( json.dumps( {\'id\': \'exception occurred\'} ) )\n\n\tslides = json.loads(obj[\'slides\'])\n\t#logger.debug(\'slides are \' + str(type(slides)) + \'     ---------- ---------   \'  + str(slides))\n\tmetaData = obj[\'metaData\']\n\t#logger.debug(\'metaData is \' +  str(type(metaData)) + \'     ---------- ---------   \'  + str(metaData))\n\ta = Article.objects.get(pk=p)\n\ta.metaData = json.dumps( metaData )\n\ta.save()\n\t\n\ta.slides_set.all().delete()\n\n\tfor js in slides:\n\t\tlogger.debug(\'slide is \' + str(type(js)) + \'     ---------- ---------   \'  + str(js))\n\t\ts = Slides()\n\t\tlogger.debug(\'BEHOLD \' + str(js))\n\t\ts.uid = js[\'data\'][\'uid\']\n\t\ts.slide = json.dumps( js )\n\t\ts.aid = a\n\t\ts.save()\n\t\n\treturn HttpResponse( json.dumps( {\'id\': a.id} ) )\n\n\n@csrf_exempt\ndef saveTree(request):\n\ts = request.POST.get(\'js\', None)\n\n\ta = Tree()\n\ta.js = s\n\ta.save()\n\treturn HttpResponse( json.dumps( {\'id\': a.id} ) )\n\n\ndef save_upload( uploaded, filename, raw_data ):\n\t\'\'\' \n\traw_data: if True, uploaded is an HttpRequest object with the file being\n\t\t\tthe raw post data \n\t\t\tif False, uploaded has been submitted via the basic form\n\t\t\tsubmission and is a regular Django UploadedFile in request.FILES\n\t\'\'\'\n\ttry:\n\t\tfrom io import FileIO, BufferedWriter\n\t\tsPath = os.path.join(settings.BASE_DIR, \'articles\', \'static\', \'images\')\n\t\text = filename.split(".")\n\t\tif not ext:\n\t\t\text = ".jpg"\n\t\telse :\n\t\t\text = "." + str(ext[-1])\n\t\tsname = str(uuid.uuid1()) + ext\n\t\tsPathimage = os.path.join(sPath,  sname)\n\t\twith BufferedWriter( FileIO( sPathimage, "wb" ) ) as dest:\n\t\t  # if the "advanced" upload, read directly from the HTTP request \n\t\t  # with the Django 1.3 functionality\n\t\t\tif raw_data:\n\t\t\t\tfoo = uploaded.read( 1024 )\n\t\t\t\twhile foo:\n\t\t\t\t  dest.write( foo )\n\t\t\t\t  foo = uploaded.read( 1024 ) \n\t\t\t  # if not raw, it was a form upload so read in the normal Django chunks fashion\n\t\t\telse:\n\t\t\t\tfor c in uploaded.chunks( ):\n\t\t\t\t  dest.write( c )\n\t\t\t# got through saving the upload, report success\n\t\t\treturn sname\n\texcept Exception, e:\n\t\t# could not open the file most likely\n\t\t# print \'Exception occurred \' + str(e)\n\t\tlogger.debug(\'something went wrong\')\n\t\tlogger.exception(e)\n\t\tpass\n\t\n\treturn \'\'\n\n\t\n@csrf_exempt\ndef ajaxupload( request ):\n\tif request.method == "POST":   \n\t\tif request.is_ajax( ):\n\t\t\t# the file is stored raw in the request\n\t\t\tupload = request\n\t\t\tis_raw = True\n\t\t\t# AJAX Upload will pass the filename in the querystring if it is the "advanced" ajax upload\n\t\t\ttry:\n\t\t\t\tfilename = request.GET[ \'qqfile\' ]\n\t\t\texcept KeyError: \n\t\t\t\treturn HttpResponseBadRequest( "AJAX request not valid" )\n\t\t# not an ajax upload, so it was the "basic" iframe version with submission via form\n\t\telse:\n\t\t\tis_raw = False\n\t\t\tif len( request.FILES ) == 1:\n\t\t\t\t# FILES is a dictionary in Django but Ajax Upload gives the uploaded file an\n\t\t\t\t# ID based on a random number, so it cannot be guessed here in the code.\n\t\t\t\t# Rather than editing Ajax Upload to pass the ID in the querystring,\n\t\t\t\t# observer that each upload is a separate request,\n\t\t\t\t# so FILES should only have one entry.\n\t\t\t\t# Thus, we can just grab the first (and only) value in the dict.\n\t\t\t\tupload = request.FILES.values( )[ 0 ]\n\t\t\telse:\n\t\t\t\traise Http404( "Bad Upload" )\n\t\t\tfilename = upload.name\n\telse:\n\t\treturn HttpResponse("You gotta be kidding me " + str(request.method)) \n\t\n\t\n\t#return HttpResponse( json.dumps( {\'success\': \'Before calling save_upload\'} ) )\n\t# save the file\n\tsuccess = save_upload( upload, filename, is_raw )\n\n\t# let Ajax Upload know whether we saved it or not\n\t\n\tret_json = { \'success\': success}\n\tlogger.debug(str(ret_json))\n\treturn HttpResponse( json.dumps( ret_json ) )\n\n\n\n', u'TYPE': u'CODE', u'name': u'second', u'watches': [{u'text': u'this method would be called.', u'lineNumber': 147}], u'uid': 4}}
-[01/Apr/2014 04:49:40] DEBUG [articles.views:137] slide is <type 'dict'>     ---------- ---------   {u'data': {u'src': u'/static/images/55583de3-b8ba-11e3-8aa8-70cd6092b026.jpg', u'TYPE': u'IMAGE', u'name': u'Name for the new Image Slide', u'watches': [{u'text': u'Hail scott gu', u'div': None, u'guid': u'a1560074-84f0-ef10-2a20-18c8e787320f', u'rect': {u'y': u'83px', u'x': u'28px', u'height': u'40px', u'width': u'152px'}}], u'uid': 5}}
-[01/Apr/2014 04:49:40] DEBUG [articles.views:137] slide is <type 'dict'>     ---------- ---------   {u'data': {u'src': u'/static/images/55583de3-b8ba-11e3-8aa8-70cd6092b026.jpg', u'TYPE': u'IMAGE', u'name': u'Name for the new Image Slide', u'watches': [{u'text': u'Hail scott gu', u'div': None, u'guid': u'a1560074-84f0-ef10-2a20-18c8e787320f', u'rect': {u'y': u'83px', u'x': u'28px', u'height': u'40px', u'width': u'152px'}}], u'uid': 5}}
-[01/Apr/2014 04:49:40] DEBUG [articles.views:139] BEHOLD {u'data': {u'src': u'/static/images/55583de3-b8ba-11e3-8aa8-70cd6092b026.jpg', u'TYPE': u'IMAGE', u'name': u'Name for the new Image Slide', u'watches': [{u'text': u'Hail scott gu', u'div': None, u'guid': u'a1560074-84f0-ef10-2a20-18c8e787320f', u'rect': {u'y': u'83px', u'x': u'28px', u'height': u'40px', u'width': u'152px'}}], u'uid': 5}}
-[01/Apr/2014 04:49:40] DEBUG [articles.views:139] BEHOLD {u'data': {u'src': u'/static/images/55583de3-b8ba-11e3-8aa8-70cd6092b026.jpg', u'TYPE': u'IMAGE', u'name': u'Name for the new Image Slide', u'watches': [{u'text': u'Hail scott gu', u'div': None, u'guid': u'a1560074-84f0-ef10-2a20-18c8e787320f', u'rect': {u'y': u'83px', u'x': u'28px', u'height': u'40px', u'width': u'152px'}}], u'uid': 5}}
-[01/Apr/2014 04:49:40] DEBUG [articles.views:137] slide is <type 'dict'>     ---------- ---------   {u'data': {u'text': u'is always close man.', u'TYPE': u'TEXT', u'name': u'The end', u'uid': 6}}
-[01/Apr/2014 04:49:40] DEBUG [articles.views:137] slide is <type 'dict'>     ---------- ---------   {u'data': {u'text': u'is always close man.', u'TYPE': u'TEXT', u'name': u'The end', u'uid': 6}}
-[01/Apr/2014 04:49:40] DEBUG [articles.views:139] BEHOLD {u'data': {u'text': u'is always close man.', u'TYPE': u'TEXT', u'name': u'The end', u'uid': 6}}
-[01/Apr/2014 04:49:40] DEBUG [articles.views:139] BEHOLD {u'data': {u'text': u'is always close man.', u'TYPE': u'TEXT', u'name': u'The end', u'uid': 6}}
-[01/Apr/2014 04:51:51] DEBUG [articles.views:153] 12
-[01/Apr/2014 04:51:51] DEBUG [articles.views:153] 12
-[01/Apr/2014 04:52:44] DEBUG [articles.views:153] 12
-[01/Apr/2014 04:52:44] DEBUG [articles.views:153] 12
-[01/Apr/2014 04:52:44] ERROR [django.request:226] Internal Server Error: /articles/updateSlides
+[30/Apr/2014 08:39:37] ERROR [django.request:226] Internal Server Error: /articles/saveSlides
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
   File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
     return view_func(*args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 167, in updateSlides
-    a.slides_set.all().delete()
-AttributeError: 'Article' object has no attribute 'slides_set'
-[01/Apr/2014 04:58:20] ERROR [django.request:226] Internal Server Error: /articles/updateSlides
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 121, in saveSlides
+    name = metadata['articleMetaData']["name"]
+NameError: global name 'metadata' is not defined
+[30/Apr/2014 08:40:15] ERROR [django.request:226] Internal Server Error: /articles/saveSlides
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
   File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
     return view_func(*args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 153, in updateSlides
-    logger.debug(p)
-NameError: global name 'logger' is not defined
-[01/Apr/2014 04:58:37] DEBUG [articles.views:153] 12
-[01/Apr/2014 04:58:37] DEBUG [articles.views:153] 12
-[01/Apr/2014 05:01:21] DEBUG [articles.views:153] 12
-[01/Apr/2014 05:01:21] DEBUG [articles.views:153] 12
-[01/Apr/2014 05:02:46] DEBUG [articles.views:153] 12
-[01/Apr/2014 05:02:46] DEBUG [articles.views:153] 12
-[01/Apr/2014 07:14:16] DEBUG [articles.views:153] 12
-[01/Apr/2014 07:14:16] DEBUG [articles.views:153] 12
-[01/Apr/2014 07:40:38] DEBUG [articles.views:153] 15
-[01/Apr/2014 07:40:38] DEBUG [articles.views:153] 15
-[01/Apr/2014 07:42:58] DEBUG [articles.views:153] 16
-[01/Apr/2014 07:42:58] DEBUG [articles.views:153] 16
-[01/Apr/2014 07:43:18] ERROR [django.request:226] Internal Server Error: /articles/getSlide
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 121, in saveSlides
+    name = metaData['articleMetaData']["name"]
+TypeError: string indices must be integers
+[30/Apr/2014 08:40:46] ERROR [django.request:226] Internal Server Error: /articles/saveSlides
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 68, in getSlide
-    s = Slides.objects.get(aid = a , uid=p)
-  File "/Library/Python/2.7/site-packages/django/db/models/manager.py", line 151, in get
-    return self.get_queryset().get(*args, **kwargs)
-  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 307, in get
-    self.model._meta.object_name)
-DoesNotExist: Slides matching query does not exist.
-[01/Apr/2014 07:43:39] ERROR [django.request:226] Internal Server Error: /articles/getSlide
+  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 122, in saveSlides
+    name = metaData['articleMetaData']["name"]
+TypeError: string indices must be integers
+[30/Apr/2014 08:42:42] ERROR [django.request:226] Internal Server Error: /articles/saveSlides
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 68, in getSlide
-    s = Slides.objects.get(aid = a , uid=p)
-  File "/Library/Python/2.7/site-packages/django/db/models/manager.py", line 151, in get
-    return self.get_queryset().get(*args, **kwargs)
-  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 307, in get
-    self.model._meta.object_name)
-DoesNotExist: Slides matching query does not exist.
-[01/Apr/2014 07:44:19] ERROR [django.request:226] Internal Server Error: /articles/getSlide
+  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 121, in saveSlides
+    obj = json.loads(metaData)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/__init__.py", line 326, in loads
+    return _default_decoder.decode(s)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/decoder.py", line 360, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+TypeError: expected string or buffer
+[30/Apr/2014 08:43:07] ERROR [django.request:226] Internal Server Error: /articles/saveSlides
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 68, in getSlide
-    s = Slides.objects.get(aid = a , uid=p)
-  File "/Library/Python/2.7/site-packages/django/db/models/manager.py", line 151, in get
-    return self.get_queryset().get(*args, **kwargs)
-  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 307, in get
-    self.model._meta.object_name)
-DoesNotExist: Slides matching query does not exist.
-[01/Apr/2014 07:44:23] ERROR [django.request:226] Internal Server Error: /articles/getSlide
+  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 123, in saveSlides
+    obj1 = obj['articleMetaData']
+KeyError: 'articleMetaData'
+[30/Apr/2014 08:44:17] ERROR [django.request:226] Internal Server Error: /articles/saveSlides
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 68, in getSlide
-    s = Slides.objects.get(aid = a , uid=p)
-  File "/Library/Python/2.7/site-packages/django/db/models/manager.py", line 151, in get
-    return self.get_queryset().get(*args, **kwargs)
-  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 307, in get
-    self.model._meta.object_name)
-DoesNotExist: Slides matching query does not exist.
-[01/Apr/2014 07:46:14] ERROR [django.request:226] Internal Server Error: /articles/getSlide
+  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 125, in saveSlides
+    name = obj1["name"]
+TypeError: string indices must be integers
+[30/Apr/2014 08:44:50] DEBUG [articles.views:127] metaData is <type 'dict'>     ---------- ---------   {u'articleMetaData': u'{"TYPE":"METADATA","name":"object litreal explained","tags":"javascript ","zist":"secret sausages of javascript","initialSeed":5,"showNextButton":false,"uid":2}'}
+[30/Apr/2014 08:44:50] DEBUG [articles.views:127] metaData is <type 'dict'>     ---------- ---------   {u'articleMetaData': u'{"TYPE":"METADATA","name":"object litreal explained","tags":"javascript ","zist":"secret sausages of javascript","initialSeed":5,"showNextButton":false,"uid":2}'}
+[30/Apr/2014 08:44:50] ERROR [django.request:226] Internal Server Error: /articles/saveSlides
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 68, in getSlide
-    s = Slides.objects.get(aid = a , uid=p)
-  File "/Library/Python/2.7/site-packages/django/db/models/manager.py", line 151, in get
-    return self.get_queryset().get(*args, **kwargs)
-  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 307, in get
-    self.model._meta.object_name)
-DoesNotExist: Slides matching query does not exist.
-[01/Apr/2014 07:49:29] ERROR [django.request:226] Internal Server Error: /articles/getSlide
+  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 134, in saveSlides
+    a.tags.add(tags)
+  File "/Library/Python/2.7/site-packages/taggit/managers.py", line 235, in __get__
+    "before you can access their tags." % model.__name__)
+ValueError: Article objects need to have a primary key value before you can access their tags.
+[30/Apr/2014 08:45:27] ERROR [django.request:226] Internal Server Error: /articles/saveSlides
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 68, in getSlide
-    s = Slides.objects.get(aid = a , uid=p)
-  File "/Library/Python/2.7/site-packages/django/db/models/manager.py", line 151, in get
-    return self.get_queryset().get(*args, **kwargs)
-  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 307, in get
-    self.model._meta.object_name)
-DoesNotExist: Slides matching query does not exist.
-[01/Apr/2014 08:08:24] DEBUG [articles.views:153] 16
-[01/Apr/2014 08:08:24] DEBUG [articles.views:153] 16
-[01/Apr/2014 08:09:39] DEBUG [articles.views:153] 16
-[01/Apr/2014 08:09:39] DEBUG [articles.views:153] 16
-[01/Apr/2014 17:30:04] DEBUG [articles.views:153] 16
-[01/Apr/2014 17:30:04] DEBUG [articles.views:153] 16
-[05/Apr/2014 11:55:05] WARNING [django.request:145] Not Found: /articles/favicon.png
-[10/Apr/2014 06:54:25] WARNING [django.request:145] Not Found: /favicon.ico
-[10/Apr/2014 18:22:39] DEBUG [articles.views:153] 21
-[10/Apr/2014 18:22:39] DEBUG [articles.views:153] 21
-[10/Apr/2014 18:23:20] DEBUG [articles.views:153] 21
-[10/Apr/2014 18:23:20] DEBUG [articles.views:153] 21
+  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 134, in saveSlides
+    a.tags.add(tags)
+  File "/Library/Python/2.7/site-packages/taggit/managers.py", line 235, in __get__
+    "before you can access their tags." % model.__name__)
+ValueError: Article objects need to have a primary key value before you can access their tags.
+[30/Apr/2014 08:51:44] ERROR [django.request:226] Internal Server Error: /articles/edit/1
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 90, in get_response
+    response = middleware_method(request)
+  File "/Library/Python/2.7/site-packages/django/middleware/common.py", line 71, in process_request
+    if (not urlresolvers.is_valid_path(request.path_info, urlconf) and
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 573, in is_valid_path
+    resolve(path, urlconf)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 453, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 318, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 346, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 341, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Python/2.7/site-packages/django/utils/importlib.py", line 40, in import_module
+    __import__(name)
+  File "/ajay/Tanicode/Tanicode/Tanicode/urls.py", line 10, in <module>
+    url(r'^articles/', include('articles.urls')),
+  File "/Library/Python/2.7/site-packages/django/conf/urls/__init__.py", line 26, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/utils/importlib.py", line 40, in import_module
+    __import__(name)
+  File "/ajay/Tanicode/Tanicode/articles/urls.py", line 5, in <module>
+    from articles import views
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 64
+    template = loader.get_template('articles/create.html')
+                                                         ^
+IndentationError: unindent does not match any outer indentation level
+[30/Apr/2014 08:52:08] WARNING [django.request:145] Not Found: /articles/edit/favicon.png
+[30/Apr/2014 08:52:29] WARNING [django.request:145] Not Found: /articles/edit/updateSlides
+[30/Apr/2014 08:54:06] WARNING [django.request:145] Not Found: /updateSlides
+[30/Apr/2014 08:55:10] WARNING [django.request:145] Not Found: /updateSlides
+[30/Apr/2014 08:55:57] WARNING [django.request:145] Not Found: /articles/edit/updateSlides
+[30/Apr/2014 08:58:36] DEBUG [articles.views:159] 1
+[30/Apr/2014 08:58:36] DEBUG [articles.views:159] 1
+[30/Apr/2014 08:58:43] WARNING [django.request:145] Not Found: /articles/viewArticle/1
+[30/Apr/2014 08:58:51] WARNING [django.request:145] Not Found: /articles/viewArticle/1/favicon.png
+[30/Apr/2014 09:26:17] DEBUG [articles.views:159] 1
+[30/Apr/2014 09:26:17] DEBUG [articles.views:159] 1
+[30/Apr/2014 09:26:37] WARNING [django.request:145] Not Found: /articles/viewArticle/1/
+[30/Apr/2014 09:33:17] DEBUG [articles.views:159] 1
+[30/Apr/2014 09:33:17] DEBUG [articles.views:159] 1
+[30/Apr/2014 09:33:17] ERROR [django.request:226] Internal Server Error: /articles/edit/updateSlides
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 182, in updateSlides
+    a.tags.add(tags.split())
+AttributeError: 'list' object has no attribute 'split'
+[30/Apr/2014 09:33:49] DEBUG [articles.views:159] 1
+[30/Apr/2014 09:33:49] DEBUG [articles.views:159] 1
+[30/Apr/2014 09:33:49] ERROR [django.request:226] Internal Server Error: /articles/edit/updateSlides
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 182, in updateSlides
+    a.tags.add(tags)
+  File "/Library/Python/2.7/site-packages/taggit/utils.py", line 128, in inner
+    return func(self, *args, **kwargs)
+  File "/Library/Python/2.7/site-packages/taggit/managers.py", line 134, in add
+    if not isinstance(t, self.through.tag_model())
+TypeError: unhashable type: 'list'
+[30/Apr/2014 09:34:33] DEBUG [articles.views:159] 1
+[30/Apr/2014 09:34:33] DEBUG [articles.views:159] 1
+[30/Apr/2014 09:34:33] ERROR [django.request:226] Internal Server Error: /articles/edit/updateSlides
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 183, in updateSlides
+    a.tags.add(tags)
+  File "/Library/Python/2.7/site-packages/taggit/utils.py", line 128, in inner
+    return func(self, *args, **kwargs)
+  File "/Library/Python/2.7/site-packages/taggit/managers.py", line 134, in add
+    if not isinstance(t, self.through.tag_model())
+TypeError: unhashable type: 'list'
+[30/Apr/2014 09:36:22] DEBUG [articles.views:160] 1
+[30/Apr/2014 09:36:22] DEBUG [articles.views:160] 1

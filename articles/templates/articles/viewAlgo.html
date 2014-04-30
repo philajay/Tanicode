@@ -23,15 +23,12 @@
       <script src="/static/js/bootstrap/respond.min.js"></script>
     <![endif]-->
     <script type="text/javascript">
-    	window.metaData = {{ metadata|safe }}
-      window.savedSlides = {{ slides|safe }}
-      window.aid = {{ aid|safe }}
+
     </script>
 <style>
 /******************************* Overlay css properties ***************************************/
 #overlay {
     position: fixed;
-    display: none;
     top: 0;
     left: 0;
     width: 100%;
@@ -45,6 +42,29 @@
 }
 
 /******************************* Overlay css properties ***************************************/
+
+.hidden {
+    display:none;
+}
+
+
+.boxSize {
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+  float: left;
+  border: 1px solid black;
+}
+
+.sliderBox {
+  position: absolute;
+  top: 100px;
+  padding: 2px;
+  width: 40px;
+  height: 40px;
+  float: left;
+  border: 1px solid black; 
+}
 
 #text_editor {
     /** Setting height is also important, otherwise editor wont showup**/
@@ -128,8 +148,8 @@ background: #FFFFA3;
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav">
-                    <li><a href="#" onClick="javascript:tcp.UIManager.previous();"><span class="glyphicon glyphicon-arrow-left"></span>Previous</a></li>
-                    <li><a href="#" onClick="javascript:tcp.UIManager.next();">Next<span class="glyphicon glyphicon-arrow-right" ></span></a></li>
+                    <li><a href="#" onClick="previous();"><span class="glyphicon glyphicon-arrow-left"></span>Previous</a></li>
+                    <li><a href="#" onClick="next();">Next<span class="glyphicon glyphicon-arrow-right" ></span></a></li>
                     
                         <li class="dropdown">
                           <a href="#" class="dropdown-toggle" id="pv_dd_a" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
@@ -147,39 +167,22 @@ background: #FFFFA3;
                     <span data-bind="text: previewCurrentSlide() ? previewCurrentSlide().data.name : ''" ></span>
                   -->
                   <div class="main-content-section" style="padding: 0px;">
-      						<span data-bind="visible: showPreviewTemplate('TEXT|CODE')">
       							<div id="editor"></div>
-      						</span>
-      						<span data-bind="visible: showPreviewTemplate('IMAGE')">
-      							<div id="preview_board" data-bind="visible: previewCurrentSlide() ? previewCurrentSlide().data.src : false">
+      						<!--
+                  <span data-bind="visible: showPreviewTemplate('IMAGE')">
+      						
+                  	<div id="preview_board" data-bind="visible: previewCurrentSlide() ? previewCurrentSlide().data.src : false">
       								<img id = "preview_board_image" height="400" width="500" data-bind="imgSrc: previewCurrentSlide() ? previewCurrentSlide().data.src : '' "/>
       							</div>
-      						</span>
-                  <span data-bind="visible: showPreviewTemplate('CANVAS')">
-                    <div id="canvas" style="border: 2px dotted">
-                      just show it to me...
-                    </div>
-                  </span>
                   
-
+      						</span>
+                  -->
       					</div>
-      					<div class="main-content-section " style="padding: 0px;">
-      						<div id="overlay_watch" class="watch" data-bind="visible: showPreviewWatchTemplate()">
-      								<span id="preview_watch" data-bind="text: previewWatch() ? previewWatch().text : '' "></span>
-      						</div>
-                  <span data-bind="visible: showPreviewTemplate('VAR_WATCH')">
-                    <div id="vars_watch" style="border: 2px dotted">
-                        And vars go here!!!!!!!!!
-                    </div>
-                  </span>
+      					<div id = "sim_watch" class="main-content-section" style="padding: 0px;">
       					</div>
            </div>
 			</div>
         </div>
-
-    <div id="seo" class="seo">
-        {{html|safe}}
-    </div>
 
 
 
@@ -197,13 +200,12 @@ background: #FFFFA3;
 	<script src="/static/js/jquery-plugins/tinyscrollbar.js"></script>
 	<script src="/static/js/fileuploader.js"></script>
 	<script src="/static/js/underscore/underscore.js"></script>
-    <script src="/static/js/jstree/jstree.js"></script>
+    <script src="/static/js/jsPlumb/jquery.jsPlumb-1.5.5.js"></script>
 	<script src="/static/js/slider/bootstrap-slider.js"></script>
 	<script src="/static/js/ko/ko.js"></script>
 	<script src="/static/js/common.js"></script>
-	<script src="/static/js/article/article1.js"></script>
-	<script src="/static/js/create/preview1.js"></script>
-    <script src="http://jsplumbtoolkit.com/demo/js/jquery.jsPlumb-1.5.5-min.js"></script>
+	<script src="/static/js/algo/algo.js"></script>
+  <script src="/static/js/algo/simTrial.js"></script>
 	
 </body>
 </html>
