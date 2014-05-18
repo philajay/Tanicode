@@ -165,3 +165,7 @@ Traceback (most recent call last):
 TypeError: unhashable type: 'list'
 [30/Apr/2014 09:36:22] DEBUG [articles.views:160] 1
 [30/Apr/2014 09:36:22] DEBUG [articles.views:160] 1
+[30/Apr/2014 12:39:06] WARNING [django.request:145] Not Found: /articles/favicon.png
+[30/Apr/2014 12:39:09] WARNING [django.request:145] Not Found: /favicon.ico
+[30/Apr/2014 19:13:48] WARNING [django.request:145] Not Found: /articles/viewArticle/1/favicon.png
+[18/May/2014 07:41:04] WARNING [django.request:145] Not Found: /articles/edit/favicon.png

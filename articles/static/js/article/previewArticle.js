@@ -26,7 +26,9 @@ tcp.tcEditor = {
 		editor.getSession().setMode("ace/mode/html");
 		editor.setReadOnly(true);
 		this.defaultStyle	= editor.container.style.fontFamily;	
+		editor.setFontSize(16);
 		this.aceEditor = editor;
+
 	},
 	
 	setValue : function(s){

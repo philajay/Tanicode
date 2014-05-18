@@ -90,8 +90,6 @@ def getSlide(request):
 	return HttpResponse(json.dumps(s.slide))
 
 def viewArticle(request, id, slug):
-	print id
-	print slug
 	p = int(id)
 
 	'''
@@ -127,18 +125,13 @@ def viewAlgo(request):
 @csrf_exempt
 def saveSlides(request):
 	s = request.POST.get('data', None)
-	#logger.debug(s)
 	obj = json.loads(s)
 	slides = obj['slides']
-	#logger.debug('slides are ' + str(type(slides)) + '     ---------- ---------   '  + str(slides))
 	metaData = obj['metaData']
 	obj1 = metaData['articleMetaData']
 	obj1 = json.loads(obj1)
-	#print str(obj1)
-	#obj1 = obj['articleMetaData']
 	name = obj1["name"]
 	tags = filter(None,  obj1["tags"].split())
-	#logger.debug('metaData is ' +  str(type(metaData)) + '     ---------- ---------   '  + str(metaData))
 	html = obj['html']
 	a = Article()
 	a.metaData = json.dumps( metaData )
@@ -154,17 +147,14 @@ def saveSlides(request):
 @csrf_exempt
 def updateSlides(request):
 	s = request.POST.get('data', None)
-	#logger.debug(s)
 	obj = json.loads(s)
 	p = obj['aid']
-	logger.debug(p)
 	try:
 		p = int(p)
 	except:
 		return HttpResponse( json.dumps( {'id': 'exception occurred'} ) )
 
 	slides = obj['slides']
-	#logger.debug('slides are ' + str(type(slides)) + '     ---------- ---------   '  + str(slides))
 	metaData = obj['metaData']
 	obj1 = metaData['articleMetaData']
 	obj1 = json.loads(obj1)
@@ -173,7 +163,6 @@ def updateSlides(request):
 	name = obj1["name"]
 	tags = filter(None,  obj1["tags"].split())
 
-	#logger.debug('metaData is ' +  str(type(metaData)) + '     ---------- ---------   '  + str(metaData))
 	html = obj['html']
 	a = Article.objects.get(pk=p)
 	a.metaData = json.dumps( metaData )
@@ -197,7 +186,8 @@ def save_upload( uploaded, filename, raw_data ):
 	'''
 	try:
 		from io import FileIO, BufferedWriter
-		sPath = os.path.join(settings.BASE_DIR, 'articles', 'static', 'images')
+		#sPath = os.path.join(settings.BASE_DIR, 'articles', 'static', 'images')
+		sPath = os.path.join('/home/philajay/webapps/static', 'images')
 		ext = filename.split(".")
 		if not ext:
 			ext = ".jpg"

@@ -10,6 +10,7 @@ urlpatterns = patterns('',
 	url(r'^ajaxupload', views.ajaxupload, name='ajaxupload'),
 	url(r'^saveSlides', views.saveSlides, name='saveSlides'),
 	url(r'^edit/updateSlides', views.updateSlides, name='updateSlides'),
+	url(r'^edit/ajaxupload', views.ajaxupload, name='ajaxupload'),
 	#Main article page
 	url(r'^viewArticle/(?P<id>\d+)/(?P<slug>[-\w\d]+)/?$', views.viewArticle, name='viewArticle'),
 	#Get the slide JSON through a ajax request. Used in multiple pages
