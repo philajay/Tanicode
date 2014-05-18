@@ -809,6 +809,10 @@
 		
 		
 		this.deleteSlide = function(){
+			var res = confirm("Are you sure you want to delete this slide?");
+			
+			if( ! res ) return;
+
 			tc.koModel.slides.remove(this);
 			if( tc.koModel.slides().length > 0 ){
 				//also set the focus to the first node of the tree.
@@ -826,7 +830,26 @@
 		
 		this.addCodeWatch = function(){
 			
-		}
+		};
+
+		this.moveSlideUp = function(){
+			i = tc.koModel.slides.indexOf(this);
+			tc.koModel.slides.remove(this);
+			i--;
+			tc.koModel.slides.splice(i,0,this);
+		};
+		this.moveSlidedown = function(){
+			i = tc.koModel.slides.indexOf(this);
+			tc.koModel.slides.remove(this);
+			i++;
+			tc.koModel.slides.splice(i,0,this);
+		};
+		/*
+					i = tc.koModel.slides.indexOf(this);
+			i--;
+			tc.koModel.slides.splice(i,0,this);
+
+		*/
 	}
 
 	tc.getSlideDataEventBinder = {

@@ -181,7 +181,7 @@ background: #FFFFA3;
         </nav>
     </div>
     <!-- /.navbar -->
-	<div class="container" style="padding-top:50px;">
+	<div class="container" style="padding-top:50px;width:100%;">
         <div class="row row-offcanvas row-offcanvas-right">
             <div id="tc_create_container">
                     <div id="tc_tree_container" class="tc_containers tc_adjust_ui" style="width:20%;">
@@ -194,9 +194,18 @@ background: #FFFFA3;
 
                             <ul class="nav nav-pills nav-stacked">
                                 <!-- ko foreach: slides -->
-                                    <li><a href="#">
-                                            <span data-bind="forEachIndex: $index" ></span><span data-bind="partialText: $data.data.name, click: $data.changeSlide"></span>
-                                            <span data-bind="click: $data.deleteSlide" style="float:right" class="glyphicon glyphicon-remove"></span>
+                                    <li>
+                                        <a href="#">
+                                            <span style="width:100%">
+                                                <span style="width:70%;">
+                                                    <span  data-bind="forEachIndex: $index" ></span><span data-bind="text: $data.data.name, click: $data.changeSlide"></span>
+                                                </span>
+                                                <span style="width:30%;padding:5px;"> 
+                                                    <span style="width:10%;" data-bind="click: $data.deleteSlide" class="glyphicon glyphicon-remove"></span>
+                                                    <span style="width:10%;" data-bind="click: $data.moveSlideUp" class="glyphicon glyphicon-arrow-up"></span>
+                                                    <span style="width:10%;" data-bind="click: $data.moveSlidedown" class="glyphicon glyphicon-arrow-down"></span>
+                                                </span>
+                                            </span>
                                         </a>
                                     </li>
                                 <!-- /ko -->
