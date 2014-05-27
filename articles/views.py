@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 import os
 import traceback
@@ -25,6 +26,7 @@ def index(request):
     })
     return HttpResponse(template.render(context))
 
+@login_required
 def create(request):
     edit = request.GET.get('edit', None)
     metadata = ''
@@ -115,7 +117,7 @@ def viewArticle(request, id, slug):
 	return HttpResponse(template.render(context))
 
 
-def viewAlgo(request):
+def viewAlgo(request, id, slug):
 	template = loader.get_template('articles/viewAlgo.html')
 	context = RequestContext(request, {
 	})
@@ -138,6 +140,7 @@ def saveSlides(request):
 	a.slides = json.dumps( slides )
 	a.html = json.dumps( html )
 	a.title = name
+	a.user = request.user
 	a.save()
 	for tag in tags:
 		a.tags.add(tag) 

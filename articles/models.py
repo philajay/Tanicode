@@ -1,5 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
 
 from taggit.managers import TaggableManager
 
@@ -12,6 +13,7 @@ class Article(models.Model):
 	html =  models.TextField()
 	last_saved = models.DateField(auto_now=True)
 	tags = TaggableManager()
+	user = models.ForeignKey(User)
 
 
 	def save(self):

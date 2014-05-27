@@ -113,7 +113,6 @@ tc.overlayInitArticle = function(){
 	tcp.UIManager.init(tc.koModel.previewSlides()[0]);
 	$('#pv_dd > li' ).each(function(index){
 	$(this).find('a').each( function(index2){
-			
 			$(this).on('click', function(){
 				tcp.UIManager.moveTo(index)
 			});

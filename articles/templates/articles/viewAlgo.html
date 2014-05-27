@@ -12,20 +12,141 @@
     <link href="/static/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="/static/css/fileuploader.css" rel="stylesheet">
-	<link href="/static/css/jstree/style.css" rel="stylesheet">
-	<link href="/static/css/slider/slider.css" rel="stylesheet">
-	<link href="/static/css/article.css" rel="stylesheet">
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="ie8-responsive-file-warning.js"></script><![endif]-->
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="/static/js/bootstrap/html5shiv.js"></script>
-      <script src="/static/js/bootstrap/respond.min.js"></script>
-    <![endif]-->
-    <script type="text/javascript">
-
-    </script>
+  	<link href="/static/css/jstree/style.css" rel="stylesheet">
+	  <link href="/static/css/slider/slider.css" rel="stylesheet">
+  	<link href="/static/css/article.css" rel="stylesheet">
 <style>
+/************************************** Bubble Speech ******************************************/
+.triangle-isosceles {
+  position:relative;
+  padding:15px;
+  margin:1em 0 3em;
+  color:#000;
+  background:#f3961c; /* default background for browsers without gradient support */
+  /* css3 */
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#f9d835), to(#f3961c));
+  background:-moz-linear-gradient(#f9d835, #f3961c);
+  background:-o-linear-gradient(#f9d835, #f3961c);
+  background:linear-gradient(#f9d835, #f3961c);
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+
+/* Variant : for top positioned triangle
+------------------------------------------ */
+
+.triangle-isosceles.top {
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#f3961c), to(#f9d835));
+  background:-moz-linear-gradient(#f3961c, #f9d835);
+  background:-o-linear-gradient(#f3961c, #f9d835);
+  background:linear-gradient(#f3961c, #f9d835);
+}
+
+/* Variant : for left/right positioned triangle
+------------------------------------------ */
+
+.triangle-isosceles.left {
+  margin-left:50px;
+  background:#f3961c;
+}
+
+/* Variant : for right positioned triangle
+------------------------------------------ */
+
+.triangle-isosceles.right {
+  margin-right:50px;
+  background:#f3961c;
+}
+
+/* THE TRIANGLE
+------------------------------------------------------------------------------------------------------------------------------- */
+
+/* creates triangle */
+.triangle-isosceles:after {
+  content:"";
+  position:absolute;
+  bottom:-15px; /* value = - border-top-width - border-bottom-width */
+  left:50px; /* controls horizontal position */
+  border-width:15px 15px 0; /* vary these values to change the angle of the vertex */
+  border-style:solid;
+  border-color:#f3961c transparent;
+  /* reduce the damage in FF3.0 */
+  display:block;
+  width:0;
+}
+
+/* Variant : top
+------------------------------------------ */
+
+.triangle-isosceles.top:after {
+  top:-15px; /* value = - border-top-width - border-bottom-width */
+  right:50px; /* controls horizontal position */
+  bottom:auto;
+  left:auto;
+  border-width:0 15px 15px; /* vary these values to change the angle of the vertex */
+  border-color:#f3961c transparent;
+}
+
+/* Variant : left
+------------------------------------------ */
+
+.triangle-isosceles.left:after {
+  top:16px; /* controls vertical position */
+  left:-50px; /* value = - border-left-width - border-right-width */
+  bottom:auto;
+  border-width:10px 50px 10px 0;
+  border-color:transparent #f3961c;
+}
+
+/* Variant : right
+------------------------------------------ */
+
+.triangle-isosceles.right:after {
+  top:16px; /* controls vertical position */
+  right:-50px; /* value = - border-left-width - border-right-width */
+  bottom:auto;
+  left:auto;
+  border-width:10px 0 10px 50px;
+  border-color:transparent #f3961c;
+}
+
+/************************************ bubble Speech *******************************/
+
+
+.stepContainer {
+  position: relative;
+  width : 100%;
+  padding: 20px;
+  /*border: 1px solid;*/
+  float: left;
+}
+
+.stepContainer_th {
+  opacity: .3;
+  -webkit-transition: opacity 3s ease;
+  -moz-transition: opacity 3s ease;
+  -o-transition: opacity 3s ease;
+  transition: opacity 3s ease;
+
+}
+
+.stepContainer-change {
+  opacity: 1;
+}
+
+
+.section{
+  width : 45%;
+  float : left;
+  position: relative;
+}
+
+.sectionText {
+  background-color: yellow;
+  padding: 10px;
+}
+
 /******************************* Overlay css properties ***************************************/
 #overlay {
     position: fixed;
@@ -40,6 +161,7 @@
     opacity: 0.9;
     z-index: 10;
 }
+
 
 /******************************* Overlay css properties ***************************************/
 
@@ -73,9 +195,10 @@
       font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
       line-height:1.0;
 }
-#editor {
+.editor {
     /** Setting height is also important, otherwise editor wont showup**/
      height: 350px; 
+     width: 100%;
 }
 
 
@@ -84,8 +207,8 @@
 ._jsPlumb_overlay { z-index:100; }
 
 
-.ace_active_line {
-background: #FFFFA3;
+.ace_active-line {
+background: yellow;
 }
 
 
@@ -116,6 +239,37 @@ background: #FFFFA3;
     display:none;
 }    
 
+.prettyPrint {
+  margin-bottom: 20px;
+  z-index: 999;
+  padding: 15px 0 0;
+  border: 0;
+  position: relative;
+  background: #222;
+  white-space: pre;
+  word-wrap: normal;
+  overflow: hidden;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  color: #fec974;
+}
+
+
+.player {
+  position: absolute;
+  bottom: 2px;
+  float: left;
+  border-radius: 8px;
+  background: white;
+  color: #8F908A;
+  padding: 5px;
+  z-index: 20;
+}
+
+.player_element1 {
+  margin-left: 100px;
+}
 
 #scrollbar1 { width: 240px; clear: both; margin: 5px 0 2px; }
 .viewport { width: 225px; height: 200px; overflow: hidden; position: relative; }
@@ -129,68 +283,98 @@ background: #FFFFA3;
 .disable{ display: none; }
 .noSelect { user-select: none; -o-user-select: none; -moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none; }
 
+
+
+table.fixed { /*table-layout:fixed;*/ background-color:yellow;}
+/*table.fixed td { overflow: hidden; }
+*/
+table td > div {
+    overflow: hidden;
+    text-align: center;
+    height: 20px;
+    width: 50px;
+}
+
+.red {
+  background-color: red;
+}
+
+.transit-box {
+  background-color: orange;
+  border-radius: 5px;
+  border: 1px solid;
+}
+
 </style>
 </head>
 <body>
-		<div id="overlay"> 
-         <div >
-            <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse" role="navigation">
-              <div class="container-fluid">
-                <div class="navbar-header">
-                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand" href="#">Tanituts</a>
-                </div>
 
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  <ul class="nav navbar-nav">
-                    <li><a href="#" onClick="previous();"><span class="glyphicon glyphicon-arrow-left"></span>Previous</a></li>
-                    <li><a href="#" onClick="next();">Next<span class="glyphicon glyphicon-arrow-right" ></span></a></li>
-                    
-                        <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" id="pv_dd_a" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                          <ul class="dropdown-menu" id="pv_dd">
-                          </ul>
-                        </li>
-                  </ul>
-                </div>
-              </div>
-            </nav>
-         </div>
-            <div id="main_ui">
-                  <div class="main-content-wrapper" style="margin: 1%">
-                  <!-- 
-                    <span data-bind="text: previewCurrentSlide() ? previewCurrentSlide().data.name : ''" ></span>
-                  -->
-                  <div class="main-content-section" style="padding: 0px;">
-      							<div id="editor"></div>
-      						<!--
-                  <span data-bind="visible: showPreviewTemplate('IMAGE')">
-      						
-                  	<div id="preview_board" data-bind="visible: previewCurrentSlide() ? previewCurrentSlide().data.src : false">
-      								<img id = "preview_board_image" height="400" width="500" data-bind="imgSrc: previewCurrentSlide() ? previewCurrentSlide().data.src : '' "/>
-      							</div>
-                  
-      						</span>
-                  -->
-      					</div>
-      					<div id = "sim_watch" class="main-content-section" style="padding: 0px;">
-      					</div>
-           </div>
-			</div>
+<script id="simTmpl" type="text/x-jquery-tmpl"> 
+  <div class="stepContainer">
+      <div class="section triangle-isosceles right">
+          ${left}
+      </div>
+      <div class="section">
+        ${right}
+      </div>
+  </div>
+</script>
+  <div id="tanituts-nav-bar">
+    <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Tanituts</a>
         </div>
 
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="#" onClick="previous();"><span class="glyphicon glyphicon-arrow-left"></span>Previous</a></li>
+            <li><a href="#" onClick="next();">Next<span class="glyphicon glyphicon-arrow-right" ></span></a></li>
+            
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" id="pv_dd_a" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                  <ul class="dropdown-menu" id="pv_dd">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                  </ul>
+                </li>
+          </ul>
+          <div id="toc" style="opacity:0">
+              <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" >Huyyah <b class="caret"></b></a>
+                    </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+  <div id="main_ui">
 
-
+  </div>
+  <!--
+  <div id="player">
+    <a href="#" onClick="previous();"><span class="glyphicon glyphicon-arrow-left"></span>Previous</a>
+    <a href="#" onClick="next();">Next<span class="glyphicon glyphicon-arrow-right" ></span></a>
+  </div>
+  -->
     <!-- Bootstrap core JavaScript
 
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script type='text/javascript' src='/static/js/jquery/jquery.js'></script>
+  <script src="/static/js/jquery-tmpl/jquery.tmpl.min.js" />
     <script src="/static/js/bootstrap/bootstrap.min.js"></script>
     <script src="/static/js/bootstrap/offcanvas.js"></script>
 	<script src="/static/js/ace-js/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
@@ -203,9 +387,11 @@ background: #FFFFA3;
     <script src="/static/js/jsPlumb/jquery.jsPlumb-1.5.5.js"></script>
 	<script src="/static/js/slider/bootstrap-slider.js"></script>
 	<script src="/static/js/ko/ko.js"></script>
-	<script src="/static/js/common.js"></script>
+	<script src="/static/js/jquery-transit/jquery.transit.min.js"></script>
+  <script src="/static/js/common.js"></script>
 	<script src="/static/js/algo/algo.js"></script>
   <script src="/static/js/algo/simTrial.js"></script>
-	
+
+
 </body>
 </html>

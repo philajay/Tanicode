@@ -1,7 +1,15 @@
 To do list
 
+If code slide is the first slide then setCodeWatch doesnt work because editor has been not set and watch doesnt works.
+
+
 -- In create slides should have drag and drop to rearragne the chapters.
 
 
 
+facebook 
+	AppId = 1489867734562036
+	secret = d2684b032a9224117f9c6df398604f62
 
+
+	

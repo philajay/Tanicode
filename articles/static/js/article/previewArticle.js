@@ -28,7 +28,7 @@ tcp.tcEditor = {
 		this.defaultStyle	= editor.container.style.fontFamily;	
 		editor.setFontSize(16);
 		this.aceEditor = editor;
-
+		console.log("intialized editor");
 	},
 	
 	setValue : function(s){
@@ -90,7 +90,13 @@ tcp.Slide = function(data){
 				if(this.data.TYPE == "CODE"){
 					if ( this.data.watches.length > 0){ 
 						w = this.data.watches[this.index];
-						this.showCodeWatch(w)
+						this.showCodeWatch(w);
+						console.log("show watch called");
+						/*window.setTimeout( function(){
+							w = tcp.UIManager.manager.currentSlide.data.watches[ tcp.UIManager.manager.currentSlide.index ];
+							tcp.UIManager.manager.currentSlide.showCodeWatch(w);
+						}, 1000 )*/
+						
 					}
 				}
 				else {
