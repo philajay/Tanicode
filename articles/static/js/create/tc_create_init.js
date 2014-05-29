@@ -1189,6 +1189,7 @@
 	}
 
 	function saveArticle(){
+		tc.UIManager.syncLastSlide();
 		o = new tc.saveArticleData();
 		d = o.getData();
 		u = "saveSlides";

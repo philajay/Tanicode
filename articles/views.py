@@ -27,6 +27,151 @@ def index(request):
     return HttpResponse(template.render(context))
 
 @login_required
+def dashboard(request):
+    template = loader.get_template('articles/dashboard.html')
+    articles = Article.objects.filter(user = request.user).order_by("-last_saved")
+    context = RequestContext(request, {"articles": articles})
+    return HttpResponse(template.render(context))
+
+
+@login_required
+def dashboardGetAllSeries(request):
+    series = Series.objects.filter(user = request.user).order_by("-last_saved")
+    l = []
+    for s in series:
+    	l.append({'name': str(s.title), 'id' : s.pk, 'domId' : "series_id_" + str(s.pk) ,'date' : str(s.last_saved), 'is_published' : s.is_published, 
+    		"edit" : "/articles/createSeries?edit=123&aid=" + str(s.pk)})
+
+    return HttpResponse( json.dumps( l ) )
+
+
+@login_required
+def createSeries(request):
+	name = ''
+	tags = ''
+	zist = ''
+	sa = ''
+	aid = ''
+	edit = request.GET.get('edit', None)
+	logger.debug("edit is " + edit)
+	if(edit):
+		p = 1
+		try:
+			x = request.GET.get('aid', None)
+			if x :
+				p = int(x)
+		except:
+			pass
+		a = Series.objects.get(pk=p)
+		logger.debug("object got")
+		d = json.loads(a.rawJSON)
+		name = d['name']
+		tags = d['tags']
+		zist = d['zist']
+		sa = a.articles
+		aid = a.pk
+
+	template = loader.get_template('articles/createSeries.html')
+	articles = Article.objects.filter(user = request.user , is_published = True).order_by("-last_saved")
+	editParams = {"articles": articles,'aid' : aid, 'name' : name , 'zist': zist, 'tags': tags, 'sa' : sa}
+	logger.debug("edit Params is " + str(editParams))	
+	context = RequestContext(request, editParams)
+ 	return HttpResponse(template.render(context))
+
+@login_required
+def updateSeries(request):
+	x = request.GET.get('aid', None)
+	p = int(x)
+	a = Series.objects.get(pk=p)
+	s = request.POST.get('data', None)
+	obj = json.loads(s)
+	name = obj['name']
+	zist = obj['zist']
+	tags = filter(None,  obj["tags"].split())
+	search = str(name) + " " + str(obj["tags"]) + " " + str(zist)
+	articles = obj['articles']
+	a.articles = articles
+	a.title = name
+	a.user = request.user
+	a.is_published = False
+	a.search = search
+	a.rawJSON = s
+	a.save()
+	for tag in tags:
+		a.tags.add(tag) 
+	#delete all the entries from SeriesAndArticles
+	SeriesAndArticles.objects.filter(series = a).delete()
+	sid = a.pk;
+	al = json.loads(articles)
+	for a1 in al['articles'] :
+		aid = a1['id']
+		sa = SeriesAndArticles(article_id = aid, series_id = sid)
+		sa.save()
+			
+	return HttpResponse( json.dumps( {'id': a.pk} ) )
+	
+@login_required
+def saveSeries(request):
+	s = request.POST.get('data', None)
+	obj = json.loads(s)
+	name = obj['name']
+	zist = obj['zist']
+	tags = filter(None,  obj["tags"].split())
+	search = str(name) + " " + str(obj["tags"]) + " " + str(zist)
+	articles = obj['articles']
+	a = Series()
+	a.articles = articles
+	a.title = name
+	a.user = request.user
+	a.is_published = False
+	a.search = search
+	a.rawJSON = s
+	a.save()
+	for tag in tags:
+		a.tags.add(tag) 
+
+	#logger.debug("Articles is  ---- " + str(articles))
+	al = json.loads(articles)
+	#logger.debug("Data as received ---- " + str(al))
+	
+	sid = a.pk;
+	for a1 in al['articles'] :
+		aid = a1['id']
+		sa = SeriesAndArticles(article_id = aid, series_id = sid)
+		sa.save()
+			
+	return HttpResponse( json.dumps( {'id': a.pk} ) )
+
+
+
+@login_required
+def publishArticle(request):
+	p = request.GET.get('id', None)
+	try:
+		p = int(p)
+	except:
+		return HttpResponse( json.dumps( {'msgg': 'Invalid article ID.'} ) )
+
+	a = Article.objects.get(pk=p)
+	a.is_published = True
+	a.save()
+	return HttpResponse( json.dumps( {'msgg': "Article " + a.title + " published", 'id': p} ) )
+
+@login_required
+def publishSeries(request):
+	p = request.GET.get('id', None)
+	try:
+		p = int(p)
+	except:
+		return HttpResponse( json.dumps( {'msgg': 'Invalid article ID.'} ) )
+
+	a = Series.objects.get(pk=p)
+	a.is_published = True
+	a.save()
+	return HttpResponse( json.dumps( {'msgg': "Series " + a.title + " published", 'id': p} ) )
+
+
+@login_required
 def create(request):
     edit = request.GET.get('edit', None)
     metadata = ''
@@ -55,7 +200,9 @@ def create(request):
     	'aid': aid
     })
     return HttpResponse(template.render(context))
-    
+
+
+@login_required  
 def edit(request, id):
 	a = Article.objects.get(pk=id)
 	metadata = a.metaData
@@ -109,12 +256,58 @@ def viewArticle(request, id, slug):
 	aid = a.pk
 	template = loader.get_template('articles/viewArticle.html')
 	context = RequestContext(request, {
+		'object' : a,
 		'metadata': json.dumps(metadata),
 		'slides' : json.dumps(slides),
 		'html' : html,
 		'aid': aid
 	})
 	return HttpResponse(template.render(context))
+
+def viewSeries(request, id, slug):
+	p = int(id)
+
+	'''
+	try:
+		x = request.GET.get('aid', None)
+		if x :
+			p = int(x)
+	except:
+		pass
+	'''
+	a = Article.objects.get(pk=p)
+	metadata = a.metaData
+	slides = a.slides
+	html = a.html
+	aid = a.pk
+	template = loader.get_template('articles/viewSeries.html')
+	context = RequestContext(request, {
+		'object' : a,
+		'metadata': json.dumps(metadata),
+		'slides' : json.dumps(slides),
+		'html' : html,
+		'aid': aid
+	})
+	return HttpResponse(template.render(context))
+
+def getArticleSlidesAjax(request):
+	id = request.GET.get("aid")
+	p = int(id)
+	logger.debug("Inside")
+	a = Article.objects.get(pk=p)
+	metadata = a.metaData
+	slides = a.slides
+	html = a.html
+	aid = a.pk
+	d = {
+		'metadata': json.dumps(metadata),
+		'slides' : json.dumps(slides),
+		'html' : html,
+		'aid': aid,
+		}
+	#context = RequestContext(request, )
+	return HttpResponse( json.dumps( d ) )
+	
 
 
 def viewAlgo(request, id, slug):
@@ -123,7 +316,7 @@ def viewAlgo(request, id, slug):
 	})
 	return HttpResponse(template.render(context))
 
-
+@login_required
 @csrf_exempt
 def saveSlides(request):
 	s = request.POST.get('data', None)
@@ -134,6 +327,8 @@ def saveSlides(request):
 	obj1 = json.loads(obj1)
 	name = obj1["name"]
 	tags = filter(None,  obj1["tags"].split())
+	zist = obj1["zist"]
+	search = str(name) + " " + str(obj1["tags"]) + " " + str(zist)
 	html = obj['html']
 	a = Article()
 	a.metaData = json.dumps( metaData )
@@ -141,14 +336,17 @@ def saveSlides(request):
 	a.html = json.dumps( html )
 	a.title = name
 	a.user = request.user
+	a.is_published = False
+	a.search = search
 	a.save()
 	for tag in tags:
 		a.tags.add(tag) 
-	
 	return HttpResponse( json.dumps( {'id': a.id} ) )
-	
+
+@login_required	
 @csrf_exempt
-def updateSlides(request):
+def updateSlides(request, id):
+	logger.debug("Ajay -- save Slides Called")
 	s = request.POST.get('data', None)
 	obj = json.loads(s)
 	p = obj['aid']
@@ -165,17 +363,22 @@ def updateSlides(request):
 	#obj1 = obj['articleMetaData']
 	name = obj1["name"]
 	tags = filter(None,  obj1["tags"].split())
-
+	zist = obj1["zist"]
+	search = str(name) + " " + str(obj1["tags"]) + " " + str(zist)
+	
 	html = obj['html']
 	a = Article.objects.get(pk=p)
+	a.title = name
 	a.metaData = json.dumps( metaData )
 	a.slides = json.dumps( slides )
 	a.html = json.dumps( html )
 	a.title = name
+	a.search = search
 	a.save()
 	a.tags.clear()
 	for tag in tags:
 		a.tags.add(tag) 
+	logger.debug("Ajay -- save Slides saved")
 	return HttpResponse( json.dumps( {'id': a.id} ) )
 
 
@@ -221,7 +424,7 @@ def save_upload( uploaded, filename, raw_data ):
 	
 	return ''
 
-	
+@login_required	
 @csrf_exempt
 def ajaxupload( request ):
 	if request.method == "POST":   

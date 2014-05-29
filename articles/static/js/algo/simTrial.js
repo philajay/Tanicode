@@ -433,7 +433,7 @@ simWatchMgr = {
 	},
 	'jumpTo' : function(i){
 
-
+    /*
     if( i == 2 ){
       trans.scaleDown({to: "toc > ul", elem: "main_ui", show: "toc"});
       return;
@@ -442,6 +442,7 @@ simWatchMgr = {
       trans.scaleUp({to: "toc > ul", elem: "main_ui", show: "toc"});
       return;
     }
+    */
 		this.currIndex = i;
 		
 		//jsPlumbMgr.clear();

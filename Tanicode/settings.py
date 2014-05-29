@@ -39,7 +39,12 @@ INSTALLED_APPS = (
     'articles',
     'taggit',
     'social.apps.django_app.default',
+    'hitcount',
 )
+
+HITCOUNT_KEEP_HIT_ACTIVE = { 'seconds': 1 }
+HITCOUNT_HITS_PER_IP_LIMIT = 0
+HITCOUNT_EXCLUDE_USER_GROUP = ( 'Editor', )
 
 
 TEMPLATE_CONTEXT_PROCESSORS = (
