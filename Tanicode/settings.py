@@ -70,6 +70,7 @@ SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/another-login-url/'
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/new-users-redirect-url/'
 
 LOGIN_URL = '/login/facebook'
+LOGOUT_URL = '/'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',

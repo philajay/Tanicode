@@ -9,244 +9,97 @@
     <link rel="shortcut icon" href="favicon.png">
     <title>Blog Express - Don't Blog, Express It!!</title>
     <!-- Bootstrap core CSS -->
-    <link href="/static/css/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="/static/css/bootstrap/offcanvas.css" rel="stylesheet">
-	<link href="/static/css/fileuploader.css" rel="stylesheet">
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="ie8-responsive-file-warning.js"></script><![endif]-->
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="/static/js/bootstrap/html5shiv.js"></script>
-      <script src="/static/js/bootstrap/respond.min.js"></script>
-    <![endif]-->
-<style>
-#editor {
-    /** Setting height is also important, otherwise editor wont showup**/
-    height: 350px;
-}
-
-.ace_active_line {
-background: #FFFFA3;
-}
-
-.ace_gutter-cell.ace_breakpoint{ 
-	border-radius: 20px 0px 0px 20px; 
-	box-shadow: 0px 0px 1px 1px red inset; 
-} 
-
-#board {
-	width: 300px;
-	height: 350px;
-	border: 1px dotted black;
-}
-
-#scrollbar1 { width: 250px; clear: both; margin: 20px 0 10px; }
-.viewport { width: 230px; height: 250px; overflow: hidden; position: relative; }
-.overview { width: 230px;list-style: none; position: absolute; left: 0; top: 0; }
-.thumb .end,
-.thumb { background-color: #003D5D; }
-.scrollbar { position: relative; float: right; width: 15px; }
-.track { background-color: #D8EEFD; height: 100%; width:13px; position: relative; padding: 0 1px; }
-.thumb { height: 20px; width: 13px; cursor: pointer; overflow: hidden; position: absolute; top: 0; }
-.thumb .end { overflow: hidden; height: 5px; width: 13px; }
-.disable{ display: none; }
-.noSelect { user-select: none; -o-user-select: none; -moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none; }
-
-</style>
+    <link href="/static/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/article.css" rel="stylesheet">
 </head>
 <body>
-    <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-        <div class="container">
+           <!-- Fixed navbar -->
+      <div class="navbar navbar-fixed-top">
+        <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Blog Express</a>
+              <a class="navbar-brand" href="/">TaniTuts</a>
             </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-            <!-- /.nav-collapse -->
-        </div>
-        <!-- /.container -->
+            <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" style="width:500px;" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right" id="bs_navbar">
+              {% if user.is_authenticated %}
+                  <ul class="nav navbar-nav">
+                    <li><a id="create_new" href="/dashboard">dashboard</a></li>
+                  </ul>
+                  <ul class="nav navbar-nav">
+                    <li><a href="/logout">Sign Out</a></li>
+                  </ul>
+              {% else %}
+                  <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign In <b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                        <li><a href="/login/facebook?next=/">facebook</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">google</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+              {% endif %}
+            </div><!-- /.navbar-collapse -->
+            
+        </nav>
     </div>
     <!-- /.navbar -->
-	<div style="padding: 0 15px;">
-    <div class="container">
-        <div class="row row-offcanvas row-offcanvas-right">
-            <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-                
-				<span><a href="#" class="list-group-item active">Slides</a></span>
-				<div id="scrollbar1">
-					<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
-					<div class="viewport">
-						<div class="overview">
-							<span class="list-group">
-								<!-- ko foreach: slides -->
-									<span>
-										<a href="#" class="list-group-item" > <span data-bind="forEachIndex: $index" ></span><span data-bind="partialText: $data.data.name, click: $data.changeSlide"></span><span data-bind="click: $data.deleteSlide">&nbsp;&nbsp;delete</span></a>										
-									</span>
-								<!-- /ko -->
-							</span>
-						</div>
-                	</div>
-				</div>
-				
-				
-				
-				<div class="list-group">
-                    <a href="#" class="list-group-item active">Create New</a>
-                    <!-- ko foreach: newSlideOptions -->
-						<a href="#" class="list-group-item" data-bind="click: $data.setNewSlideName" ><span data-bind="text: $data.name"></span></a>
-					<!-- /ko -->
-					<!--
-					<a href="#" class="list-group-item">Text Slide</a>
-                    <a href="#" class="list-group-item" data-toggle="modal" data-target="#myModal">Code Slide</a>
-                    <a href="#" class="list-group-item" data-toggle="modal" data-target="#myModal">Image Slide</a>
-					-->
-                </div>
-            </div>
-            <!--/span-->
-            <div class="col-xs-12 col-sm-9">
-                <div>
-					<p class="pull-right visible-xs">
-						<button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Links</button>
-					</p>
-					<div class="row" >
-						<div class="col-xs-12 col-md-8" id="text_slide">
-							<span data-bind="visible: showTemplate('TEXT|CODE|IMAGE')">
-								<input id="slide_name" type="text" class="form-control"  data-bind="value: currentSlide().data.name"/>
-							</span>
-							<br>
-							<span data-bind="visible: showTemplate('CODE')">
-								<select id="code_template" class="form-control" data-bind="options: codeSlides(), optionsText: 'name', value: codeSlideForTemplate, optionsCaption: 'Choose template for new code slide'">
-								</select>
-							</span>
-							<span data-bind="visible: showTemplate('IMAGE')">
-								
-								<select id="code_template" class="form-control" style="width:60%;display:inherit" data-bind="options: imageSlides(), optionsText: 'name', value: imageSlideForTemplate, optionsCaption: 'Choose template for new image slide'">
-								</select>
-								&nbsp;&nbsp;
-								<!--<button type="button" class="btn btn-default" data-bind="click: $data.delete">Upload new Image</button>-->
-								<span id = "file-uploader"></span>
-							</span>
-							<br>
-							<span data-bind="visible: showTemplate('TEXT|CODE')">
-								<div id="editor"></div>
-							</span>
-							<span data-bind="visible: showTemplate('IMAGE')">
-								<div id="board" data-bind="visible: currentSlide().data.src">
-									<!--
-									<img id = "board_image" height="400" width="500" src="http://www.scottgu.com/blogposts/mvc2/step7.jpg" />
-									-->
-									<img id = "board_image" height="400" width="500" data-bind="imgSrc: currentSlide().data.src"/>
-								</div>
-							</span>
 
-						</div>
-						
-						<div class="col-xs-6 col-md-4" data-bind="visible: showTemplate('CODE')">
-							<span data-bind='template: { name: showWatchTemplate,
-							data: watch() }' >
-							</span>
-						</div>
-
-						<script language="text/html" id = "howToCodewatch">
-							<h2>How to add code watch?</h2>
-							<p>Give the general instructions here for adding the watch.</p>
-						</script>
-
-						<script language="text/html" id = "codeWatch">
-							<h2>Watch</h2>
-							<textarea class="form-control" rows="3" id="watch" data-bind="value:$data.text"></textarea>
-							<button type="button" class="btn btn-default" data-bind="click: $data.delete">Delete</button>
-						</script>
-						
-						<div class="col-xs-6 col-md-4" data-bind="visible: showTemplate('IMAGE')">
-							<span data-bind='template: { name: showImageWatchTemplate,
-							data: watchImage() }' >
-							</span>
-						</div>
-						<script language="text/html" id = "howToImagewatch">
-							<h2>How to add image watch?</h2>
-							<p>Give the general instructions here for adding the watch for the image.</p>
-						</script>
-
-						<script language="text/html" id = "imageWatch">
-							<h2>Watch</h2>
-							<textarea class="form-control" rows="3" id="watch" data-bind="value:$data.text"></textarea>
-							<button type="button" class="btn btn-default" data-bind="click: $data.delete">Delete</button>
-						</script>
-						
-					</div>
-                <!--/row-->
-				</div>
-			</div>
-            <!--/span-->
-        </div>
-        <!--/row-->
-        <footer>
-            <div class="row">
-                <div class="col-xs-8 col-md-6">
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Cancel</button>
-                </div>
-                <!--/span-->
-                <div class="col-xs-8 col-md-6">
-                    <button class="btn btn-lg btn-primary btn-block" type="submit" onClick= "javascript:saveSlides();">Save</button>
-                </div>
-                <!--/span-->
-            </div>
-            <!--/row-->
-            <hr>
-            <p>&copy; BlogExpress 2014</p>
-        </footer>
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Copy Slide</h4>
-                    </div>
-                    <div class="modal-body">                        
-                        <!-- /.panel panel-info -->
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Select Slide</h3>
-                            </div>
-                            <div class="panel-body">
-                                <select multiple class="form-control">
-                                    <option value="chapter1">Chapter1</option>
-                                    <option value="chapter2">Chapter2</option>
-                                    <option value="chapter3">Chapter3</option>
-                                    <option value="chapter4">Chapter4</option>
-                                    <option value="chapter5">Chapter5</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!-- /.panel panel-info -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Copy</button>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
+    <div class="well" style="margin-top:60px;background-color:aliceblue;">
+          <h1>Share your knowledge in intutive and easy way.</h1>
+          <p>Write articles and series in way thats is fun to write and fun to read.</p>
+          <p><a class="btn btn-primary btn-lg" role="button">Learn more</a></p>
     </div>
-    <!--/.container-->
-	</div>
+<div id="container" > 
+    <div class="row">
+        <div class="col-md-12">
+            <div class = "col-sm-6">
+                <div class="well">
+                    <h2>Absolute Beginner</h2>
+                    <p>Build first web application, first ios app or</p>
+                    <p><a class="btn btn-primary btn-lg" role="button">Learn more</a></p>
+                </div>
+            </div>
+            <div class = "col-sm-6">
+                <div class="well">
+                    <h2>Understand Academics</h2>
+                    <p>Learn Data Structures, algorithms, operating system and more..</p>
+                    <p><a class="btn btn-primary btn-lg" role="button">Learn more</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class = "col-sm-6">
+                <div class="well">
+                    <h2>I know programming</h2>
+                    <p>but want to learn new technology</p>
+                    <p><a class="btn btn-primary btn-lg" role="button">Learn more</a></p>
+                </div>
+            </div>
+            <div class = "col-sm-6">
+                <div class="panel">
+                    <h2>If nothing else then:</h2>
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input type="text" style="width:400px;" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <!-- Bootstrap core JavaScript
 
     ================================================== -->
@@ -254,15 +107,6 @@ background: #FFFFA3;
     <script type='text/javascript' src='/static/js/jquery/jquery.js'></script>
     <script src="/static/js/bootstrap/bootstrap.min.js"></script>
     <script src="/static/js/bootstrap/offcanvas.js"></script>
-	<script src="/static/js/ace-js/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/static/js/drag/drag.js"></script>
-	<script src="/static/js/drag/drag-live.js"></script>
-	<script src="/static/js/jquery-plugins/tinyscrollbar.js"></script>
-	<script src="/static/js/ko/ko.js"></script>
-	<script src="/static/js/common.js"></script>
-	<script src="/static/js/tc_ko.js"></script>
-	<script src="/static/js/tc_slide_objects.js"></script>
-	<script src="/static/js/templates.js"></script>
-	<script src="/static/js/fileuploader.js"></script>
+    <script src="/static/js/underscore/underscore.js"></script>
 </body>
 </html>

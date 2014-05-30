@@ -22,7 +22,7 @@ logger = logging.getLogger('articles.views')
 
 def index(request):
     template = loader.get_template('articles/index.html')
-    context = RequestContext(request, {
+    context = RequestContext(request, { 'user', request.user
     })
     return HttpResponse(template.render(context))
 
@@ -40,7 +40,7 @@ def dashboardGetAllSeries(request):
     l = []
     for s in series:
     	l.append({'name': str(s.title), 'id' : s.pk, 'domId' : "series_id_" + str(s.pk) ,'date' : str(s.last_saved), 'is_published' : s.is_published, 
-    		"edit" : "/articles/createSeries?edit=123&aid=" + str(s.pk)})
+    		"edit" : "/articles/createSeries?edit=123&aid=" + str(s.pk), 'slug' : '/articles/viewSeries/' + s.slug })
 
     return HttpResponse( json.dumps( l ) )
 
@@ -53,7 +53,6 @@ def createSeries(request):
 	sa = ''
 	aid = ''
 	edit = request.GET.get('edit', None)
-	logger.debug("edit is " + edit)
 	if(edit):
 		p = 1
 		try:
@@ -74,6 +73,7 @@ def createSeries(request):
 	template = loader.get_template('articles/createSeries.html')
 	articles = Article.objects.filter(user = request.user , is_published = True).order_by("-last_saved")
 	editParams = {"articles": articles,'aid' : aid, 'name' : name , 'zist': zist, 'tags': tags, 'sa' : sa}
+	logger.debug("User " + str(request.user))
 	logger.debug("edit Params is " + str(editParams))	
 	context = RequestContext(request, editParams)
  	return HttpResponse(template.render(context))

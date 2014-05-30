@@ -87,9 +87,22 @@ $(document).ready( function(){
 
 		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 		  var target = $(e.target).attr("href") // activated tab
+		  UIManager.changeUI(target);
 		  series.visited(target)
 		})
-
-
 	}
 );
+
+UIManager = {
+	changeUI : function(target){
+		if(target == "#series"){
+			$("#create_new").attr("href", "/articles/createSeries");
+			$("#create_new").html("New Series");
+		}
+		else if( target == "#articles" ){
+			$("#create_new").attr("href", "/articles/create");
+			$("#create_new").html("New Article");
+		}
+	}
+}
+

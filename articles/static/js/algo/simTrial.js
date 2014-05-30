@@ -110,6 +110,7 @@ steps[steps.length] = {
 }
 
 
+
 steps[steps.length] = {
   'arr' : [
     new list({
@@ -426,6 +427,24 @@ steps[steps.length] = {
       ],
 };
 
+
+steps[steps.length] = {
+  'question' : "But we have sorted only one element?",
+
+};
+
+
+steps[steps.length] = {
+  'answer' : "To sort rest of elements we will use divde and conquer using recursion. Lets see how.<a href='google.com'>jump</a>",
+};
+
+
+/*
+steps[steps.length] = {
+  'answer' : "Fear not. To sort rest of the elements we will use recursion.",
+};
+*/
+
 simWatchMgr = {
 	'currIndex' : 0,
 	'first' : function(){
@@ -447,7 +466,27 @@ simWatchMgr = {
 		
 		//jsPlumbMgr.clear();
 		$('#sim_watch').empty();
-		if(steps[i].code){
+    if( steps[i].answer ){
+        var html =   '<div class="stepContainer">'
+                + '<div class="row"><div class="col-md-12">' 
+                + '<div class = "col-sm-10"><div> <p class="thoughtRight">'+ steps[i].answer + '</p></div></div>' 
+                + '<div class = "col-sm-2"><img src="/static/images/tuts/tanituts.jpeg" /></div>'
+                + '</div></div></div>';
+          $("#main_ui").prepend(html);
+        //window.setTimeout(this.populateCells, 10)
+
+    }
+		else if( steps[i].question ){
+        var html =   '<div class="stepContainer">'
+                + '<div class="row"><div class="col-md-12">' 
+                + '<div class = "col-sm-2"><img src="/static/images/tuts/you.jpeg" /></div>'
+                +  '<div class = "col-sm-10"><p class="thoughtLeft">'+ steps[i].question + '</p></div>' 
+                + '</div></div></div>';
+          $("#main_ui").prepend(html);
+        //window.setTimeout(this.populateCells, 10)
+
+    }
+    else if(steps[i].code){
 			id = "editor_" + i;
 			var left = steps[i].left;
 			var html =   '<div class="stepContainer">'

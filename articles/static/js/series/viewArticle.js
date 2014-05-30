@@ -104,7 +104,7 @@ tc.preview = function(){
 
 tc.overlayInitArticle = function(){
 	dataSlides = []
-
+	$('#pv_dd').html('')
 	_.each(window.slides, function(elem, i){
 			o =  elem.data;
 			slide = new tcp.Slide(o);
