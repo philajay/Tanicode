@@ -266,26 +266,11 @@ def viewArticle(request, id, slug):
 
 def viewSeries(request, id, slug):
 	p = int(id)
-
-	'''
-	try:
-		x = request.GET.get('aid', None)
-		if x :
-			p = int(x)
-	except:
-		pass
-	'''
-	a = Article.objects.get(pk=p)
-	metadata = a.metaData
-	slides = a.slides
-	html = a.html
+	a = Series.objects.get(pk=p)
 	aid = a.pk
 	template = loader.get_template('articles/viewSeries.html')
 	context = RequestContext(request, {
 		'object' : a,
-		'metadata': json.dumps(metadata),
-		'slides' : json.dumps(slides),
-		'html' : html,
 		'aid': aid
 	})
 	return HttpResponse(template.render(context))

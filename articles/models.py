@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 from taggit.managers import TaggableManager
 
-# Create your models here.
+#
 class Article(models.Model):
 	title = models.CharField(max_length=255)
 	slug = models.CharField(max_length=255)
@@ -28,8 +28,11 @@ class Article(models.Model):
 class Series(models.Model):
 	title = models.CharField(max_length=255)
 	slug = models.CharField(max_length=255)
+	#field to capture name, tags and zist fields. Used for search.
 	search = models.TextField()
+	#json having article names and article Ids.
 	articles = models.TextField()
+	#complete JSON object as obtained from client side
 	rawJSON = models.TextField()
 	last_saved = models.DateField(auto_now=True)
 	tags = TaggableManager()
@@ -50,5 +53,11 @@ class SeriesAndArticles(models.Model):
 	series =  models.ForeignKey(Series)
 
 
-class BeginnerSeries(models.Model):
-	series =  models.ForeignKey(Series)
+
+class BeginnerSeriesTags(models.Model):
+	titleTags = models.CharField(max_length=255)
+
+
+class AcademicsTags(models.Model):
+	titleTags = models.CharField(max_length=255)
+	

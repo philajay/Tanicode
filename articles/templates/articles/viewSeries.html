@@ -24,15 +24,16 @@
       <script src="/static/js/bootstrap/respond.min.js"></script>
     <![endif]-->
     <script type="text/javascript">
-    	window.metaData = {{ metadata|safe }}
-      window.savedSlides = {{ slides|safe }}
-      window.aid = {{ aid|safe }}
+    	//window.metaData = {{ metadata|safe }};
+      //window.savedSlides = {{ slides|safe }};
+      window.aid = {{ aid|safe }};
+      window.toc = {{object.articles | safe}};
+      window.title = "{{object.title | safe}}";
     </script>
 <style>
 /******************************* Overlay css properties ***************************************/
 #overlay {
     position: fixed;
-    display: none;
     top: 0;
     left: 0;
     width: 100%;
@@ -42,7 +43,6 @@
     -moz-opacity:0.9;
     -khtml-opacity: 0.9;
     opacity: 0.9;
-    z-index: 10;
 }
 
 /******************************* Overlay css properties ***************************************/
@@ -110,6 +110,15 @@ background: #FFFFA3;
 .disable{ display: none; }
 .noSelect { user-select: none; -o-user-select: none; -moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none; }
 
+
+.nav_bar_hide {
+  display : none;
+}
+
+.nav_bar_show {
+  display : block;
+}
+
 </style>
 </head>
 <body>
@@ -129,20 +138,43 @@ background: #FFFFA3;
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav">
-                    <li><a href="#" onClick="javascript:tcp.UIManager.previous();"><span class="glyphicon glyphicon-arrow-left"></span>Previous</a></li>
-                    <li><a href="#" onClick="javascript:tcp.UIManager.next();">Next<span class="glyphicon glyphicon-arrow-right" ></span></a></li>
+                    <li id="nav_bar_previous"><a  href="#" onClick="javascript:tcp.UIManager.previous();"><span class="glyphicon glyphicon-arrow-left"></span>Previous</a></li>
+                    <li id="nav_bar_next"><a href="#" onClick="javascript:tcp.UIManager.next();">Next<span class="glyphicon glyphicon-arrow-right" ></span></a></li>
                     
-                        <li class="dropdown">
+                        <li class="dropdown" id="nav_bar_article_toc">
                           <a href="#" class="dropdown-toggle" id="pv_dd_a" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
                           <ul class="dropdown-menu" id="pv_dd">
                           </ul>
                         </li>
+                        <li><a href="#" id="nav_toc" onClick="javascript:animationManager.tocSelected()"  style="display:none;">Table of Content</a></li>
+
                   </ul>
                 </div>
               </div>
             </nav>
          </div>
-            <div id="main_ui">
+         <div id="toc" >
+              <div class="row">
+                <div class="col-md-12">
+                    <div  class = "col-sm-12">
+                        <table id="series_toc" class="table table-striped">
+                          <thead>
+                              <tr>
+                                  <td width="100%" class="success"><h1><span data-bind="text: articleName"><span></h1></td>
+                              </tr>
+                          </thead>
+                          <!-- ko foreach: seriesTOC -->
+                          <tbody>
+                              <td> <a href="#" data-bind="attr: {'id': 'toc_' + $data.id}"> <span data-bind="text: $data.name"></span></a></td>
+                          </tbody>
+                          <!-- /ko -->
+                          </table>              
+                    </div>
+                </div>
+              </div>
+         </div>
+
+            <div id="main_ui" style="display:none">
                   <div class="main-content-wrapper" style="margin: 1%">
                   <!-- 
                     <span data-bind="text: previewCurrentSlide() ? previewCurrentSlide().data.name : ''" ></span>
@@ -166,14 +198,8 @@ background: #FFFFA3;
                   
       					</div>
            </div>
-			</div>
-        </div>
-
-    <div id="seo" class="seo">
-        {{html|safe}}
-    </div>
-
-
+			   </div>
+      </div>
 
     <!-- Bootstrap core JavaScript
 
@@ -193,8 +219,10 @@ background: #FFFFA3;
 	<script src="/static/js/slider/bootstrap-slider.js"></script>
 	<script src="/static/js/ko/ko.js"></script>
 	<script src="/static/js/common.js"></script>
-	<script src="/static/js/series/viewArticle.js"></script>
-	<script src="/static/js/series/previewArticle.js"></script>
+	<script src="/static/js/series/viewSeries.js"></script>
+  <script src="/static/js/jquery-transit/jquery.transit.min.js"></script>
+
+	<script src="/static/js/series/previewSeries.js"></script>
   <script src="/static/js/jsPlumb/jquery.jsPlumb-1.5.5.js"></script>
   <script src="/static/js/jmpress/jmpress.all.min.js"></script>
   <script language="javascript">

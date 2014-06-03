@@ -40,7 +40,8 @@ tc.articleDetailsHolder = {
 tc.koModel = {
     articleDetails : tc.articleDetails,
 	previewCurrentSlide : ko.observable(),
-	
+	articleName : ko.observable(),
+	seriesTOC : ko.observableArray(),
 
 	previewWatch : ko.observable(),
 	showPreviewTemplate : function(s){
@@ -74,12 +75,68 @@ tc.koModel = {
 //firstSlide
 
 $( document ).ready(function(){
-	initView();
+	//initView();
+	initSeries();
 })
 
+function initSeries(){
+	tc.koModel.articleName(window.title);
+	_.each(toc.articles, function(d, i){
+		tc.koModel.seriesTOC.push(d);
+	});
+
+	ko.applyBindings(tc.koModel);
+
+	_.each(toc.articles, function(d, i){
+		$('#toc_' + d.id).on('click', {id : d.id, index: i}, function(event){
+			tcp.SeriesManager.currentIndex = i;
+			tcp.SeriesManager.getArticleSlides(event.data.id)
+			//trans.scaleDown(;
+			//trans.scaleDown({to: "nav_toc", elem: "toc", show: "nav_toc", callback:scaleDown});
+			animationManager.ArticleSelected();
+		})
+
+	})
+
+}
+
+function scaleUp(){
+	$('#main_ui').hide();
+	$('#toc').show();
+	trans.scaleUp({to: "nav_toc", elem: "toc", show: "nav_toc", callback:reInitTOC});
+}
+
+
+/*
+
+function reInitTOC(){
+	_.each(toc.articles, function(d, i){
+		$('#toc_' + d.id).on('click', {id : d.id, index: i}, function(event){
+			tcp.SeriesManager.currentIndex = i;
+			tcp.SeriesManager.getArticleSlides(event.data.id)
+			//trans.scaleDown(;
+			trans.scaleDown({to: "nav_toc", elem: "toc", show: "nav_toc", callback:scaleDown});
+		})
+
+	})
+}
+
+function scaleDown(){
+	$('#toc').hide();
+	$('#main_ui').show();
+}
+function getArticle(){
+			//event.data['elem'] = $(this);
+	$('#toc').hide();
+	var id = $(this).attr("id").replace("toc_", "");
+	id = parseInt(id, 10);
+	tcp.SeriesManager.getNextArticleSlides(id)
+
+}
+*/
 var done = false;
 function initView(){
-		window.sj = $.parseJSON(metaData)
+	window.sj = $.parseJSON(metaData)
 	artDetailsData = $.parseJSON( sj['articleMetaData'] );
 	//window.slides =  sj['slidesMetaData'] ;
 	window.slides =  $.parseJSON($.parseJSON( window.savedSlides ));
@@ -88,17 +145,17 @@ function initView(){
 	tc.koModel.previewSlides = ko.observableArray();
 	tc.articleDetailsHolder.data = tc.articleDetails;
 	tc.koModel.articleDetails = tc.articleDetailsHolder;
-    if( !done ){
+    /*if( !done ){
     	ko.applyBindings(tc.koModel);
     	done = true;
-	}
+	}*/
     tc.preview();
 
 }
 
 tc.preview = function(){
    tc.overlayInitArticle();
-   $('#jstreejstreeHolder').css('height', $('#editor').css('height'));
+   //$('#jstreejstreeHolder').css('height', $('#editor').css('height'));
 }
 
 

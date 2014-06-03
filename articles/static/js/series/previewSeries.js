@@ -258,6 +258,13 @@ tcp.StandardUIManager = {
 		tcp.tcEditor.init();
 		this.changeTextSlide(t);
 	},
+	/*
+		Called whenever we change the article in the series
+	*/
+	reinit : function(){
+		this.index = 0;
+		this.currentSlide = null;
+	},
 	changeTextSlide : function(t){
 		if( this.currentSlide ){
 			this.currentSlide.hide();
@@ -285,7 +292,7 @@ tcp.StandardUIManager = {
 		}
 		temp = this.index + 1
 		if( temp >= tc.koModel.previewSlides().length ){
-			tcp.SeriesManager.getNextArticleSlides(2)
+			tcp.SeriesManager.getNextArticleSlides();
 			return;
 		}
 		this.index++;
@@ -299,7 +306,8 @@ tcp.StandardUIManager = {
 		}
 		temp = this.index - 1
 		if( temp < 0  ){
-			return
+			tcp.SeriesManager.getPreviousArticleSlides();
+			return;
 		}
 		this.index--;
 		this.changeTextSlide(tc.koModel.previewSlides()[this.index])
@@ -398,20 +406,184 @@ tcp.InitUI = {
 
 
 tcp.SeriesManager = {
-	'getNextArticleSlides' : function(id){
-		id = 2;
-		$.ajax({
-				  dataType: "json",
-				  url: '/articles/getArticleSlidesAjax?aid=' + id,
-				  success: function(res){
-				  	//res = $.parseJSON(res)
-				  	window.metaData = $.parseJSON(res['metadata'])
-				    window.savedSlides = $.parseJSON(res['slides'])
-      				window.aid = ['aid']
-      				initView();
-				  }
-		});
-
+	'currentIndex' : 0,
+	'cache' : {},
+	'getArticleSlides' : function(id){
+		if( this.cache[id] ){
+			window.metaData = this.cache[id]['metadata'];
+			window.savedSlides = this.cache[id]['slides'];
+	      	initView();
+		}
+		else{
+			$.ajax({
+					  dataType: "json",
+					  url: '/articles/getArticleSlidesAjax?aid=' + id,
+					  success: function(res){
+					  	//res = $.parseJSON(res)
+					  	window.metaData = $.parseJSON(res['metadata'])
+					    window.savedSlides = $.parseJSON(res['slides'])
+					    tcp.SeriesManager.cache[id] = {};
+					    tcp.SeriesManager.cache[id]['metadata'] = window.metaData;
+					    tcp.SeriesManager.cache[id]['slides'] = window.savedSlides;
+	      				tcp.StandardUIManager.reinit();
+	      				initView();
+					  }
+			});
+		}
+	},
+	'getNextArticleSlides' : function(){
+		if( (this.currentIndex + 1) >  tc.koModel.seriesTOC().length){
+			return;
+		}
+		this.currentIndex++;
+		var v = tc.koModel.seriesTOC()[this.currentIndex];
+		this.getArticleSlides(v.id);
+	},
+	'getPreviousArticleSlides' : function(){
+		if( (this.currentIndex - 1) <  0){
+			return;
+		}
+		this.currentIndex--;
+		var v = tc.koModel.seriesTOC()[this.currentIndex];
+		this.getArticleSlides(v.id);
 	}
 }
 
+
+
+navbarManager = {
+	once : false,
+	'init' : function(){
+		navbarManager.hideNav();
+	},
+	'hideNav' : function(){
+		$('#nav_bar_previous').hide();
+		$('#nav_bar_next').hide();
+		$('#nav_bar_article_toc').hide();
+	},
+	'showNav' : function(){
+		if( !navbarManager.once ){
+			navbarManager.once = true;
+		}
+		$('#nav_bar_previous').show();
+		$('#nav_bar_next').show();
+		$('#nav_bar_article_toc').show();
+
+	},
+	'onShowTOC' : function(){
+
+	},
+	'onShowArticle' : function(){
+
+	}
+};
+
+
+
+(function(obj){
+	obj.init();
+}(navbarManager));
+
+animationManager = {
+	scaledDown : false,
+	scaledUp : false,
+	ArticleSelected : function (){
+		navbarManager.showNav();
+		if( !animationManager.scaledDown  ){
+			$('#nav_toc').show();
+			$('#nav_toc').css('opacity', 0);
+			trans.scaleDown({to: "nav_toc", elem: "toc", show: "nav_toc", callback:animationManager.cbScaleDown});
+		}
+		else{
+			animationManager.cbScaleDown();		
+		}
+	},
+	cbScaleDown : function(){
+		$('#toc').hide();
+		$('#main_ui').show();
+
+		animationManager.scaledDown = true;
+	},
+	tocSelected : function(){
+		$('#main_ui').hide();
+		$('#toc').show();
+		if( !animationManager.scaledUp ){
+			trans.scaleUp({to: "nav_toc", elem: "toc", show: "nav_toc", callback:animationManager.cbScaleUp});
+		}
+		navbarManager.hideNav();
+	},
+	cbScaleUp : function(){
+		_.each(toc.articles, function(d, i){
+			$('#toc_' + d.id).on('click', {id : d.id, index: i}, function(event){
+				tcp.SeriesManager.currentIndex = i;
+				tcp.SeriesManager.getArticleSlides(event.data.id);
+				animationManager.ArticleSelected();
+			})
+		})
+		$('#toc').css('opacity', 1);
+		animationManager.scaledUp = true;
+	},
+}
+
+
+
+trans = {
+  toc : null,
+  height: null,
+  width: null,
+  'scaleDown' : function(anim ){
+      var o = $('#' + anim.to);
+      var w = 100;
+      var l = o.offset().left;
+      var t = o.offset().top;
+      var elem = $("#" + anim.elem)
+      this.toc = elem.html();
+      this.height = $(document).height();
+      this.width = elem.width();
+      elem.transition({ x: l }, 500,'ease', function(){
+          elem.animate({ width: w }, 600, "linear", function(){
+              
+              html = '<div class="triangle-isosceles bottom">Table of Content</div>'
+              elem.html(html);
+              //$("#main_ui").addClass('transit-box');
+              elem.animate({height: 50 }, 600, "linear", function(){
+                  elem.transition({y: t - 70 }, 1500,'ease', function(){
+                    $('#' + anim.show).animate({opacity: 1 }, 300, "linear", function(){
+                      elem.animate({opacity: 0 }, 300, "linear" , function(){
+                      	if(anim.callback){
+                      		anim.callback();
+                      	}
+                      });
+                    });
+                  });            
+                }
+            );
+          });
+      });
+  },
+
+  'scaleUp' : function(anim){
+      var o = $('#' + anim.to);
+      var elem = $("#" + anim.elem)
+      elem.animate({opacity: 1 }, 300, "linear", function(){
+          $('#' + anim.show).animate({opacity: 1 }, 3, "linear", function(){
+              elem.transition({y: 0 }, 1500,'ease', function(){
+                  elem.html(trans.toc);
+                  /**/
+                  elem.animate({width: trans.width }, 600, "linear", function(){
+                         elem.animate({height: trans.height }, 600, "linear", function(){
+                                elem.transition({ x: 0 }, 500,'ease', function(){
+                                  try{
+                                        if(anim.callback){
+                      						anim.callback();
+                      					};
+                                  }catch(e){alert(e)}
+                                });
+
+                          });
+                  });
+              });
+          });
+      })
+  },
+}

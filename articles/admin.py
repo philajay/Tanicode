@@ -5,6 +5,6 @@ from articles.models import *
 admin.site.register(Article)
 admin.site.register(Series)
 admin.site.register(SeriesAndArticles)
-admin.site.register(BeginnerSeries)
-#admin.site.register(Tree)
+admin.site.register(BeginnerSeriesTags)
+admin.site.register(AcademicsTags)
 #admin.site.register(Slides)
