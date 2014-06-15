@@ -77,7 +77,65 @@ tc.koModel = {
 $( document ).ready(function(){
 	//initView();
 	initSeries();
+	attachHandlers();
+	//goToWatch();
+	goToArticle();
 })
+
+
+function attachHandlers(){
+	$("#popComments").on('click', function(){
+		populateComments();
+		$('.comment_outer_div').show();
+	});
+
+	$("#close_comments").on('click', function(){
+		$('.comment_outer_div').hide();
+	});
+	$("#signIn").on('click', function(){
+		var slide = tcp.SeriesManager.currentArticleId
+		slide = slide + "_" + tcp.UIManager.manager.index;
+		var watch = null;
+		if(tcp.UIManager.manager.currentSlide.data.TYPE == "CODE" || tcp.UIManager.manager.currentSlide.data.TYPE == "IMAGE"){
+			watch = tcp.UIManager.manager.currentSlide.index;
+		}
+		var href = window.location.pathname + "?slide="  + slide;
+		if ( watch  != null){
+			href =  href + "_" + watch;
+		}
+		href = "/login/facebook?next=" + href;
+		window.location.href = href
+	});
+
+	$('#postComment').on('click', function(){
+		comment = $.trim($('#txtComments').val());
+		if( comment == ""){
+			alert("Comment cannot be empty.")
+			return; 
+		}
+
+		var wid = tcp.UIManager.manager.currentSlide.data.uid;
+		if(tcp.UIManager.manager.currentSlide.data.TYPE == "CODE" || tcp.UIManager.manager.currentSlide.data.TYPE == "IMAGE"){
+			if( tcp.UIManager.manager.currentSlide.data.watches && tcp.UIManager.manager.currentSlide.data.watches.length > 0 ){
+				wid = tcp.UIManager.manager.currentSlide.data.watches[ tcp.UIManager.manager.currentSlide.index ].uid;
+			}
+		}
+
+		$.post( "/articles/saveComment", { 'wid': wid, 'aid': aid, 'comment' : comment } , function(d){
+			d = $.parseJSON(d)
+			if( commentsCache[wid] ){
+				commentsCache[wid].push(d);
+			}
+			else {
+				commentsCache[wid] = new Array();	
+				commentsCache[wid].push(d);
+			}
+			populateHTML(commentsCache[wid]);
+			$('#txtComments').val('');
+		})
+	})
+}
+
 
 function initSeries(){
 	tc.koModel.articleName(window.title);
@@ -136,6 +194,7 @@ function getArticle(){
 */
 var done = false;
 function initView(){
+	tcp.StandardUIManager.reinit();
 	window.sj = $.parseJSON(metaData)
 	artDetailsData = $.parseJSON( sj['articleMetaData'] );
 	//window.slides =  sj['slidesMetaData'] ;
@@ -186,3 +245,69 @@ tc.overlayInitArticle = function(){
 	$('#overlay').show();	
 }
 
+commentsCache = {}
+function populateComments(){
+	$(".comment_comments").html();
+	var wid = tcp.UIManager.manager.currentSlide.data.uid;
+	if(tcp.UIManager.manager.currentSlide.data.TYPE == "CODE" || tcp.UIManager.manager.currentSlide.data.TYPE == "IMAGE"){
+		if( tcp.UIManager.manager.currentSlide.data.watches  && tcp.UIManager.manager.currentSlide.data.watches.length > 0){
+			wid = tcp.UIManager.manager.currentSlide.data.watches[ tcp.UIManager.manager.currentSlide.index ].uid;
+		}
+	}
+
+	if ( commentsCache[wid] ){
+		populateHTML(commentsCache[wid]);
+	}
+	else {
+		aid = tcp.SeriesManager.currentArticleId;
+		getComments(aid, wid);
+	}
+}
+
+function populateHTML(l){
+	html = ""
+	_.each(l, function(d,i){
+		s = "<h2 class='comment_h2'><span class='comment_username'>" + d.user + "</span><span class='comment_date'>" + d.date + "</span></h2>"
+		s = s + "<div class='comment_comment'>" + d.comment + "</div>";
+		html += s;
+	})
+	$(".comment_comments").html(html);	
+}
+
+function getComments(a, w){
+	var post = $.ajax({
+		  dataType: "json",
+		  url: '/articles/getComments?aid='+ a + "&wid=" + w,
+		  success: function(res){
+		  		var ls = res['comments'];
+		  		commentsCache[w] = ls;
+		  		populateHTML(ls);
+		  }
+	});
+}
+
+function goToArticle(){
+	var slide = getParameterByName("slide");
+	if(slide){
+		var params = slide.split("_")
+		articleID = parseInt(params, 10);
+		tcp.SeriesManager.getArticleSlides(articleID, goToWatch)
+	}
+}
+
+function goToWatch(){
+	$('#toc').hide();
+	$('#main_ui').show();
+
+	navbarManager.showNav();
+	var slide = getParameterByName("slide")
+	if(slide){
+		var params = slide.split("_")
+		islide = parseInt(params[1], 10);
+		tcp.UIManager.moveTo(islide);
+		if( params.length > 2 ){
+			iwatch = parseInt(params[2], 10);
+			tcp.UIManager.manager.goToWatch(iwatch);
+		}
+	}
+}

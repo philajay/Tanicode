@@ -2,7 +2,8 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
-from taggit.managers import TaggableManager
+from djorm_pgfulltext.models import SearchManager
+from djorm_pgfulltext.fields import VectorField
 
 #
 class Article(models.Model):
@@ -13,10 +14,18 @@ class Article(models.Model):
 	slides = models.TextField()
 	html =  models.TextField()
 	last_saved = models.DateField(auto_now=True)
-	tags = TaggableManager()
 	user = models.ForeignKey(User)
 	is_published = models.BooleanField(default=False)
 	#hit_count = models.IntegerField()
+	search_index = VectorField()
+	#objects = models.Manager()
+	objects = SearchManager(
+        fields = ('search',),
+        config = 'pg_catalog.english', # this is default
+        search_field = 'search_index', # this is default
+        auto_update_search_field = True
+    )
+
 
 	def save(self):
 	    super(Article, self).save()
@@ -24,6 +33,8 @@ class Article(models.Model):
 	        self.id, slugify(self.title)
 	    )
 	    super(Article, self).save()
+
+
 
 class Series(models.Model):
 	title = models.CharField(max_length=255)
@@ -35,10 +46,17 @@ class Series(models.Model):
 	#complete JSON object as obtained from client side
 	rawJSON = models.TextField()
 	last_saved = models.DateField(auto_now=True)
-	tags = TaggableManager()
 	user = models.ForeignKey(User)
 	is_published = models.BooleanField(default=False)
 	#hit_count = models.IntegerField()
+	search_index = VectorField()
+	#objects = models.Manager()
+	objects = SearchManager(
+        fields = ('search',),
+        config = 'pg_catalog.english', # this is default
+        search_field = 'search_index', # this is default
+        auto_update_search_field = True
+    )
 
 	def save(self):
 	    super(Series, self).save()
@@ -61,3 +79,12 @@ class BeginnerSeriesTags(models.Model):
 class AcademicsTags(models.Model):
 	titleTags = models.CharField(max_length=255)
 	
+
+class Comments(models.Model):
+	comment = models.CharField(max_length=2500)
+	wid = models.IntegerField()
+	article = models.ForeignKey(Article)
+	user = models.ForeignKey(User)		
+	saved_time = models.DateField(auto_now=True)
+
+

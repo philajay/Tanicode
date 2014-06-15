@@ -85,8 +85,74 @@ $( document ).ready(function(){
 	tc.koModel.articleDetails = tc.articleDetailsHolder;
     ko.applyBindings(tc.koModel);
     tc.preview();
+    goToWatch();
+    attachHandlers();
 })
 
+function attachHandlers(){
+	$("#popComments").on('click', function(){
+		populateComments();
+		$('.comment_outer_div').show();
+	});
+
+	$("#close_comments").on('click', function(){
+		$('.comment_outer_div').hide();
+	});
+	$("#signIn").on('click', function(){
+		var slide = tcp.UIManager.manager.index;
+		var watch = null;
+		if(tcp.UIManager.manager.currentSlide.data.TYPE == "CODE" || tcp.UIManager.manager.currentSlide.data.TYPE == "IMAGE"){
+			watch = tcp.UIManager.manager.currentSlide.index;
+		}
+		var href = window.location.pathname + "?slide="  + slide;
+		if ( watch  != null){
+			href =  href + "_" + watch;
+		}
+		href = "/login/facebook?next=" + href;
+		window.location.href = href
+	});
+
+	$('#postComment').on('click', function(){
+		comment = $.trim($('#txtComments').val());
+		if( comment == ""){
+			alert("Comment cannot be empty.")
+			return; 
+		}
+
+		var wid = tcp.UIManager.manager.currentSlide.data.uid;
+		if(tcp.UIManager.manager.currentSlide.data.TYPE == "CODE" || tcp.UIManager.manager.currentSlide.data.TYPE == "IMAGE"){
+			if( tcp.UIManager.manager.currentSlide.data.watches && tcp.UIManager.manager.currentSlide.data.watches.length > 0 ){
+				wid = tcp.UIManager.manager.currentSlide.data.watches[ tcp.UIManager.manager.currentSlide.index ].uid;
+			}
+		}
+
+		$.post( "/articles/saveComment", { 'wid': wid, 'aid': aid, 'comment' : comment } , function(d){
+			d = $.parseJSON(d)
+			if( commentsCache[wid] ){
+				commentsCache[wid].push(d);
+			}
+			else {
+				commentsCache[wid] = new Array();	
+				commentsCache[wid].push(d);
+			}
+			populateHTML(commentsCache[wid]);
+			$('#txtComments').val('');
+		})
+	})
+}
+
+function goToWatch(){
+	var slide = getParameterByName("slide")
+	if(slide){
+		var params = slide.split("_")
+		islide = parseInt(params[0], 10);
+		tcp.UIManager.moveTo(islide);
+		if( params.length > 1 ){
+			iwatch = parseInt(params[1], 10);
+			tcp.UIManager.manager.goToWatch(iwatch);
+		}
+	}
+}
 
 tc.preview = function(){
    tc.overlayInitArticle();

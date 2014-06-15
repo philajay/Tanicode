@@ -192,7 +192,23 @@ tcp.Slide = function(data){
 			this.showImageWatch(w)
 		}
 		return {}
-	}
+	};
+
+	this.goToWatch = function(i){
+		if(this.data.TYPE == "TEXT"){
+			return null;
+		}
+		this.index = i;
+		w = this.data.watches[this.index];
+		
+		if(this.data.TYPE == "CODE"){
+			this.showCodeWatch(w)
+		}
+		if(this.data.TYPE == "IMAGE"){
+			this.showImageWatch(w)
+		}
+		return {}
+	};
 	
 	this.previous = function(){
 		if(this.data.TYPE == "TEXT"){
@@ -211,7 +227,7 @@ tcp.Slide = function(data){
 			this.showImageWatch(w)
 		}
 		return {}
-	}
+	};
 	
 	this.show = function(){
 	};
@@ -221,6 +237,7 @@ tcp.Slide = function(data){
 
 	this.hide = function(){
 		if(this.data.TYPE == "IMAGE"){
+			tcp.UIManager.manager.imageWatchDiv.hide();	
 			jsPlumb.hide(tcp.UIManager.manager.imageWatchDiv);
 		}//jsPlumb.hide($('.ace_active-line'));
 	};
@@ -262,6 +279,9 @@ tcp.StandardUIManager = {
 		Called whenever we change the article in the series
 	*/
 	reinit : function(){
+		if( this.currentSlide ){
+			this.currentSlide.hide();
+		}
 		this.index = 0;
 		this.currentSlide = null;
 	},
@@ -299,6 +319,9 @@ tcp.StandardUIManager = {
 		this.changeTextSlide(tc.koModel.previewSlides()[this.index])
 	},
 	
+	goToWatch : function(i){
+		this.currentSlide.goToWatch(i)
+	},
 	previous : function(){
 		o = this.currentSlide.previous();
 		if ( o ) {
@@ -311,7 +334,7 @@ tcp.StandardUIManager = {
 		}
 		this.index--;
 		this.changeTextSlide(tc.koModel.previewSlides()[this.index])
-	}
+	},
 }
 
 tcp.UIManager = {
@@ -337,7 +360,9 @@ tcp.UIManager = {
 	next : function(){
 		this.manager.next();
 	},
-	
+	goToWatch : function(i){
+		this.manager.goToWatch(i)
+	},
 	previous : function(){
 		this.manager.previous();
 	},
@@ -393,8 +418,7 @@ tcp.overlayInit = function(){
 tcp.InitUI = {
 	init : function(){
 		h = $( window ).height();
-		h = h - 46 - 46 - 10;
-		//h = h / 2;
+		h = h - 85;
 		h = h + 'px'
 		$('#editor').css('height', h);
 		$('#overlay_watch').css('height', h);
@@ -406,13 +430,18 @@ tcp.InitUI = {
 
 
 tcp.SeriesManager = {
+	'currentArticleId' : 0,
 	'currentIndex' : 0,
 	'cache' : {},
-	'getArticleSlides' : function(id){
+	'getArticleSlides' : function(id, cb){
+		this.currentArticleId = id;
 		if( this.cache[id] ){
 			window.metaData = this.cache[id]['metadata'];
 			window.savedSlides = this.cache[id]['slides'];
 	      	initView();
+	      	if(cb){
+				cb();	      		
+	      	}
 		}
 		else{
 			$.ajax({
@@ -425,8 +454,11 @@ tcp.SeriesManager = {
 					    tcp.SeriesManager.cache[id] = {};
 					    tcp.SeriesManager.cache[id]['metadata'] = window.metaData;
 					    tcp.SeriesManager.cache[id]['slides'] = window.savedSlides;
-	      				tcp.StandardUIManager.reinit();
+	      				//tcp.StandardUIManager.reinit();
 	      				initView();
+	      				if(cb){
+							cb();	      		
+	      				}
 					  }
 			});
 		}
@@ -460,6 +492,7 @@ navbarManager = {
 		$('#nav_bar_previous').hide();
 		$('#nav_bar_next').hide();
 		$('#nav_bar_article_toc').hide();
+		$('#popComments').hide();
 	},
 	'showNav' : function(){
 		if( !navbarManager.once ){
@@ -468,7 +501,7 @@ navbarManager = {
 		$('#nav_bar_previous').show();
 		$('#nav_bar_next').show();
 		$('#nav_bar_article_toc').show();
-
+		$('#popComments').show();
 	},
 	'onShowTOC' : function(){
 
@@ -505,6 +538,9 @@ animationManager = {
 		animationManager.scaledDown = true;
 	},
 	tocSelected : function(){
+		if( tcp.UIManager.manager.currentSlide ){
+			tcp.UIManager.manager.currentSlide.hide();
+		}
 		$('#main_ui').hide();
 		$('#toc').show();
 		if( !animationManager.scaledUp ){
@@ -534,20 +570,19 @@ trans = {
   'scaleDown' : function(anim ){
       var o = $('#' + anim.to);
       var w = 100;
-      var l = o.offset().left;
-      var t = o.offset().top;
+      var l = o.offset().left + 15;
+      var t = o.offset().bottom - 30;
       var elem = $("#" + anim.elem)
       this.toc = elem.html();
       this.height = $(document).height();
       this.width = elem.width();
       elem.transition({ x: l }, 500,'ease', function(){
           elem.animate({ width: w }, 600, "linear", function(){
-              
-              html = '<div class="triangle-isosceles bottom">Table of Content</div>'
+              html = '<div class="triangle-isosceles top">Table of Content</div>'
               elem.html(html);
               //$("#main_ui").addClass('transit-box');
               elem.animate({height: 50 }, 600, "linear", function(){
-                  elem.transition({y: t - 70 }, 1500,'ease', function(){
+                  elem.transition({y: t - 70 }, 500,'ease', function(){
                     $('#' + anim.show).animate({opacity: 1 }, 300, "linear", function(){
                       elem.animate({opacity: 0 }, 300, "linear" , function(){
                       	if(anim.callback){
@@ -567,7 +602,7 @@ trans = {
       var elem = $("#" + anim.elem)
       elem.animate({opacity: 1 }, 300, "linear", function(){
           $('#' + anim.show).animate({opacity: 1 }, 3, "linear", function(){
-              elem.transition({y: 0 }, 1500,'ease', function(){
+              elem.transition({y: 0 }, 500,'ease', function(){
                   elem.html(trans.toc);
                   /**/
                   elem.animate({width: trans.width }, 600, "linear", function(){

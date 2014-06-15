@@ -75,6 +75,35 @@ steps[steps.length] = {
 
 
 steps[steps.length] = {
+  'question' : "But we have sorted only one element?",
+
+};
+
+
+steps[steps.length] = {
+  'answer' : "To sort rest of elements we will use divde and conquer using recursion. Lets see how." + 
+              "To sort rest of elements we will use divde and conquer using recursion. Lets see how." + 
+              "To sort rest of elements we will use divde and conquer using recursion. Lets see how." + 
+              "To sort rest of elements we will use divde and conquer using recursion. Lets see how." + 
+              "To sort rest of elements we will use divde and conquer using recursion. Lets see how." + 
+              "To sort rest of elements we will use divde and conquer using recursion. Lets see how." + 
+              "To sort rest of elements we will use divde and conquer using recursion. Lets see how." + 
+              "To sort rest of elements we will use divde and conquer using recursion. Lets see how." + 
+              "To sort rest of elements we will use divde and conquer using recursion. Lets see how." + 
+              "To sort rest of elements we will use divde and conquer using recursion. Lets see how." + 
+              "To sort rest of elements we will use divde and conquer using recursion. Lets see how." + 
+              "To sort rest of elements we will use divde and conquer using recursion. Lets see how." + 
+              "To sort rest of elements we will use divde and conquer using recursion. Lets see how." + 
+              "To sort rest of elements we will use divde and conquer using recursion. Lets see how." + 
+              "To sort rest of elements we will use divde and conquer using recursion. Lets see how." + 
+              "To sort rest of elements we will use divde and conquer using recursion. Lets see how." + 
+              "To sort rest of elements we will use divde and conquer using recursion. Lets see how." + 
+              "To sort rest of elements we will use divde and conquer using recursion. Lets see how." ,
+};
+
+
+
+steps[steps.length] = {
   'arr' : [
     new list({
       'data' : [7,2,1,6,8,5,3,4],
@@ -428,15 +457,6 @@ steps[steps.length] = {
 };
 
 
-steps[steps.length] = {
-  'question' : "But we have sorted only one element?",
-
-};
-
-
-steps[steps.length] = {
-  'answer' : "To sort rest of elements we will use divde and conquer using recursion. Lets see how.<a href='google.com'>jump</a>",
-};
 
 
 /*
@@ -453,14 +473,14 @@ simWatchMgr = {
 	'jumpTo' : function(i){
 
     
-    if( i == 2 ){
+    /*if( i == 2 ){
       trans.scaleDown({to: "toc > ul", elem: "main_ui", show: "toc"});
       return;
     }
     if( i == 3 ){
       trans.scaleUp({to: "toc > ul", elem: "main_ui", show: "toc"});
       return;
-    }
+    }*/
     
 		this.currIndex = i;
 		
@@ -469,7 +489,7 @@ simWatchMgr = {
     if( steps[i].answer ){
         var html =   '<div class="stepContainer">'
                 + '<div class="row"><div class="col-md-12">' 
-                + '<div class = "col-sm-10"><div> <p class="thoughtRight">'+ steps[i].answer + '</p></div></div>' 
+                + '<div class = "col-sm-10"><div> <div class="triangle-isosceles right">'+ steps[i].answer + '</div></div></div>' 
                 + '<div class = "col-sm-2"><img src="/static/images/tuts/tanituts.jpeg" /></div>'
                 + '</div></div></div>';
           $("#main_ui").prepend(html);

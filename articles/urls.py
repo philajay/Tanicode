@@ -29,4 +29,11 @@ urlpatterns = patterns('',
 	url(r'^updateSeries/?$', views.updateSeries, name='updateSeries'),
 	url(r'^dashboardGetAllSeries/?$', views.dashboardGetAllSeries, name='dashboardGetAllSeries'),
 	url(r'^edit/(?P<id>\d+)/?', views.edit, name='edit'),
+	#Search
+	url(r'^searchArticles/?', views.searchArticles, name='searchArticles'),
+	url(r'^searchSeries/?', views.searchSeries, name='searchSeries'),
+	#comments
+	url(r'^saveComment/?', views.saveComment, name='saveComment'),
+	url(r'^getComments/?', views.getComments, name='getComments'),
+
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

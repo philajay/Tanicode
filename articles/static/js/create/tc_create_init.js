@@ -468,6 +468,7 @@
 		this.cloneFrom = function(d){
 			this.name( d.name );
 			this.text = d.text;
+			this.uid = d.uid;
 		};
 
 	}
@@ -483,6 +484,7 @@
 		this.cloneFrom = function(d){
 			this.name( d.name );
 			this.src( d.src );
+			this.uid = d.uid;
 			if( d.watches ){
 				_.each(d.watches, function(elem, i){
 					w = new tc.ImageWatch();
@@ -590,6 +592,7 @@
 		this.rect = {};
 		this.div = null;
 		this.guid = null;
+		this.uid = tc.getUID();
 		this.getDiv = function(){
 			return divDict[this.guid];
 		};
@@ -614,6 +617,7 @@
 			//var temp = new tc.ImageWatch();
 			temp = this;
 			this.rect = w.rect;
+			this.uid = w.uid;
 			temp.queued = function(temp){
 				w = temp;
 				elem = document.createElement('div');
@@ -654,6 +658,7 @@
 		this.cloneFrom = function(d){
 			this.name( d.name );
 			this.text =  d.text;
+			this.uid = d.uid;
 			if( d.watches ){
 				_.each(d.watches, function(elem, i){
 					w = new tc.CodeWatch();
@@ -757,10 +762,12 @@
 	tc.CodeSlide.prototype.constructor = tc.CodeSlide;
 
 	tc.CodeWatch = function(){
+		this.uid = tc.getUID();
 		this.lineNumber = 0;
 		this.text = ko.observable('Explain code here');
 		this.attached = ko.observable(true);
 		this.cloneFrom = function(w){
+			this.uid = w.uid;
 			this.lineNumber = w.lineNumber;
 			this.text( w.text )
 		};
@@ -786,7 +793,10 @@
 
 	tc.Slide = function(data){
 		this.data = data;
-		this.data['uid'] = tc.getUID();
+
+		if( ! this.data['uid'] ){
+			this.data['uid'] = tc.getUID();
+		}
 		//tc.vm.slides.push(this);
 		//tc.vm.currentSlide( this )
 		this.setText = function(text){

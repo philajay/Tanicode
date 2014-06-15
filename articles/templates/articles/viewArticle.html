@@ -1,4 +1,3 @@
-{% load hitcount_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +15,7 @@
 	<link href="/static/css/jstree/style.css" rel="stylesheet">
 	<link href="/static/css/slider/slider.css" rel="stylesheet">
 	<link href="/static/css/article.css" rel="stylesheet">
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!-- Just for debugging purposes. Don't actua3wlly copy this line! -->
     <!--[if lt IE 9]><script src="ie8-responsive-file-warning.js"></script><![endif]-->
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -86,7 +85,7 @@ background: #FFFFA3;
     float: left;
     padding: 5px;
     border: 1px dotted black;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .tc_box {
@@ -115,7 +114,7 @@ background: #FFFFA3;
 <body>
 		<div id="overlay"> 
          <div >
-            <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse" role="navigation">
+            <nav class="navbar navbar-default navbar-fixed navbar-inverse" role="navigation">
               <div class="container-fluid">
                 <div class="navbar-header">
                   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -124,7 +123,7 @@ background: #FFFFA3;
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="#">Tanituts</a>
+                  <a class="navbar-brand" href="/">Tanituts</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -138,12 +137,34 @@ background: #FFFFA3;
                           </ul>
                         </li>
                   </ul>
+                    <!--
+                    {% if user.is_authenticated %}
+                        <ul class="nav navbar-nav navbar-right">
+                          <li><a href="/logout">Sign Out</a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="nav navbar-nav navbar-right">
+                          <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign In <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                              <li><a href="/login/facebook?next=/">facebook</a></li>
+                              <li class="divider"></li>
+                              <li><a href="#">google</a></li>
+                            </ul>
+                          </li>
+                        </ul>
+                    {% endif %}
+                    -->
+                    <ul class="nav navbar-nav navbar-right">
+                      <li><a id="popComments" href="#">Comments</a></li>
+                    </ul>
+
                 </div>
               </div>
             </nav>
          </div>
             <div id="main_ui">
-                  <div class="main-content-wrapper" style="margin: 1%">
+                  <div class="main-content-wrapper">
                   <!-- 
                     <span data-bind="text: previewCurrentSlide() ? previewCurrentSlide().data.name : ''" ></span>
                   -->
@@ -174,6 +195,26 @@ background: #FFFFA3;
     </div>
 
 
+    <div class="comment_outer_div" style="display:none;">
+      <div class="comments_header_center">
+          Comments
+          <span id="close_comments" class="comments_header_right glyphicon glyphicon-remove"></span>
+      </div>
+      <div class="comment_comments">
+
+      </div>
+      <div class="comment_post_div">
+        {% if user.is_authenticated %}
+          <textarea id="txtComments" class="form-control" rows="3"></textarea>
+          <button type="button" id="postComment" class="btn btn-primary">Post Comment</button>
+        {% else %}
+        <div class-"comment_post">
+          <div class="comment_sign_in"><button id="signIn" type="button" class="btn btn-primary">Sign In</button></a></div>
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
 
     <!-- Bootstrap core JavaScript
 
@@ -198,10 +239,6 @@ background: #FFFFA3;
   <script src="/static/js/jsPlumb/jquery.jsPlumb-1.5.5.js"></script>
   <script src="/static/js/jmpress/jmpress.all.min.js"></script>
   <script language="javascript">
-        $(document).ready(function() {
-              {% get_hit_count_javascript for object %}
-      });
-
   </script>
 </body>
 </html>

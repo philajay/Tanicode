@@ -1,0 +1,13 @@
+ALTER TABLE articles_article ADD COLUMN search_index tsvector;
+ALTER TABLE articles_series ADD COLUMN search_index tsvector;
+CREATE INDEX article_search_index
+  ON articles_article
+  USING gin
+  (search_index);
+CREATE INDEX series_search_index
+  ON articles_series
+  USING gin
+  (search_index);
+
+
+

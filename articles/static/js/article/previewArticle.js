@@ -98,6 +98,9 @@ tcp.Slide = function(data){
 						}, 1000 )*/
 						
 					}
+					else{
+						tcp.tcEditor.aceEditor.gotoLine(1)
+					}
 				}
 				else {
 					tcp.tcEditor.setTextMode();
@@ -171,6 +174,22 @@ tcp.Slide = function(data){
 			tcp.UIManager.manager.imageWatchDiv.hide();	
 		}
 		tc.koModel.previewWatch(w);
+	};
+
+	this.goToWatch = function(i){
+		if(this.data.TYPE == "TEXT"){
+			return null;
+		}
+		this.index = i;
+		w = this.data.watches[this.index];
+		
+		if(this.data.TYPE == "CODE"){
+			this.showCodeWatch(w)
+		}
+		if(this.data.TYPE == "IMAGE"){
+			this.showImageWatch(w)
+		}
+		return {}
 	};
 
 	this.next = function(){
@@ -300,6 +319,10 @@ tcp.StandardUIManager = {
 		}
 		this.index--;
 		this.changeTextSlide(tc.koModel.previewSlides()[this.index])
+	},
+
+	goToWatch : function(i){
+		this.currentSlide.goToWatch(i)
 	}
 }
 
@@ -382,7 +405,7 @@ tcp.overlayInit = function(){
 tcp.InitUI = {
 	init : function(){
 		h = $( window ).height();
-		h = h - 46 - 46 - 10;
+		h = h - 80;
 		//h = h / 2;
 		h = h + 'px'
 		$('#editor').css('height', h);
@@ -392,7 +415,43 @@ tcp.InitUI = {
 	
 }
 
+commentsCache = {}
+function populateComments(){
+	$(".comment_comments").html();
+	var wid = tcp.UIManager.manager.currentSlide.data.uid;
+	if(tcp.UIManager.manager.currentSlide.data.TYPE == "CODE" || tcp.UIManager.manager.currentSlide.data.TYPE == "IMAGE"){
+		if( tcp.UIManager.manager.currentSlide.data.watches  && tcp.UIManager.manager.currentSlide.data.watches.length > 0){
+			wid = tcp.UIManager.manager.currentSlide.data.watches[ tcp.UIManager.manager.currentSlide.index ].uid;
+		}
+	}
 
+	if ( commentsCache[wid] ){
+		populateHTML(commentsCache[wid]);
+	}
+	else {
+		getComments(aid, wid);
+	}
+}
 
+function populateHTML(l){
+	html = ""
+	_.each(l, function(d,i){
+		s = "<h2 class='comment_h2'><span class='comment_username'>" + d.user + "</span><span class='comment_date'>" + d.date + "</span></h2>"
+		s = s + "<div class='comment_comment'>" + d.comment + "</div>";
+		html += s;
+	})
+	$(".comment_comments").html(html);	
+}
 
+function getComments(a, w){
+	var post = $.ajax({
+		  dataType: "json",
+		  url: '/articles/getComments?aid='+ a + "&wid=" + w,
+		  success: function(res){
+		  		var ls = res['comments'];
+		  		commentsCache[w] = ls;
+		  		populateHTML(ls);
+		  }
+	});
+}
 

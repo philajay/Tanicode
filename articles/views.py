@@ -1,9 +1,10 @@
 from django.http import HttpResponse
+from django.http import Http404
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-
+from django import forms
 import os
 import traceback
 import uuid
@@ -14,15 +15,87 @@ from django.conf import settings
 import logging
 import json
 from articles.models import *
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 logger = logging.getLogger('articles.views')
 
 
+SpecialTags = ["{{ACADEMICS}}", "{{BEGINNER}}"]
+
+
+def searchArticles(request):
+	if request.method == 'POST':
+	    noResult = False
+	    results = None
+	    search = request.POST.get("search")
+	    keyword = search
+	    searchResults = Article.objects.search(search)
+	    paginator = Paginator(searchResults, 20, allow_empty_first_page=False) # Show 25 contacts per page
+
+	    page = request.GET.get('page')
+	    try:
+	        results = paginator.page(page)
+	    except PageNotAnInteger:
+	        # If page is not an integer, deliver first page.
+	        try:
+	        	results = paginator.page(1)
+	        except EmptyPage:
+	        	noResult = True
+	    except EmptyPage:
+	        # If page is out of range (e.g. 9999), deliver last page of results.
+	        noResult = True
+	        results = paginator.page(paginator.num_pages)
+	    template = loader.get_template('articles/searchArticles.html')
+	    
+	    context = RequestContext(request, { 'user': request.user,
+	    	'results' : results , 'noResult' : noResult, 'keyword' : keyword})
+	    return HttpResponse(template.render(context))
+	else:
+		template = loader.get_template('articles/searchArticles.html')
+		context = RequestContext(request, { 'user': request.user, 'keyword' : ''})
+		return HttpResponse(template.render(context))
+		#return render_to_response('articles/searchArticles.html', {"user": request.user})
+		
+
+
+def searchSeries(request):
+	if request.method == 'POST':
+	    noResult = False
+	    results = None
+	    search = request.POST.get("search")
+	    keyword = search
+	    searchResults = Series.objects.search(search)
+	    paginator = Paginator(searchResults, 20, allow_empty_first_page=False) # Show 25 contacts per page
+
+	    page = request.GET.get('page')
+	    try:
+	        results = paginator.page(page)
+	    except PageNotAnInteger:
+	        # If page is not an integer, deliver first page.
+	        try:
+	        	results = paginator.page(1)
+	        except EmptyPage:
+	        	noResult = True
+	    except EmptyPage:
+	        # If page is out of range (e.g. 9999), deliver last page of results.
+	        noResult = True
+	        results = paginator.page(paginator.num_pages)
+	    template = loader.get_template('articles/searchSeries.html')
+	    
+	    context = RequestContext(request, { 'user': request.user,
+	    	'results' : results , 'noResult' : noResult, 'keyword' : keyword})
+	    return HttpResponse(template.render(context))
+	else:
+		template = loader.get_template('articles/searchSeries.html')
+		context = RequestContext(request, { 'user': request.user, 'keyword' : ''})
+		return HttpResponse(template.render(context))
+		#return render_to_response('articles/searchArticles.html', {"user": request.user})
+
 
 def index(request):
     template = loader.get_template('articles/index.html')
-    context = RequestContext(request, { 'user', request.user
+    context = RequestContext(request, { 'user': request.user 
     })
     return HttpResponse(template.render(context))
 
@@ -87,19 +160,29 @@ def updateSeries(request):
 	obj = json.loads(s)
 	name = obj['name']
 	zist = obj['zist']
-	tags = filter(None,  obj["tags"].split())
+	lt = None
+	if obj["tags"]:
+		lt = obj["tags"].lower()
+	tags = filter(None,  lt.split())
+
 	search = str(name) + " " + str(obj["tags"]) + " " + str(zist)
 	articles = obj['articles']
 	a.articles = articles
 	a.title = name
 	a.user = request.user
-	a.is_published = False
+	a.is_published = True
 	a.search = search
 	a.rawJSON = s
 	a.save()
-	for tag in tags:
-		a.tags.add(tag) 
-	#delete all the entries from SeriesAndArticles
+	
+	if SpecialTags[1].lower() in lt:
+		for aTag in tags:
+			aTag = aTag.lower()
+			if aTag == SpecialTags[1].lower():
+				continue
+			BeginnerSeriesTags.objects.get_or_create(titleTags = aTag)
+
+
 	SeriesAndArticles.objects.filter(series = a).delete()
 	sid = a.pk;
 	al = json.loads(articles)
@@ -109,14 +192,19 @@ def updateSeries(request):
 		sa.save()
 			
 	return HttpResponse( json.dumps( {'id': a.pk} ) )
-	
+
+
 @login_required
 def saveSeries(request):
 	s = request.POST.get('data', None)
 	obj = json.loads(s)
 	name = obj['name']
 	zist = obj['zist']
-	tags = filter(None,  obj["tags"].split())
+	lt = None
+	if obj["tags"]:
+		lt = obj["tags"].lower()
+	tags = filter(None,  lt.split())
+
 	search = str(name) + " " + str(obj["tags"]) + " " + str(zist)
 	articles = obj['articles']
 	a = Series()
@@ -127,12 +215,16 @@ def saveSeries(request):
 	a.search = search
 	a.rawJSON = s
 	a.save()
-	for tag in tags:
-		a.tags.add(tag) 
 
-	#logger.debug("Articles is  ---- " + str(articles))
+
+	if SpecialTags[1].lower() in lt:
+		for aTag in tags:
+			aTag = aTag.lower()
+			if aTag == SpecialTags[1].lower():
+				continue
+			BeginnerSeriesTags.objects.get_or_create(titleTags = aTag)
+
 	al = json.loads(articles)
-	#logger.debug("Data as received ---- " + str(al))
 	
 	sid = a.pk;
 	for a1 in al['articles'] :
@@ -141,6 +233,34 @@ def saveSeries(request):
 		sa.save()
 			
 	return HttpResponse( json.dumps( {'id': a.pk} ) )
+
+
+@login_required
+def saveComment(request):
+	comment = request.POST.get('comment', None)
+	aid = int(request.POST.get('aid', None))
+	wid = int (request.POST.get('wid', None))
+	c = Comments()
+	c.comment = comment
+	c.wid = wid
+	c.article = Article.objects.get(pk=aid)
+	c.user = request.user
+	c.save()
+	return HttpResponse( json.dumps( {'comment': comment, 'user': c.user.username, 'date' : str(c.saved_time)} ) )
+
+
+def getComments(request):
+	aid = request.GET.get("aid")
+	p = int( aid )
+	w = int ( request.GET.get("wid") )
+	a = Article.objects.get(pk=p)
+	cs = Comments.objects.filter(article= a, wid = w).order_by("-saved_time")
+	retObjs = []
+	for c in cs :
+		s = {'comment' : c.comment, 'date' : str(c.saved_time), 'user': c.user.username}
+		retObjs.append(s)
+
+	return HttpResponse( json.dumps( {'comments': retObjs} ))
 
 
 
@@ -250,6 +370,9 @@ def viewArticle(request, id, slug):
 		pass
 	'''
 	a = Article.objects.get(pk=p)
+	if not a.is_published:
+		raise Http404
+
 	metadata = a.metaData
 	slides = a.slides
 	html = a.html
@@ -260,18 +383,22 @@ def viewArticle(request, id, slug):
 		'metadata': json.dumps(metadata),
 		'slides' : json.dumps(slides),
 		'html' : html,
-		'aid': aid
+		'aid': aid,
+		'user': request.user ,
 	})
 	return HttpResponse(template.render(context))
 
 def viewSeries(request, id, slug):
 	p = int(id)
 	a = Series.objects.get(pk=p)
+	if not a.is_published:
+		raise Http404
 	aid = a.pk
 	template = loader.get_template('articles/viewSeries.html')
 	context = RequestContext(request, {
 		'object' : a,
-		'aid': aid
+		'aid': aid,
+		'user' : request.user,
 	})
 	return HttpResponse(template.render(context))
 
@@ -311,21 +438,32 @@ def saveSlides(request):
 	obj1 = metaData['articleMetaData']
 	obj1 = json.loads(obj1)
 	name = obj1["name"]
-	tags = filter(None,  obj1["tags"].split())
+	lt = None
+	if obj1["tags"]:
+		lt = obj1["tags"].lower()
+	tags = filter(None,  lt.split())
+
 	zist = obj1["zist"]
 	search = str(name) + " " + str(obj1["tags"]) + " " + str(zist)
 	html = obj['html']
 	a = Article()
 	a.metaData = json.dumps( metaData )
 	a.slides = json.dumps( slides )
-	a.html = json.dumps( html )
+	a.html = search + " " +  html 
 	a.title = name
 	a.user = request.user
 	a.is_published = False
 	a.search = search
 	a.save()
-	for tag in tags:
-		a.tags.add(tag) 
+
+	if SpecialTags[0].lower() in lt:
+		for aTag in tags:
+			aTag = aTag.lower()
+			if aTag == SpecialTags[0].lower():
+				continue
+			AcademicsTags.objects.get_or_create(titleTags = aTag)
+
+
 	return HttpResponse( json.dumps( {'id': a.id} ) )
 
 @login_required	
@@ -351,7 +489,13 @@ def updateSlides(request, id):
 	zist = obj1["zist"]
 	search = str(name) + " " + str(obj1["tags"]) + " " + str(zist)
 	
-	html = obj['html']
+	lt = None
+	if obj1["tags"]:
+		lt = obj1["tags"].lower()
+	tags = filter(None,  lt.split())
+	logger.debug("tags are " + str(tags))
+
+	html = search + '  ' + obj['html']
 	a = Article.objects.get(pk=p)
 	a.title = name
 	a.metaData = json.dumps( metaData )
@@ -360,9 +504,18 @@ def updateSlides(request, id):
 	a.title = name
 	a.search = search
 	a.save()
-	a.tags.clear()
-	for tag in tags:
-		a.tags.add(tag) 
+
+	if SpecialTags[0].lower() in lt:
+		for aTag in tags:
+			aTag = aTag.lower()
+			logger.debug("checking tag are " + aTag)
+			if aTag == SpecialTags[0].lower():
+				continue
+			logger.debug("adding tag are " + aTag)
+			AcademicsTags.objects.get_or_create(titleTags = aTag)
+
+
+
 	logger.debug("Ajay -- save Slides saved")
 	return HttpResponse( json.dumps( {'id': a.id} ) )
 
