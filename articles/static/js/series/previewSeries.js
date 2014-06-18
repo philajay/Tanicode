@@ -228,6 +228,30 @@ tcp.Slide = function(data){
 		}
 		return {}
 	};
+
+	this.goToLastWatch = function(){
+		if(this.data.TYPE == "TEXT"){
+			return null;
+		}
+
+		if( ! this.data.watches ){
+			return {}
+		}
+
+		this.index = this.data.watches.length - 1
+		w = this.data.watches[this.index];
+
+		
+		if(this.data.TYPE == "CODE"){
+			this.showCodeWatch(w)
+		}
+		if(this.data.TYPE == "IMAGE"){
+			this.showImageWatch(w)
+		}
+
+		return {}		
+	};
+
 	
 	this.show = function(){
 	};
@@ -334,6 +358,7 @@ tcp.StandardUIManager = {
 		}
 		this.index--;
 		this.changeTextSlide(tc.koModel.previewSlides()[this.index])
+		this.currentSlide.goToLastWatch();
 	},
 }
 
