@@ -34,24 +34,23 @@
 	</script>
 
     <script language="text/html" id = "select_slide">
-        Text Slide is created by default.<br>
-        This slide should only have text in it. <br>
+        First Text Slide is created by default.<br>
+        This slide should only have text in it(like introduction, summary). <br>
         To explain code use the code slide from the new slide section.<br>
         To explain image use the image slide from the new slide section.<br>
-        
+        The best way to understand is to have a look at the tutorial.
 	</script>
 
 
 	<script language="text/html" id = "help_text_slide">
         This slide should only have text in it. <br>
-        To explain code use the code slide.<br>
-        To explain image use the image slide.<br>
+        Should be used for the sections of article like introduction, summary. <br>
 	</script>
 	<script language="text/html" id = "help_code_slide">
         Enter your code in the the editor. <br>
-        To explain a specific of code add a watch for that line and the enter the 
-        explanaton of code in the watch text box which will appear once you have 
-        added a watch.
+        To highlite a specific line click the gutter(section of editor where line number is shown).
+        Once a line is selected a text box will show up to add the explanation of that line.<br>
+        To delete a existing watch press the delete button.
 	</script>
 	<script language="text/html" id = "help_image_slide">
         Enter your code in the the editor. <br>
@@ -116,8 +115,8 @@ background: #FFFFA3;
 .tc_containers {
     float: left;
     padding: 5px;
-    /*border: 1px dotted black;*/
-    overflow: auto;
+    /*border: 1px dotted black;
+    overflow: auto;*/
 }
 
 .tc_box {
@@ -212,7 +211,7 @@ background: #FFFFA3;
                             </ul>
                         </div>
                     </div>
-                <div id = "tc_editor_container" class="tc_containers tc_adjust_ui" style="width:50%" >
+                <div id = "tc_editor_container" class="tc_containers tc_adjust_ui" style="width:50%;" >
                     <div id="div_metadata" data-bind="visible: showTemplate('METADATA')">
                         <input id="name" type="text" class="form-control" placeholder="name of the article" data-bind="value: articleDetails.data.name"/><br>
                         <input id="tags" type="text" class="form-control"  placeholder="tags for this article" data-bind="value: articleDetails.data.tags"/><br>
@@ -258,20 +257,24 @@ background: #FFFFA3;
                     <!-- <div id="editor"></div>-->
                 </div>
                 <div id = "tc_watch_container" class="tc_containers tc_adjust_ui" style="width:30%">
-                    <div id="help" >
+                    <div id="help" class="main_Color">
                         	<script language="text/html" id="help_empty">
                         	</script>
 
-                        <span data-bind='template: { name: showHelpTemplate()}' >
+                        <span  data-bind='template: { name: showHelpTemplate()}' >
 						</span>
                     </div>
                     <div>
 						
+                        <br>
+                        
                         <div data-bind="visible: showWatchesForCodeSlide()">
-                                <select id="code_template" class="form-control" data-bind="options: watchesForCodeSlide(), optionsText: 'name', value: watchForCodeSlide, optionsCaption: 'Edit existing watch.'">
+                            Select the existing watch you want to edit:
+                                <select id="code_template" class="form-control" data-bind="options: watchesForCodeSlide(), optionsText: 'name', value: watchForCodeSlide,">
                             </select>
                         </div>
-                        
+                        <br>
+
                         	<span data-bind='visible: showWatchTemplate()' >
 	    						<textarea style="width:100%" rows="10" id="watch" data-bind="value: watch()?watch().text:''"></textarea>
 	    						<br>
