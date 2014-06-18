@@ -24,7 +24,7 @@ tcp.tcEditor = {
 		var editor = ace.edit("editor");
 		editor.setTheme("ace/theme/eclipse");
 		editor.getSession().setMode("ace/mode/html");
-		editor.setReadOnly(true);
+		//editor.setReadOnly(true);
 		this.defaultStyle	= editor.container.style.fontFamily;	
 		editor.setFontSize(16);
 		this.aceEditor = editor;
@@ -101,6 +101,7 @@ tcp.Slide = function(data){
 					else{
 						tcp.tcEditor.aceEditor.gotoLine(1)
 					}
+					tcp.tcEditor.aceEditor.session.setScrollLeft(0);
 				}
 				else {
 					tcp.tcEditor.setTextMode();
@@ -123,18 +124,6 @@ tcp.Slide = function(data){
 			tcp.tcEditor.aceEditor.scrollToLine(n - 1, true);
 			tc.koModel.previewWatch(w);
 			tcp.tcEditor.setBreakPoint(n - 1);
-
-			/*window.setTimeout(function(){
-					jsPlumb.hide($('.ace_active-line'));
-					jsPlumb.connect(
-						{ 
-						  	source: $('.ace_active-line'), 
-						  	target: $("#overlay_watch"), 
-						  	anchors:["BottomCenter", "Left"]
-						}, stateMachineConnector
-					);
-				}, 10);
-			*/
 		}
 		$('#preview_watch').html(w.text);
 	};
