@@ -131,6 +131,7 @@ tcp.Slide = function(data, uid){
 			tcp.UIManager.imageWatchDiv.hide();	
 		}
 		tc.koModel.previewWatch(w);
+		$('#preview_watch').html(w.text());
 	};
 
 	this.next = function(){

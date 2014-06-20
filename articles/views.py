@@ -469,7 +469,6 @@ def saveSlides(request):
 @login_required	
 @csrf_exempt
 def updateSlides(request, id):
-	logger.debug("Ajay -- save Slides Called")
 	s = request.POST.get('data', None)
 	obj = json.loads(s)
 	p = obj['aid']

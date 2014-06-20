@@ -1193,6 +1193,9 @@
 			}
 			else{
 				obj = {'metaData' : this.getMetaData(), 'slides': this.getSlides(), 'html': this.getSlidesHTML()}
+				if( window.aid){
+					obj["aid"] = window.aid
+				}
 				return JSON.stringify(obj)
 			}
 		};
@@ -1206,12 +1209,18 @@
 		if( tc.mode == "edit"){
 			u = "updateSlides"
 		}
+		else if (window.aid){
+			u = "/articles/edit/" + window.aid + "/updateSlides"
+
+		}
 		$.ajax({
 		  type: "POST",
 		  url: u,
 		  data: {data: d},
 		  success: function(result){
-				alert(result)
+				alert("article saved")
+				window.aid = $.parseJSON(result).id
+
 		  },
 		});
 		

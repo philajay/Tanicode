@@ -103,6 +103,7 @@ tcp.Slide = function(data){
 					tcp.tcEditor.setTextMode();
 					
 				}
+				tcp.tcEditor.aceEditor.session.setScrollLeft(0);
 			}
 		else{
 				//tcp.offset = $('#preview_board').offset();
