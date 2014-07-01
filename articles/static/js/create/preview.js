@@ -100,7 +100,7 @@ tcp.Slide = function(data, uid){
 	};
 
 	this.showCodeWatch = function(w){
-		if( w.attached ){
+		if( w.attached() ){
 			n = w.lineNumber + 1
 			tcp.tcEditor.aceEditor.gotoLine(n)
 			tcp.tcEditor.aceEditor.scrollToLine(n - 1, true);
@@ -110,7 +110,7 @@ tcp.Slide = function(data, uid){
 	};
 	
 	this.showImageWatch = function(){
-		if( w.attached ){
+		if( w.attached() ){
 			w = tcp.UIManager.currentSlide.data.watches[tcp.UIManager.currentSlide.index];
 			xoffset = parseInt(w.rect.x.replace('px', ''), 10)
 			xoffset = xoffset + tcp.offset().left

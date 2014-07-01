@@ -567,7 +567,11 @@
 						w.queued(w);
 						w.queued = null;
 					}
-					w.getDiv().show();
+					window.setTimeout(function(){
+						w.getDiv().show();
+					}, 10);
+
+					
 				}
 			}
 

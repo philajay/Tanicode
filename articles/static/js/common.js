@@ -153,6 +153,9 @@ $.ajaxSetup({
             // Using the CSRFToken value acquired earlier
             xhr.setRequestHeader("X-CSRFToken", csrftoken);
         }
+        else {
+            alert("couldnt work")
+        }
     }
 });
 

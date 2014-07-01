@@ -529,8 +529,8 @@ def save_upload( uploaded, filename, raw_data ):
 	'''
 	try:
 		from io import FileIO, BufferedWriter
-		#sPath = os.path.join(settings.BASE_DIR, 'articles', 'static', 'images')
-		sPath = os.path.join('/home/philajay/webapps/static', 'images')
+		sPath = os.path.join(settings.BASE_DIR, 'articles', 'static', 'images')
+		#sPath = os.path.join('/home/philajay/webapps/static', 'images')
 		ext = filename.split(".")
 		if not ext:
 			ext = ".jpg"
@@ -563,7 +563,7 @@ def save_upload( uploaded, filename, raw_data ):
 
 @login_required	
 @csrf_exempt
-def ajaxupload( request ):
+def ajaxupload( request):
 	if request.method == "POST":   
 		if request.is_ajax( ):
 			# the file is stored raw in the request

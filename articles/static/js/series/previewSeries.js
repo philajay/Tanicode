@@ -172,6 +172,7 @@ tcp.Slide = function(data){
 			tcp.UIManager.manager.imageWatchDiv.hide();	
 		}
 		tc.koModel.previewWatch(w);
+		$('#preview_watch').html(w.text);
 	};
 
 	this.next = function(){
