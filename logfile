@@ -1,171 +1,638 @@
-[30/Apr/2014 08:39:37] ERROR [django.request:226] Internal Server Error: /articles/saveSlides
+[14/Jun/2014 14:59:11] ERROR [django.request:226] Internal Server Error: /articles/viewArticle/2/name
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 121, in saveSlides
-    name = metadata['articleMetaData']["name"]
-NameError: global name 'metadata' is not defined
-[30/Apr/2014 08:40:15] ERROR [django.request:226] Internal Server Error: /articles/saveSlides
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 372, in viewArticle
+    a = Article.objects.get(pk=p)
+  File "/Library/Python/2.7/site-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 307, in get
+    self.model._meta.object_name)
+DoesNotExist: Article matching query does not exist.
+[14/Jun/2014 14:59:16] ERROR [django.request:226] Internal Server Error: /articles/viewArticle/3/name
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 121, in saveSlides
-    name = metaData['articleMetaData']["name"]
-TypeError: string indices must be integers
-[30/Apr/2014 08:40:46] ERROR [django.request:226] Internal Server Error: /articles/saveSlides
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 372, in viewArticle
+    a = Article.objects.get(pk=p)
+  File "/Library/Python/2.7/site-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 307, in get
+    self.model._meta.object_name)
+DoesNotExist: Article matching query does not exist.
+[14/Jun/2014 15:14:42] DEBUG [articles.views:408] Inside
+[14/Jun/2014 15:14:42] DEBUG [articles.views:408] Inside
+[14/Jun/2014 15:14:49] ERROR [django.request:226] Internal Server Error: /articles/getComments
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 122, in saveSlides
-    name = metaData['articleMetaData']["name"]
-TypeError: string indices must be integers
-[30/Apr/2014 08:42:42] ERROR [django.request:226] Internal Server Error: /articles/saveSlides
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 255, in getComments
+    w = int ( request.GET.get("wid") )
+ValueError: invalid literal for int() with base 10: 'undefined'
+[14/Jun/2014 15:14:57] ERROR [django.request:226] Internal Server Error: /articles/getComments
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 121, in saveSlides
-    obj = json.loads(metaData)
-  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/__init__.py", line 326, in loads
-    return _default_decoder.decode(s)
-  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/decoder.py", line 360, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-TypeError: expected string or buffer
-[30/Apr/2014 08:43:07] ERROR [django.request:226] Internal Server Error: /articles/saveSlides
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 255, in getComments
+    w = int ( request.GET.get("wid") )
+ValueError: invalid literal for int() with base 10: 'undefined'
+[14/Jun/2014 15:15:47] DEBUG [articles.views:408] Inside
+[14/Jun/2014 15:15:47] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:28:01] ERROR [django.request:226] Internal Server Error: /articles/viewSeries/1/asd
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 123, in saveSlides
-    obj1 = obj['articleMetaData']
-KeyError: 'articleMetaData'
-[30/Apr/2014 08:44:17] ERROR [django.request:226] Internal Server Error: /articles/saveSlides
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 397, in viewSeries
+    template = loader.get_template('articles/viewSeries.html')
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 138, in get_template
+    template, origin = find_template(template_name)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 127, in find_template
+    source, display_name = loader(name, dirs)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 43, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 49, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 149, in get_template_from_string
+    return Template(source, origin, name)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 125, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 153, in compile_string
+    return parser.parse()
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 278, in parse
+    compiled_result = compile_func(self, token)
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 1084, in load
+    (taglib, e))
+TemplateSyntaxError: 'hitcount_tags' is not a valid tag library: Template library hitcount_tags not found, tried django.templatetags.hitcount_tags,django.contrib.admin.templatetags.hitcount_tags,django.contrib.staticfiles.templatetags.hitcount_tags
+[15/Jun/2014 06:28:40] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:28:40] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:28:55] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:28:55] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:29:11] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:29:11] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:30:01] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:30:01] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:30:19] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:30:19] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:30:55] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:30:55] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:32:02] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:32:02] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:32:20] WARNING [django.request:145] Not Found: /articles/viewArticle/7/favicon.png
+[15/Jun/2014 06:32:55] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:32:55] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:39:54] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:39:54] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:40:22] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:40:22] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:44:39] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:44:39] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:44:59] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:44:59] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:45:24] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:45:24] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:45:48] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:45:48] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:46:14] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:46:14] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:46:36] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:46:36] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:46:51] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:46:51] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:48:28] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:48:28] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:51:13] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:51:13] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:51:34] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:51:34] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:52:16] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:52:16] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:53:15] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:53:15] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:54:58] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:54:58] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:56:04] WARNING [django.request:145] Not Found: /articles/viewarticle/1/asd
+[15/Jun/2014 06:56:11] WARNING [django.request:145] Not Found: /articles/viewarticle/2/asd
+[15/Jun/2014 06:56:39] DEBUG [articles.views:408] Inside
+[15/Jun/2014 06:56:39] DEBUG [articles.views:408] Inside
+[15/Jun/2014 07:01:21] DEBUG [articles.views:408] Inside
+[15/Jun/2014 07:01:21] DEBUG [articles.views:408] Inside
+[15/Jun/2014 07:01:55] DEBUG [articles.views:408] Inside
+[15/Jun/2014 07:01:55] DEBUG [articles.views:408] Inside
+[15/Jun/2014 09:01:07] DEBUG [articles.views:408] Inside
+[15/Jun/2014 09:01:07] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:17:40] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:17:40] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:17:56] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:17:56] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:19:15] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:19:15] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:19:28] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:19:28] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:19:32] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:19:32] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:19:47] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:19:47] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:19:57] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:19:57] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:20:03] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:20:03] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:20:35] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:20:35] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:20:40] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:20:40] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:20:42] DEBUG [articles.views:408] Inside
+[18/Jun/2014 10:20:42] DEBUG [articles.views:408] Inside
+[20/Jun/2014 08:45:57] WARNING [django.request:145] Not Found: /articles/updateSlides
+[20/Jun/2014 08:45:58] WARNING [django.request:145] Not Found: /articles/updateSlides
+[20/Jun/2014 08:46:13] WARNING [django.request:145] Not Found: /articles/updateSlides
+[20/Jun/2014 08:47:31] DEBUG [articles.views:495] tags are [u'gg']
+[20/Jun/2014 08:47:31] DEBUG [articles.views:495] tags are [u'gg']
+[20/Jun/2014 08:47:31] DEBUG [articles.views:518] Ajay -- save Slides saved
+[20/Jun/2014 08:47:31] DEBUG [articles.views:518] Ajay -- save Slides saved
+[20/Jun/2014 08:49:56] WARNING [django.request:145] Not Found: /articles/updateSlides
+[20/Jun/2014 08:53:55] WARNING [django.request:145] Not Found: /edit/{"id": 10}/updateSlides
+[20/Jun/2014 08:54:08] WARNING [django.request:145] Not Found: /edit/{"id": 10}/updateSlides
+[20/Jun/2014 08:54:34] WARNING [django.request:145] Not Found: /edit/{"id": 10}/updateSlides
+[20/Jun/2014 08:54:51] WARNING [django.request:145] Not Found: /edit/{"id": 10}/updateSlides
+[20/Jun/2014 08:58:49] WARNING [django.request:145] Not Found: /edit/14/updateSlides
+[20/Jun/2014 08:59:31] ERROR [django.request:226] Internal Server Error: /articles/edit/15/updateSlides
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
   File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
     return view_func(*args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 125, in saveSlides
-    name = obj1["name"]
-TypeError: string indices must be integers
-[30/Apr/2014 08:44:50] DEBUG [articles.views:127] metaData is <type 'dict'>     ---------- ---------   {u'articleMetaData': u'{"TYPE":"METADATA","name":"object litreal explained","tags":"javascript ","zist":"secret sausages of javascript","initialSeed":5,"showNextButton":false,"uid":2}'}
-[30/Apr/2014 08:44:50] DEBUG [articles.views:127] metaData is <type 'dict'>     ---------- ---------   {u'articleMetaData': u'{"TYPE":"METADATA","name":"object litreal explained","tags":"javascript ","zist":"secret sausages of javascript","initialSeed":5,"showNextButton":false,"uid":2}'}
-[30/Apr/2014 08:44:50] ERROR [django.request:226] Internal Server Error: /articles/saveSlides
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 474, in updateSlides
+    p = obj['aid']
+KeyError: 'aid'
+[20/Jun/2014 09:01:34] DEBUG [articles.views:495] tags are [u'aa']
+[20/Jun/2014 09:01:34] DEBUG [articles.views:495] tags are [u'aa']
+[20/Jun/2014 09:01:34] DEBUG [articles.views:518] Ajay -- save Slides saved
+[20/Jun/2014 09:01:34] DEBUG [articles.views:518] Ajay -- save Slides saved
+[20/Jun/2014 09:02:27] DEBUG [articles.views:495] tags are [u'aa']
+[20/Jun/2014 09:02:27] DEBUG [articles.views:495] tags are [u'aa']
+[20/Jun/2014 09:02:27] DEBUG [articles.views:518] Ajay -- save Slides saved
+[20/Jun/2014 09:02:27] DEBUG [articles.views:518] Ajay -- save Slides saved
+[20/Jun/2014 09:02:49] WARNING [django.request:145] Not Found: /articles/viewArticle/16/favicon.png
+[20/Jun/2014 09:17:33] WARNING [django.request:99] Forbidden (CSRF token missing or incorrect.): /articles/edit/16/ajaxupload
+[20/Jun/2014 09:18:13] WARNING [django.request:99] Forbidden (CSRF token missing or incorrect.): /articles/edit/16/ajaxupload
+[20/Jun/2014 09:19:08] DEBUG [articles.views:495] tags are [u'aa']
+[20/Jun/2014 09:19:08] DEBUG [articles.views:495] tags are [u'aa']
+[20/Jun/2014 09:19:08] DEBUG [articles.views:518] Ajay -- save Slides saved
+[20/Jun/2014 09:19:08] DEBUG [articles.views:518] Ajay -- save Slides saved
+[20/Jun/2014 09:19:17] DEBUG [articles.views:495] tags are [u'aa']
+[20/Jun/2014 09:19:17] DEBUG [articles.views:495] tags are [u'aa']
+[20/Jun/2014 09:19:17] DEBUG [articles.views:518] Ajay -- save Slides saved
+[20/Jun/2014 09:19:17] DEBUG [articles.views:518] Ajay -- save Slides saved
+[20/Jun/2014 09:19:49] WARNING [django.request:99] Forbidden (CSRF token missing or incorrect.): /articles/edit/16/ajaxupload
+[20/Jun/2014 09:22:25] WARNING [django.request:99] Forbidden (CSRF token missing or incorrect.): /articles/edit/16/ajaxupload
+[20/Jun/2014 09:24:26] WARNING [django.request:99] Forbidden (CSRF token missing or incorrect.): /articles/edit/16/ajaxupload
+[20/Jun/2014 09:25:42] WARNING [django.request:99] Forbidden (CSRF token missing or incorrect.): /articles/edit/16/ajaxupload
+[20/Jun/2014 09:26:07] WARNING [django.request:99] Forbidden (CSRF token missing or incorrect.): /articles/edit/16/ajaxupload
+[20/Jun/2014 09:30:06] WARNING [django.request:99] Forbidden (CSRF token missing or incorrect.): /articles/edit/16/ajaxupload
+[20/Jun/2014 09:33:35] WARNING [django.request:99] Forbidden (CSRF token missing or incorrect.): /articles/edit/16/ajaxupload
+[20/Jun/2014 09:34:29] WARNING [django.request:99] Forbidden (CSRF token missing or incorrect.): /articles/edit/16/ajaxupload
+[20/Jun/2014 10:31:08] WARNING [django.request:99] Forbidden (CSRF token missing or incorrect.): /articles/edit/16/ajaxupload
+[20/Jun/2014 10:49:25] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[20/Jun/2014 10:49:27] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQBRDet71UDitZEZ07D2EN9-FCCoXhMSihUclKaIE5ndNET_QbYDpWYPXQaDp3Z-6jk--bKKGA6uvCdkzY09eBvxHw7Wj_2R0624c-nVPzFldChiHIMIgT0VuPAwfqU7sBk4y7GeTin3lBVu4QTrrhYjIxg9RHpXClA2uqOexvfqNp-8AHpwwT7i8lHGAgopxUaPbTRK2ZHAIGp_l1MXzYPLflOmWKChhvHSMOHWOCPZTu7cfbFAL1-RRmLvxCwWCrSiuFye6wsTXynwub-aXpNXbsxVcJUSksEL44xAtz3DLUyvWAYagsbhr16ieN1Qi00&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DAB2a7EJvrX6uR11BSHs1D0poFPTyUhRo&client_id=1489867734562036 HTTP/1.1" 200 229
+[20/Jun/2014 10:49:28] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[20/Jun/2014 10:49:29] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAAMJEl2cGTZAxmWsJ8fRwsNIZAkgAazLdDv2A8gIwQGbiil44S86InQUwSN9PjjuaWZBcaxZB5I1bjLV0EUPzeMMHaMIWsHZAZBweqKuNn4DwNj3kFqCPDprg2PefZAJtCV3cYitynGX2D2ZBpPCEZBuRFRtSWifDzz6DdeVPlZBSHDgBCDk6bHRUZD HTTP/1.1" 200 293
+[20/Jun/2014 10:50:46] WARNING [django.request:99] Forbidden (CSRF token missing or incorrect.): /articles/edit/7/ajaxupload
+[20/Jun/2014 10:51:30] WARNING [django.request:99] Forbidden (CSRF token missing or incorrect.): /articles/edit/7/ajaxupload
+[20/Jun/2014 10:57:43] ERROR [django.request:226] Internal Server Error: /articles/edit/7/ajaxupload
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
   File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
     return view_func(*args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 134, in saveSlides
-    a.tags.add(tags)
-  File "/Library/Python/2.7/site-packages/taggit/managers.py", line 235, in __get__
-    "before you can access their tags." % model.__name__)
-ValueError: Article objects need to have a primary key value before you can access their tags.
-[30/Apr/2014 08:45:27] ERROR [django.request:226] Internal Server Error: /articles/saveSlides
+TypeError: ajaxupload() got an unexpected keyword argument 'id'
+[20/Jun/2014 10:59:46] ERROR [django.request:226] Internal Server Error: /articles/ajaxupload
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
   File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
     return view_func(*args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 134, in saveSlides
-    a.tags.add(tags)
-  File "/Library/Python/2.7/site-packages/taggit/managers.py", line 235, in __get__
-    "before you can access their tags." % model.__name__)
-ValueError: Article objects need to have a primary key value before you can access their tags.
-[30/Apr/2014 08:51:44] ERROR [django.request:226] Internal Server Error: /articles/edit/1
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 90, in get_response
-    response = middleware_method(request)
-  File "/Library/Python/2.7/site-packages/django/middleware/common.py", line 71, in process_request
-    if (not urlresolvers.is_valid_path(request.path_info, urlconf) and
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 573, in is_valid_path
-    resolve(path, urlconf)
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 453, in resolve
-    return get_resolver(urlconf).resolve(path)
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 318, in resolve
-    for pattern in self.url_patterns:
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 346, in url_patterns
-    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 341, in urlconf_module
-    self._urlconf_module = import_module(self.urlconf_name)
-  File "/Library/Python/2.7/site-packages/django/utils/importlib.py", line 40, in import_module
-    __import__(name)
-  File "/ajay/Tanicode/Tanicode/Tanicode/urls.py", line 10, in <module>
-    url(r'^articles/', include('articles.urls')),
-  File "/Library/Python/2.7/site-packages/django/conf/urls/__init__.py", line 26, in include
-    urlconf_module = import_module(urlconf_module)
-  File "/Library/Python/2.7/site-packages/django/utils/importlib.py", line 40, in import_module
-    __import__(name)
-  File "/ajay/Tanicode/Tanicode/articles/urls.py", line 5, in <module>
-    from articles import views
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 64
-    template = loader.get_template('articles/create.html')
-                                                         ^
-IndentationError: unindent does not match any outer indentation level
-[30/Apr/2014 08:52:08] WARNING [django.request:145] Not Found: /articles/edit/favicon.png
-[30/Apr/2014 08:52:29] WARNING [django.request:145] Not Found: /articles/edit/updateSlides
-[30/Apr/2014 08:54:06] WARNING [django.request:145] Not Found: /updateSlides
-[30/Apr/2014 08:55:10] WARNING [django.request:145] Not Found: /updateSlides
-[30/Apr/2014 08:55:57] WARNING [django.request:145] Not Found: /articles/edit/updateSlides
-[30/Apr/2014 08:58:36] DEBUG [articles.views:159] 1
-[30/Apr/2014 08:58:36] DEBUG [articles.views:159] 1
-[30/Apr/2014 08:58:43] WARNING [django.request:145] Not Found: /articles/viewArticle/1
-[30/Apr/2014 08:58:51] WARNING [django.request:145] Not Found: /articles/viewArticle/1/favicon.png
-[30/Apr/2014 09:26:17] DEBUG [articles.views:159] 1
-[30/Apr/2014 09:26:17] DEBUG [articles.views:159] 1
-[30/Apr/2014 09:26:37] WARNING [django.request:145] Not Found: /articles/viewArticle/1/
-[30/Apr/2014 09:33:17] DEBUG [articles.views:159] 1
-[30/Apr/2014 09:33:17] DEBUG [articles.views:159] 1
-[30/Apr/2014 09:33:17] ERROR [django.request:226] Internal Server Error: /articles/edit/updateSlides
+TypeError: ajaxupload() takes exactly 2 arguments (1 given)
+[20/Jun/2014 11:03:45] ERROR [django.request:226] Internal Server Error: /articles/edit/7/ajaxupload
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
   File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
     return view_func(*args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 182, in updateSlides
-    a.tags.add(tags.split())
-AttributeError: 'list' object has no attribute 'split'
-[30/Apr/2014 09:33:49] DEBUG [articles.views:159] 1
-[30/Apr/2014 09:33:49] DEBUG [articles.views:159] 1
-[30/Apr/2014 09:33:49] ERROR [django.request:226] Internal Server Error: /articles/edit/updateSlides
+TypeError: ajaxupload() takes exactly 2 arguments (1 given)
+[04/Jul/2014 05:50:50] WARNING [django.request:145] Not Found: /articles/viewArticle/8/favicon.png
+[04/Jul/2014 05:59:19] DEBUG [articles.views:149] User user
+[04/Jul/2014 05:59:19] DEBUG [articles.views:149] User user
+[04/Jul/2014 05:59:19] DEBUG [articles.views:150] edit Params is {'articles': [<Article: Article object>, <Article: Article object>], 'zist': '', 'name': '', 'tags': '', 'aid': '', 'sa': ''}
+[04/Jul/2014 05:59:19] DEBUG [articles.views:150] edit Params is {'articles': [<Article: Article object>, <Article: Article object>], 'zist': '', 'name': '', 'tags': '', 'aid': '', 'sa': ''}
+[04/Jul/2014 06:01:05] WARNING [django.request:145] Not Found: /articles/viewSeries/2/favicon.png
+[04/Jul/2014 06:01:08] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:01:08] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:01:18] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:01:18] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:02:09] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:02:09] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:02:21] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:02:21] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:03:14] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:03:14] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:03:22] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:03:22] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:15:14] WARNING [django.request:145] Not Found: /articles/viewArticle/18/n
+[04/Jul/2014 06:38:49] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:38:49] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:38:57] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:38:57] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:39:07] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:39:07] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:39:16] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:39:16] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:45:17] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:45:17] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:45:26] DEBUG [articles.views:408] Inside
+[04/Jul/2014 06:45:26] DEBUG [articles.views:408] Inside
+[04/Jul/2014 07:28:17] WARNING [django.request:145] Not Found: /articles/viewArticle/19/favicon.png
+[04/Jul/2014 10:45:47] DEBUG [articles.views:138] object got
+[04/Jul/2014 10:45:47] DEBUG [articles.views:138] object got
+[04/Jul/2014 10:45:47] DEBUG [articles.views:149] User user
+[04/Jul/2014 10:45:47] DEBUG [articles.views:149] User user
+[04/Jul/2014 10:45:47] DEBUG [articles.views:150] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z', 'name': u'n', 'tags': u't', 'aid': 2, 'sa': u'{"articles":[{"name":"aa","id":16},{"name":"gg","id":8}]}'}
+[04/Jul/2014 10:45:47] DEBUG [articles.views:150] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z', 'name': u'n', 'tags': u't', 'aid': 2, 'sa': u'{"articles":[{"name":"aa","id":16},{"name":"gg","id":8}]}'}
+[04/Jul/2014 10:47:09] DEBUG [articles.views:408] Inside
+[04/Jul/2014 10:47:09] DEBUG [articles.views:408] Inside
+[04/Jul/2014 10:47:17] DEBUG [articles.views:408] Inside
+[04/Jul/2014 10:47:17] DEBUG [articles.views:408] Inside
+[04/Jul/2014 10:47:20] DEBUG [articles.views:408] Inside
+[04/Jul/2014 10:47:20] DEBUG [articles.views:408] Inside
+[04/Jul/2014 11:00:11] DEBUG [articles.views:408] Inside
+[04/Jul/2014 11:00:11] DEBUG [articles.views:408] Inside
+[04/Jul/2014 11:16:59] DEBUG [articles.views:408] Inside
+[04/Jul/2014 11:16:59] DEBUG [articles.views:408] Inside
+[04/Jul/2014 12:22:50] DEBUG [articles.views:408] Inside
+[04/Jul/2014 12:22:50] DEBUG [articles.views:408] Inside
+[04/Jul/2014 17:02:59] DEBUG [articles.views:408] Inside
+[04/Jul/2014 17:02:59] DEBUG [articles.views:408] Inside
+[04/Jul/2014 17:03:11] DEBUG [articles.views:408] Inside
+[04/Jul/2014 17:03:11] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:05:14] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:05:14] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:07:07] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:07:07] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:07:38] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:07:38] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:07:47] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:07:47] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:07:53] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:07:53] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:11:18] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:11:18] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:11:26] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:11:26] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:12:03] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:12:03] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:12:11] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:12:11] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:13:02] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:13:02] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:14:05] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:14:05] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:14:12] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:14:12] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:14:18] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:14:18] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:30:08] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:30:08] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:35:01] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:35:01] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:35:30] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:35:30] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:37:21] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:37:21] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:40:23] DEBUG [articles.views:408] Inside
+[04/Jul/2014 18:40:23] DEBUG [articles.views:408] Inside
+[08/Jul/2014 08:37:23] DEBUG [articles.views:408] Inside
+[08/Jul/2014 08:37:23] DEBUG [articles.views:408] Inside
+[08/Jul/2014 08:38:18] DEBUG [articles.views:408] Inside
+[08/Jul/2014 08:38:18] DEBUG [articles.views:408] Inside
+[08/Jul/2014 08:38:28] DEBUG [articles.views:408] Inside
+[08/Jul/2014 08:38:28] DEBUG [articles.views:408] Inside
+[08/Jul/2014 10:10:14] DEBUG [articles.views:408] Inside
+[08/Jul/2014 10:10:14] DEBUG [articles.views:408] Inside
+[09/Jul/2014 05:56:25] WARNING [django.request:145] Not Found: /articles/viewArticle/20/favicon.png
+[09/Jul/2014 09:31:05] WARNING [django.request:145] Not Found: /articles/viewArticle/22/favicon.png
+[09/Jul/2014 09:33:00] WARNING [django.request:145] Not Found: /articles/viewArticle/23/favicon.png
+[09/Jul/2014 09:34:08] WARNING [django.request:145] Not Found: /articles/viewArticle/24/favicon.png
+[09/Jul/2014 10:24:26] ERROR [django.request:226] Internal Server Error: /articles/viewArticle/22/1sit
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 182, in updateSlides
-    a.tags.add(tags)
-  File "/Library/Python/2.7/site-packages/taggit/utils.py", line 128, in inner
-    return func(self, *args, **kwargs)
-  File "/Library/Python/2.7/site-packages/taggit/managers.py", line 134, in add
-    if not isinstance(t, self.through.tag_model())
-TypeError: unhashable type: 'list'
-[30/Apr/2014 09:34:33] DEBUG [articles.views:159] 1
-[30/Apr/2014 09:34:33] DEBUG [articles.views:159] 1
-[30/Apr/2014 09:34:33] ERROR [django.request:226] Internal Server Error: /articles/edit/updateSlides
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 183, in updateSlides
-    a.tags.add(tags)
-  File "/Library/Python/2.7/site-packages/taggit/utils.py", line 128, in inner
-    return func(self, *args, **kwargs)
-  File "/Library/Python/2.7/site-packages/taggit/managers.py", line 134, in add
-    if not isinstance(t, self.through.tag_model())
-TypeError: unhashable type: 'list'
-[30/Apr/2014 09:36:22] DEBUG [articles.views:160] 1
-[30/Apr/2014 09:36:22] DEBUG [articles.views:160] 1
-[30/Apr/2014 12:39:06] WARNING [django.request:145] Not Found: /articles/favicon.png
-[30/Apr/2014 12:39:09] WARNING [django.request:145] Not Found: /favicon.ico
-[30/Apr/2014 19:13:48] WARNING [django.request:145] Not Found: /articles/viewArticle/1/favicon.png
-[18/May/2014 07:41:04] WARNING [django.request:145] Not Found: /articles/edit/favicon.png
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 372, in viewArticle
+    a = Article.objects.get(pk=p)
+  File "/Library/Python/2.7/site-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 307, in get
+    self.model._meta.object_name)
+DoesNotExist: Article matching query does not exist.
+[09/Jul/2014 10:27:19] WARNING [django.request:145] Not Found: /favicon.png
+[09/Jul/2014 10:27:20] WARNING [django.request:145] Not Found: /favicon.ico
+[09/Jul/2014 10:27:45] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:27:45] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:27:46] WARNING [django.request:145] Not Found: /articles/viewArticle/24/favicon.png
+[09/Jul/2014 10:28:32] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:28:32] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:29:41] DEBUG [articles.views:149] User user
+[09/Jul/2014 10:29:41] DEBUG [articles.views:149] User user
+[09/Jul/2014 10:29:41] DEBUG [articles.views:150] edit Params is {'articles': [<Article: Article object>, <Article: Article object>], 'zist': '', 'name': '', 'tags': '', 'aid': '', 'sa': ''}
+[09/Jul/2014 10:29:41] DEBUG [articles.views:150] edit Params is {'articles': [<Article: Article object>, <Article: Article object>], 'zist': '', 'name': '', 'tags': '', 'aid': '', 'sa': ''}
+[09/Jul/2014 10:29:42] WARNING [django.request:145] Not Found: /articles/favicon.png
+[09/Jul/2014 10:29:53] WARNING [django.request:145] Not Found: /dashboard/favicon.png
+[09/Jul/2014 10:30:03] WARNING [django.request:145] Not Found: /articles/viewSeries/3/favicon.png
+[09/Jul/2014 10:30:07] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:30:07] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:32:36] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:32:36] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:32:36] WARNING [django.request:145] Not Found: /articles/viewArticle/25/favicon.png
+[09/Jul/2014 10:35:17] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:35:17] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:36:10] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:36:10] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:42:34] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:42:34] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:44:58] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:44:58] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:45:45] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:45:45] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:47:15] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:47:15] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:48:06] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:48:06] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:49:22] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:49:22] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:50:29] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:50:29] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:51:47] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:51:47] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:52:45] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:52:45] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:55:20] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:55:20] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:55:48] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:55:48] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:58:04] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:58:04] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:58:38] DEBUG [articles.views:495] tags are [u'2nd']
+[09/Jul/2014 10:58:38] DEBUG [articles.views:495] tags are [u'2nd']
+[09/Jul/2014 10:58:38] DEBUG [articles.views:518] Ajay -- save Slides saved
+[09/Jul/2014 10:58:38] DEBUG [articles.views:518] Ajay -- save Slides saved
+[09/Jul/2014 10:58:44] DEBUG [articles.views:408] Inside
+[09/Jul/2014 10:58:44] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:03:00] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:03:00] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:03:10] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:03:10] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:04:30] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:04:30] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:05:56] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:05:56] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:07:01] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:07:01] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:07:47] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:07:47] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:09:09] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:09:09] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:09:43] DEBUG [articles.views:138] object got
+[09/Jul/2014 11:09:43] DEBUG [articles.views:138] object got
+[09/Jul/2014 11:09:43] DEBUG [articles.views:149] User user
+[09/Jul/2014 11:09:43] DEBUG [articles.views:149] User user
+[09/Jul/2014 11:09:43] DEBUG [articles.views:150] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u't', 'name': u't', 'tags': u't', 'aid': 3, 'sa': u'{"articles":[{"name":"a","id":24}]}'}
+[09/Jul/2014 11:09:43] DEBUG [articles.views:150] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u't', 'name': u't', 'tags': u't', 'aid': 3, 'sa': u'{"articles":[{"name":"a","id":24}]}'}
+[09/Jul/2014 11:10:07] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:10:07] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:10:16] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:10:16] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:13:28] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:13:28] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:13:34] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:13:34] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:13:45] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:13:45] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:13:50] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:13:50] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:22:50] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:22:50] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:24:44] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:24:44] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:25:26] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:25:26] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:26:22] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:26:22] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:27:25] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:27:25] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:27:52] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:27:52] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:29:00] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:29:00] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:29:47] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:29:47] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:30:09] DEBUG [articles.views:495] tags are [u'2nd']
+[09/Jul/2014 11:30:09] DEBUG [articles.views:495] tags are [u'2nd']
+[09/Jul/2014 11:30:09] DEBUG [articles.views:518] Ajay -- save Slides saved
+[09/Jul/2014 11:30:09] DEBUG [articles.views:518] Ajay -- save Slides saved
+[09/Jul/2014 11:30:21] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:30:21] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:30:28] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:30:28] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:36:44] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:36:44] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:36:51] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:36:51] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:48:58] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:48:58] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:57:45] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:57:45] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:58:53] DEBUG [articles.views:408] Inside
+[09/Jul/2014 11:58:53] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:01:38] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:01:38] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:23:14] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:23:14] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:23:24] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:23:24] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:24:11] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:24:11] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:28:50] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:28:50] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:29:08] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:29:08] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:29:58] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:29:58] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:30:40] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:30:40] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:32:10] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:32:10] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:33:21] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:33:21] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:38:20] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:38:20] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:39:30] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:39:30] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:40:29] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:40:29] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:41:14] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:41:14] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:52:56] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:52:56] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:54:10] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:54:10] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:55:12] DEBUG [articles.views:408] Inside
+[09/Jul/2014 12:55:12] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:02:56] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:02:56] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:22:44] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:22:44] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:23:51] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:23:51] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:24:40] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:24:40] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:25:30] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:25:30] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:26:38] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:26:38] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:28:41] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:28:41] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:29:11] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:29:11] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:30:21] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:30:21] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:31:22] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:31:22] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:37:26] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:37:26] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:40:02] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:40:02] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:43:15] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:43:15] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:45:18] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:45:18] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:47:43] DEBUG [articles.views:408] Inside
+[09/Jul/2014 13:47:43] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:28:00] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:28:00] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:28:35] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:28:35] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:28:38] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:28:38] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:29:46] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:29:46] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:31:14] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:31:14] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:32:11] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:32:11] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:33:27] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:33:27] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:34:43] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:34:43] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:43:57] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:43:57] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:44:05] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:44:05] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:45:11] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:45:11] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:49:50] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:49:50] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:50:31] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:50:31] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:51:08] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:51:08] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:52:35] DEBUG [articles.views:408] Inside
+[09/Jul/2014 14:52:35] DEBUG [articles.views:408] Inside
+[10/Jul/2014 06:32:53] DEBUG [articles.views:408] Inside
+[10/Jul/2014 06:32:53] DEBUG [articles.views:408] Inside
+[10/Jul/2014 06:32:54] WARNING [django.request:145] Not Found: /articles/viewArticle/26/favicon.png
+[10/Jul/2014 06:33:15] DEBUG [articles.views:408] Inside
+[10/Jul/2014 06:33:15] DEBUG [articles.views:408] Inside
+[10/Jul/2014 06:55:25] DEBUG [articles.views:408] Inside
+[10/Jul/2014 06:55:25] DEBUG [articles.views:408] Inside
+[10/Jul/2014 06:55:30] DEBUG [articles.views:408] Inside
+[10/Jul/2014 06:55:30] DEBUG [articles.views:408] Inside
+[10/Jul/2014 06:55:43] DEBUG [articles.views:495] tags are [u'sprite', u'example']
+[10/Jul/2014 06:55:43] DEBUG [articles.views:495] tags are [u'sprite', u'example']
+[10/Jul/2014 06:55:43] DEBUG [articles.views:518] Ajay -- save Slides saved
+[10/Jul/2014 06:55:43] DEBUG [articles.views:518] Ajay -- save Slides saved
+[10/Jul/2014 06:55:47] DEBUG [articles.views:408] Inside
+[10/Jul/2014 06:55:47] DEBUG [articles.views:408] Inside
+[10/Jul/2014 07:02:10] DEBUG [articles.views:408] Inside
+[10/Jul/2014 07:02:10] DEBUG [articles.views:408] Inside
+[10/Jul/2014 08:28:05] DEBUG [articles.views:408] Inside
+[10/Jul/2014 08:28:05] DEBUG [articles.views:408] Inside
+[10/Jul/2014 08:53:48] DEBUG [articles.views:408] Inside
+[10/Jul/2014 08:53:48] DEBUG [articles.views:408] Inside
+[10/Jul/2014 08:53:48] WARNING [django.request:145] Not Found: /articles/viewArticle/27/favicon.png
+[10/Jul/2014 08:54:33] DEBUG [articles.views:408] Inside
+[10/Jul/2014 08:54:33] DEBUG [articles.views:408] Inside
+[10/Jul/2014 08:57:38] DEBUG [articles.views:408] Inside
+[10/Jul/2014 08:57:38] DEBUG [articles.views:408] Inside
+[10/Jul/2014 09:31:24] DEBUG [articles.views:495] tags are [u'sprite', u'example']
+[10/Jul/2014 09:31:24] DEBUG [articles.views:495] tags are [u'sprite', u'example']
+[10/Jul/2014 09:31:24] DEBUG [articles.views:518] Ajay -- save Slides saved
+[10/Jul/2014 09:31:24] DEBUG [articles.views:518] Ajay -- save Slides saved
+[10/Jul/2014 09:31:29] DEBUG [articles.views:408] Inside
+[10/Jul/2014 09:31:29] DEBUG [articles.views:408] Inside
+[10/Jul/2014 09:31:52] DEBUG [articles.views:495] tags are [u'sprite', u'example']
+[10/Jul/2014 09:31:52] DEBUG [articles.views:495] tags are [u'sprite', u'example']
+[10/Jul/2014 09:31:52] DEBUG [articles.views:518] Ajay -- save Slides saved
+[10/Jul/2014 09:31:52] DEBUG [articles.views:518] Ajay -- save Slides saved
+[10/Jul/2014 09:31:57] DEBUG [articles.views:408] Inside
+[10/Jul/2014 09:31:57] DEBUG [articles.views:408] Inside
+[10/Jul/2014 10:06:09] DEBUG [articles.views:408] Inside
+[10/Jul/2014 10:06:09] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:11:27] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:11:27] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:11:28] WARNING [django.request:145] Not Found: /articles/viewArticle/28/favicon.png
+[10/Jul/2014 13:11:43] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:11:43] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:11:54] DEBUG [articles.views:495] tags are [u'how', u'does', u'web', u'works']
+[10/Jul/2014 13:11:54] DEBUG [articles.views:495] tags are [u'how', u'does', u'web', u'works']
+[10/Jul/2014 13:11:54] DEBUG [articles.views:518] Ajay -- save Slides saved
+[10/Jul/2014 13:11:54] DEBUG [articles.views:518] Ajay -- save Slides saved
+[10/Jul/2014 13:12:02] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:12:02] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:39:47] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:39:47] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:43:15] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:43:15] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:45:05] DEBUG [articles.views:495] tags are [u'sprite', u'example']
+[10/Jul/2014 13:45:05] DEBUG [articles.views:495] tags are [u'sprite', u'example']
+[10/Jul/2014 13:45:05] DEBUG [articles.views:518] Ajay -- save Slides saved
+[10/Jul/2014 13:45:05] DEBUG [articles.views:518] Ajay -- save Slides saved
+[10/Jul/2014 13:45:11] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:45:11] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:45:16] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:45:16] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:45:37] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:45:37] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:45:45] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:45:45] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:45:50] DEBUG [articles.views:495] tags are [u'how', u'does', u'web', u'works']
+[10/Jul/2014 13:45:50] DEBUG [articles.views:495] tags are [u'how', u'does', u'web', u'works']
+[10/Jul/2014 13:45:50] DEBUG [articles.views:518] Ajay -- save Slides saved
+[10/Jul/2014 13:45:50] DEBUG [articles.views:518] Ajay -- save Slides saved
+[10/Jul/2014 13:45:55] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:45:55] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:46:02] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:46:02] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:46:09] DEBUG [articles.views:408] Inside
+[10/Jul/2014 13:46:09] DEBUG [articles.views:408] Inside
+[10/Jul/2014 17:26:36] DEBUG [articles.views:495] tags are [u'how', u'does', u'web', u'works']
+[10/Jul/2014 17:26:36] DEBUG [articles.views:495] tags are [u'how', u'does', u'web', u'works']
+[10/Jul/2014 17:26:36] DEBUG [articles.views:518] Ajay -- save Slides saved
+[10/Jul/2014 17:26:36] DEBUG [articles.views:518] Ajay -- save Slides saved
+[10/Jul/2014 17:26:43] DEBUG [articles.views:408] Inside
+[10/Jul/2014 17:26:43] DEBUG [articles.views:408] Inside

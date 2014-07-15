@@ -1,163 +1,4 @@
-[28/May/2014 06:43:24] DEBUG [articles.views:182] Ajay -- save Slides Called
-[28/May/2014 06:43:24] DEBUG [articles.views:182] Ajay -- save Slides Called
-[28/May/2014 06:43:24] DEBUG [articles.views:210] Ajay -- save Slides saved
-[28/May/2014 06:43:24] DEBUG [articles.views:210] Ajay -- save Slides saved
-[28/May/2014 06:43:42] DEBUG [articles.views:182] Ajay -- save Slides Called
-[28/May/2014 06:43:42] DEBUG [articles.views:182] Ajay -- save Slides Called
-[28/May/2014 06:43:42] DEBUG [articles.views:210] Ajay -- save Slides saved
-[28/May/2014 06:43:42] DEBUG [articles.views:210] Ajay -- save Slides saved
-[28/May/2014 06:59:11] ERROR [django.request:226] Internal Server Error: /admin/hitcount/hit/
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 139, in get_response
-    response = response.render()
-  File "/Library/Python/2.7/site-packages/django/template/response.py", line 105, in render
-    self.content = self.rendered_content
-  File "/Library/Python/2.7/site-packages/django/template/response.py", line 82, in rendered_content
-    content = template.render(context)
-  File "/Library/Python/2.7/site-packages/django/template/base.py", line 140, in render
-    return self._render(context)
-  File "/Library/Python/2.7/site-packages/django/template/base.py", line 134, in _render
-    return self.nodelist.render(context)
-  File "/Library/Python/2.7/site-packages/django/template/base.py", line 840, in render
-    bit = self.render_node(node, context)
-  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 78, in render_node
-    return node.render(context)
-  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 123, in render
-    return compiled_parent._render(context)
-  File "/Library/Python/2.7/site-packages/django/template/base.py", line 134, in _render
-    return self.nodelist.render(context)
-  File "/Library/Python/2.7/site-packages/django/template/base.py", line 840, in render
-    bit = self.render_node(node, context)
-  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 78, in render_node
-    return node.render(context)
-  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 123, in render
-    return compiled_parent._render(context)
-  File "/Library/Python/2.7/site-packages/django/template/base.py", line 134, in _render
-    return self.nodelist.render(context)
-  File "/Library/Python/2.7/site-packages/django/template/base.py", line 840, in render
-    bit = self.render_node(node, context)
-  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 78, in render_node
-    return node.render(context)
-  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 62, in render
-    result = block.nodelist.render(context)
-  File "/Library/Python/2.7/site-packages/django/template/base.py", line 840, in render
-    bit = self.render_node(node, context)
-  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 78, in render_node
-    return node.render(context)
-  File "/Library/Python/2.7/site-packages/django/template/loader_tags.py", line 62, in render
-    result = block.nodelist.render(context)
-  File "/Library/Python/2.7/site-packages/django/template/base.py", line 840, in render
-    bit = self.render_node(node, context)
-  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 78, in render_node
-    return node.render(context)
-  File "/Library/Python/2.7/site-packages/django/template/base.py", line 1196, in render
-    _dict = func(*resolved_args, **resolved_kwargs)
-  File "/Library/Python/2.7/site-packages/django/contrib/admin/templatetags/admin_list.py", line 341, in date_hierarchy
-    } for day in days]
-  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 96, in __iter__
-    self._fetch_all()
-  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 854, in _fetch_all
-    self._result_cache = list(self.iterator())
-  File "/Library/Python/2.7/site-packages/django/db/models/sql/compiler.py", line 1096, in results_iter
-    for rows in self.execute_sql(MULTI):
-  File "/Library/Python/2.7/site-packages/django/db/models/sql/compiler.py", line 771, in execute_sql
-    sql, params = self.as_sql()
-  File "/Library/Python/2.7/site-packages/django/db/models/sql/compiler.py", line 82, in as_sql
-    out_cols, s_params = self.get_columns(with_col_aliases)
-  File "/Library/Python/2.7/site-packages/django/db/models/sql/compiler.py", line 217, in get_columns
-    col_sql, col_params = col.as_sql(qn, self.connection)
-  File "/Library/Python/2.7/site-packages/django/db/models/sql/datastructures.py", line 62, in as_sql
-    return connection.ops.datetime_trunc_sql(self.lookup_type, col, self.tzname)
-  File "/Library/Python/2.7/site-packages/django/db/backends/sqlite3/base.py", line 196, in datetime_trunc_sql
-    raise ImproperlyConfigured("This query requires pytz, "
-ImproperlyConfigured: This query requires pytz, but it isn't installed.
-[29/May/2014 03:58:19] ERROR [django.request:226] Internal Server Error: /articles/saveSlides
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
-    return view_func(request, *args, **kwargs)
-  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 174, in saveSlides
-    a.save()
-  File "/ajay/Tanicode/Tanicode/articles/models.py", line 22, in save
-    super(Article, self).save()
-  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 545, in save
-    force_update=force_update, update_fields=update_fields)
-  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 573, in save_base
-    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
-  File "/Library/Python/2.7/site-packages/django/db/transaction.py", line 305, in __exit__
-    connection.commit()
-  File "/Library/Python/2.7/site-packages/django/db/backends/__init__.py", line 168, in commit
-    self._commit()
-  File "/Library/Python/2.7/site-packages/django/db/backends/__init__.py", line 136, in _commit
-    return self.connection.commit()
-  File "/Library/Python/2.7/site-packages/django/db/utils.py", line 99, in __exit__
-    six.reraise(dj_exc_type, dj_exc_value, traceback)
-  File "/Library/Python/2.7/site-packages/django/db/backends/__init__.py", line 136, in _commit
-    return self.connection.commit()
-OperationalError: database is locked
-[29/May/2014 03:58:24] ERROR [django.request:226] Internal Server Error: /articles/saveSlides
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
-    return view_func(request, *args, **kwargs)
-  File "/Library/Python/2.7/site-packages/django/views/decorators/csrf.py", line 57, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 174, in saveSlides
-    a.save()
-  File "/ajay/Tanicode/Tanicode/articles/models.py", line 22, in save
-    super(Article, self).save()
-  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 545, in save
-    force_update=force_update, update_fields=update_fields)
-  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 573, in save_base
-    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
-  File "/Library/Python/2.7/site-packages/django/db/transaction.py", line 305, in __exit__
-    connection.commit()
-  File "/Library/Python/2.7/site-packages/django/db/backends/__init__.py", line 168, in commit
-    self._commit()
-  File "/Library/Python/2.7/site-packages/django/db/backends/__init__.py", line 136, in _commit
-    return self.connection.commit()
-  File "/Library/Python/2.7/site-packages/django/db/utils.py", line 99, in __exit__
-    six.reraise(dj_exc_type, dj_exc_value, traceback)
-  File "/Library/Python/2.7/site-packages/django/db/backends/__init__.py", line 136, in _commit
-    return self.connection.commit()
-OperationalError: database is locked
-[29/May/2014 04:01:13] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
-[29/May/2014 04:01:15] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQDEfc_aPslviVj_xQcez4KxcIpBVR-rh99U_ozDkMAhDiIUUhHgS8x34_qx09xbBIrOc8fv_M9hhEHsXZwW-hlR66BvksvfTK5qucN647JmhKt7ayMBKd_jyaypahVhCR-7KxQKhCczLffHcIgEl7mDrRQWOZki-iWcvTkuaOCmC3cjhrKi9o55c-sUrsfHVACBbZeeiUeNA6Zj4vI9nMY33RFSArzSVYK8xwCjfjENneyEwqQjcK4O_-39SQRfzW1QXwAqdfQB7cGdOv8GFUvizaDfT6Ve0mopDKqtIga0QwnSaBCj7YGl8f4lJbFMfsc&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3D6wVulIGd8fUsHMMZ46NLFuAhttDnEeLy&client_id=1489867734562036 HTTP/1.1" 200 234
-[29/May/2014 04:01:15] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
-[29/May/2014 04:01:16] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAIE2RfKgsaxRDV4tZASgVz66vowUiJN8ZCsqIgGYnFZBZC676oTSPmklkOCWYOOAxOkbWzxZCWaCFDj4PoZANqfN62P0z6n95EDMZBOXYwpqOp0JZA7DZBmX0RTfGFCelIISy3rZAYJDg8kZClMKWfhwzH3cjSvGZC9kk8XUPRZBKl0hYuZCg26xwPZBfQZD HTTP/1.1" 200 293
-[29/May/2014 04:01:16] WARNING [django.request:145] Not Found: /another-login-url/
-[29/May/2014 05:00:15] ERROR [django.request:226] Internal Server Error: /articles/createSeries
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 90, in get_response
-    response = middleware_method(request)
-  File "/Library/Python/2.7/site-packages/django/middleware/common.py", line 71, in process_request
-    if (not urlresolvers.is_valid_path(request.path_info, urlconf) and
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 573, in is_valid_path
-    resolve(path, urlconf)
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 453, in resolve
-    return get_resolver(urlconf).resolve(path)
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 318, in resolve
-    for pattern in self.url_patterns:
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 346, in url_patterns
-    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 341, in urlconf_module
-    self._urlconf_module = import_module(self.urlconf_name)
-  File "/Library/Python/2.7/site-packages/django/utils/importlib.py", line 40, in import_module
-    __import__(name)
-  File "/ajay/Tanicode/Tanicode/Tanicode/urls.py", line 17, in <module>
-    url(r'^articles/', include('articles.urls')),
-  File "/Library/Python/2.7/site-packages/django/conf/urls/__init__.py", line 26, in include
-    urlconf_module = import_module(urlconf_module)
-  File "/Library/Python/2.7/site-packages/django/utils/importlib.py", line 40, in import_module
-    __import__(name)
-  File "/ajay/Tanicode/Tanicode/articles/urls.py", line 23, in <module>
-    url(r'^createSeries$', views.createSeries, name='createSeries'),
-AttributeError: 'module' object has no attribute 'createSeries'
-[29/May/2014 05:37:31] ERROR [django.request:226] Internal Server Error: /articles/createSeries
+[13/Jun/2014 03:31:33] ERROR [django.request:226] Internal Server Error: /articles/viewArticle/1/asd
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 90, in get_response
     response = middleware_method(request)
@@ -177,132 +18,78 @@ Traceback (most recent call last):
     __import__(name)
   File "/ajay/Tanicode/Tanicode/Tanicode/urls.py", line 6, in <module>
     from articles import views
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 39
-    articles = Article.objects.filter(user = request.user and is_published = True).order_by("-last_saved")
-                                                                           ^
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 359
+    'user': request.user
+         ^
 SyntaxError: invalid syntax
-[29/May/2014 07:22:36] WARNING [django.request:145] Not Found: /articles/viewArticle/3/favicon.png
-[29/May/2014 07:24:18] WARNING [django.request:145] Not Found: /saveSeries/
-[29/May/2014 07:25:15] ERROR [django.request:226] Internal Server Error: /articles/saveSeries/
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
-    return view_func(request, *args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 46, in saveSeries
-    obj = json.loads(s)
-  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/__init__.py", line 326, in loads
-    return _default_decoder.decode(s)
-  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/decoder.py", line 360, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-TypeError: expected string or buffer
-[29/May/2014 07:27:00] DEBUG [articles.views:46] Data as received ---- None
-[29/May/2014 07:27:00] DEBUG [articles.views:46] Data as received ---- None
-[29/May/2014 07:27:00] ERROR [django.request:226] Internal Server Error: /articles/saveSeries/
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
-    return view_func(request, *args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 47, in saveSeries
-    obj = json.loads(s)
-  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/__init__.py", line 326, in loads
-    return _default_decoder.decode(s)
-  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/decoder.py", line 360, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-TypeError: expected string or buffer
-[29/May/2014 07:30:53] DEBUG [articles.views:46] Data as received ---- <QueryDict: {u'data[zist]': [u'z1'], u'data[articles]': [u'{"articles":[{"name":"name","id":3},{"name":"promise made by jquery","id":2},{"name":"name ","id":1}]}'], u'data[tags]': [u't1'], u'data[name]': [u's1']}>
-[29/May/2014 07:30:53] DEBUG [articles.views:46] Data as received ---- <QueryDict: {u'data[zist]': [u'z1'], u'data[articles]': [u'{"articles":[{"name":"name","id":3},{"name":"promise made by jquery","id":2},{"name":"name ","id":1}]}'], u'data[tags]': [u't1'], u'data[name]': [u's1']}>
-[29/May/2014 07:30:53] ERROR [django.request:226] Internal Server Error: /articles/saveSeries/
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
-    return view_func(request, *args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 47, in saveSeries
-    obj = json.loads(s)
-  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/__init__.py", line 326, in loads
-    return _default_decoder.decode(s)
-  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/decoder.py", line 360, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-TypeError: expected string or buffer
-[29/May/2014 07:35:04] DEBUG [articles.views:46] Data as received ---- <QueryDict: {u'data': [u'{"name":"promise made by jquery","id":2}']}>
-[29/May/2014 07:35:04] DEBUG [articles.views:46] Data as received ---- <QueryDict: {u'data': [u'{"name":"promise made by jquery","id":2}']}>
-[29/May/2014 07:35:04] ERROR [django.request:226] Internal Server Error: /articles/saveSeries/
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
-    return view_func(request, *args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 49, in saveSeries
-    zist = obj['zist']
-KeyError: 'zist'
-[29/May/2014 07:36:37] DEBUG [articles.views:46] Data as received ---- <QueryDict: {u'data': [u'{"name":"s1","tags":"t1","zist":"z","articles":"{\\"articles\\":[{\\"name\\":\\"name\\",\\"id\\":3},{\\"name\\":\\"name \\",\\"id\\":1},{\\"name\\":\\"promise made by jquery\\",\\"id\\":2}]}"}']}>
-[29/May/2014 07:36:37] DEBUG [articles.views:46] Data as received ---- <QueryDict: {u'data': [u'{"name":"s1","tags":"t1","zist":"z","articles":"{\\"articles\\":[{\\"name\\":\\"name\\",\\"id\\":3},{\\"name\\":\\"name \\",\\"id\\":1},{\\"name\\":\\"promise made by jquery\\",\\"id\\":2}]}"}']}>
-[29/May/2014 07:36:37] ERROR [django.request:226] Internal Server Error: /articles/saveSeries/
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
-    return view_func(request, *args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 51, in saveSeries
-    search = str(name) + " " + str(obj1["tags"]) + " " + str(zist)
-NameError: global name 'obj1' is not defined
-[29/May/2014 07:37:16] DEBUG [articles.views:46] Data as received ---- <QueryDict: {u'data': [u'{"name":"s1","tags":"t1","zist":"z","articles":"{\\"articles\\":[{\\"name\\":\\"name\\",\\"id\\":3},{\\"name\\":\\"name \\",\\"id\\":1},{\\"name\\":\\"promise made by jquery\\",\\"id\\":2}]}"}']}>
-[29/May/2014 07:37:16] DEBUG [articles.views:46] Data as received ---- <QueryDict: {u'data': [u'{"name":"s1","tags":"t1","zist":"z","articles":"{\\"articles\\":[{\\"name\\":\\"name\\",\\"id\\":3},{\\"name\\":\\"name \\",\\"id\\":1},{\\"name\\":\\"promise made by jquery\\",\\"id\\":2}]}"}']}>
-[29/May/2014 07:37:16] ERROR [django.request:226] Internal Server Error: /articles/saveSeries/
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
-    return view_func(request, *args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 66, in saveSeries
-    aid = a['id']
-TypeError: string indices must be integers
-[29/May/2014 07:38:25] DEBUG [articles.views:62] Articles is  ---- {"articles":[{"name":"name","id":3},{"name":"name ","id":1},{"name":"promise made by jquery","id":2}]}
-[29/May/2014 07:38:25] DEBUG [articles.views:62] Articles is  ---- {"articles":[{"name":"name","id":3},{"name":"name ","id":1},{"name":"promise made by jquery","id":2}]}
-[29/May/2014 07:38:25] DEBUG [articles.views:64] Data as received ---- {u'articles': [{u'name': u'name', u'id': 3}, {u'name': u'name ', u'id': 1}, {u'name': u'promise made by jquery', u'id': 2}]}
-[29/May/2014 07:38:25] DEBUG [articles.views:64] Data as received ---- {u'articles': [{u'name': u'name', u'id': 3}, {u'name': u'name ', u'id': 1}, {u'name': u'promise made by jquery', u'id': 2}]}
-[29/May/2014 07:38:25] ERROR [django.request:226] Internal Server Error: /articles/saveSeries/
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
-    return view_func(request, *args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 68, in saveSeries
-    aid = a['id']
-TypeError: string indices must be integers
-[29/May/2014 07:39:39] DEBUG [articles.views:62] Articles is  ---- {"articles":[{"name":"name","id":3},{"name":"name ","id":1},{"name":"promise made by jquery","id":2}]}
-[29/May/2014 07:39:39] DEBUG [articles.views:62] Articles is  ---- {"articles":[{"name":"name","id":3},{"name":"name ","id":1},{"name":"promise made by jquery","id":2}]}
-[29/May/2014 07:39:39] DEBUG [articles.views:64] Data as received ---- {u'articles': [{u'name': u'name', u'id': 3}, {u'name': u'name ', u'id': 1}, {u'name': u'promise made by jquery', u'id': 2}]}
-[29/May/2014 07:39:39] DEBUG [articles.views:64] Data as received ---- {u'articles': [{u'name': u'name', u'id': 3}, {u'name': u'name ', u'id': 1}, {u'name': u'promise made by jquery', u'id': 2}]}
-[29/May/2014 07:39:39] ERROR [django.request:226] Internal Server Error: /articles/saveSeries/
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
-    return view_func(request, *args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 72, in saveSeries
-    return HttpResponse( json.dumps( {'id': a.id} ) )
-AttributeError: 'dict' object has no attribute 'id'
-[29/May/2014 07:40:29] DEBUG [articles.views:62] Articles is  ---- {"articles":[{"name":"name","id":3},{"name":"name ","id":1},{"name":"promise made by jquery","id":2}]}
-[29/May/2014 07:40:29] DEBUG [articles.views:62] Articles is  ---- {"articles":[{"name":"name","id":3},{"name":"name ","id":1},{"name":"promise made by jquery","id":2}]}
-[29/May/2014 07:40:29] DEBUG [articles.views:64] Data as received ---- {u'articles': [{u'name': u'name', u'id': 3}, {u'name': u'name ', u'id': 1}, {u'name': u'promise made by jquery', u'id': 2}]}
-[29/May/2014 07:40:29] DEBUG [articles.views:64] Data as received ---- {u'articles': [{u'name': u'name', u'id': 3}, {u'name': u'name ', u'id': 1}, {u'name': u'promise made by jquery', u'id': 2}]}
-[29/May/2014 07:40:29] ERROR [django.request:226] Internal Server Error: /articles/saveSeries/
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
-    return view_func(request, *args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 72, in saveSeries
-    return HttpResponse( json.dumps( {'id': a.pk} ) )
-AttributeError: 'dict' object has no attribute 'pk'
-[29/May/2014 07:41:25] DEBUG [articles.views:62] Articles is  ---- {"articles":[{"name":"name","id":3},{"name":"name ","id":1},{"name":"promise made by jquery","id":2}]}
-[29/May/2014 07:41:25] DEBUG [articles.views:62] Articles is  ---- {"articles":[{"name":"name","id":3},{"name":"name ","id":1},{"name":"promise made by jquery","id":2}]}
-[29/May/2014 07:41:25] DEBUG [articles.views:64] Data as received ---- {u'articles': [{u'name': u'name', u'id': 3}, {u'name': u'name ', u'id': 1}, {u'name': u'promise made by jquery', u'id': 2}]}
-[29/May/2014 07:41:25] DEBUG [articles.views:64] Data as received ---- {u'articles': [{u'name': u'name', u'id': 3}, {u'name': u'name ', u'id': 1}, {u'name': u'promise made by jquery', u'id': 2}]}
-[29/May/2014 08:03:23] ERROR [django.request:226] Internal Server Error: /admin/articles/
+[13/Jun/2014 03:35:52] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:35:53] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQAhW0pCP6tLMdF6yOYoIRUL9Jn9_NF5g9vL5glzaKDqlw4b98kBl0XwIFWHpbPLpg8mG5yddX4_9umo3GsKCTYtTnc9Fxnt1sF7GEq83qFFi2Tzi-Q17xM1N79abbcluyr2fEWete5Q9zlNnIexsPmRbUVYfhLWhQWsHnzy6YDIHYImX6kpYgfCtmEXPMbo5xZBznHYM30zhO216ikUfmL8tgdSPjdR3JlH2RVlHsQgjRvhKmZBKZ525Mg5yiEUsbClOuydfffjJZ7Xg2J5APqd042rZ5GQfLI_S30mDQsnRkT-GZUPLyDe35sXYORMcW4&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3D0dgxmzt6yE3MTNrWhJtXgyvWAqzMpWfE&client_id=1489867734562036 HTTP/1.1" 200 229
+[13/Jun/2014 03:35:53] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:35:54] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAKZABOTxLBPGiCxT441xX0wvUP1QonMXZBe60bMQoyehzy6cXs9xTpaZAb1D12aLQd0vWIX4p1DVk0UFOlyCzZC8RzF3C00CtsMChOgMgKlMXkmu9kEzH7lgfAlZCGPdRTqzZBP9ICbZAoUS6DFZAXG9OSV6gs2DuHZBLoJZB84fwHzn2A5xSoNBIZD HTTP/1.1" 200 293
+[13/Jun/2014 03:39:17] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:39:20] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQArQ1qnPMPX77Y7A7SVKQPocrlaqmvaM6HDR0FAz-i2z11CFUlINMovoXioBuCBPCWk4-r2IJx2RGM0v64iLXNKKC39LL1y7Gf9mr8XSAQKJDD6BAwaPE-c4M-d8zIQiduIUYFGw2T7SJnMaU19nzpOxHyl0Lj1CJTJQ-GFgZ2Emw52bCXrUJ9R5tNA9yuy02UBvsrJ1CG4ZQYIRBZTX1AwUl1EyvhiUB7FUNz-Kjc70WuNhZ5-TJSM9PaOhJGxalXfCY8Hn1xz29xbxVUXJmredH8opvmbtyOhbq4iyxDTzB7cP1MB1ilw5XTONKZi8Wg&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3Dk1eZ3LkLyiDsCYMUuZdNsdJ90Lcm40Jf&client_id=1489867734562036 HTTP/1.1" 200 227
+[13/Jun/2014 03:39:20] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:39:21] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAHUheRosj79zNYRZClSkgZBiLpimrqg2kVZCfkZAuFWyYgdvhzYY8Ibmj5AWkI7ZBMGvNG4yielR4tdgpF97CGe7r0luZCtd6PYwtpf65K4YnNK7yI9epOZAZBe3LlHGWAdLfQl6zfkk6vqoqx6mBmDP1rsNydYljXFy7WdOadO70oclpw9ntvkZD HTTP/1.1" 200 293
+[13/Jun/2014 03:40:28] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:40:29] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQDqN79HEAtJUP_l93bTWKxMZ8rxr-njwv4iTSfXTMtO2DgtkAPXQ3F6Ulf3tl4mttNUqaXrE3VWkQx7gUlY4r2dohbIMUCFnuMQ-UXSgIo2GIcUsDKDqL6zX7O7YZe2mSEX-PvB29iXfPovGjDn1gzvAiqWPZ1LWWUV5R-vFh75wOO3LtOLMOSEs4DdhBmYGlwXTeKIiopc3V5gwLKx3di16mG1nzpg_6WnAyGEErPoFKICCYRC0DkV4dlriInNESRAOIluBEdOsI85gl5uDIAyKmh9E25FaihNk3tf_OdLiCEQesZdmv2QHizZzS5R8PE&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DhpThplJXvN2ToRjV8W8FkRVoUo71hlWe&client_id=1489867734562036 HTTP/1.1" 200 222
+[13/Jun/2014 03:40:29] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:40:31] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAAxzUcFcd5ZBjpThNF5jiHgyNQoTzpk7xlqiIBQ7CaG3BEtUkQJds8iGtxk3NF4JPlQ12hKceyV9HMpxj6GrgKblU6sUPPuKBxKxUz6IWv0S9D7TD47NrCTbCKmmc0ZCipgNZCbjXhukG9HVkpUW6Uj9XNQrvIki23w4xe07b0rQP5RGa0ZD HTTP/1.1" 200 293
+[13/Jun/2014 03:44:07] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:44:09] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQDMzW0HptI2AV5kdoP1pdJjyZ0TpsiBYH2ns-4YT2RbOGAr51oKifpF07Cjfhidec2zOa_ZylCYl3Ie4ude1OKhXU4K8Cm7jRwiRS65GYq1VZJZR54_KPuWkp8htJyjkz2_YXBLozsFind6qGvFokknWeOqz2-Hz49vovgG7MQJCq6XVzfqbO5DA1vYdNXmTk9ET3r5OCs7tEe5sTGA-jFT-ksuYFsRMIbCsuFVtsE-Jiyy_3soo26WACeZpgDE69RhvzpYoI2fSY7Fud9hItPMT3ZsgR4uB3QDuKG6MbX0DkfydeB9NLBoxtHGZqbPQl4&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3D9VuldnI2Pa5KPqsxHtd3VrSOkjKziULh&client_id=1489867734562036 HTTP/1.1" 200 226
+[13/Jun/2014 03:44:09] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:44:11] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAC3DBfvTbxemuVD55VzBRKoLt1gPr0weSzRRrznzXSNWhpRVZBCMz5VeZCE9HrS95PmTXirGRCmd5n2iYqAZCPJ70r07wQLm6hB32W8i2alu9ZAOw8fQ8wdokP8IQdVfMJTuwwTgvvaoiiNORrLVDcUI4xQejJjSkSbF4noZA0ZBjQuc2ZCxVAZD HTTP/1.1" 200 293
+[13/Jun/2014 04:00:49] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 04:00:52] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQCdYIjT9luVWKfD568Lm9ClOnMyUDZACynpmwkdYQojbf6OGKr-xI7Jyy7u-F7zS0BiWGPm5y2_g1f2o1qczezJicoWo6yZlw1ZpzIvOzdZlQqsVlnE-f0fv4NFIQ7fKWDL1BIRHJ3EhJGROMAGVg2vIwlUgczJoozn7XTFbsjPiOwRPqJee5wQI4RQwXpN83q13tDjgQbwWNYsjggQhvquHyXdpDHy5_6rToRnx3HVryW3blwH4lnmocDIBLVUNajkQqZwZ7PMr9AjqT1Q2b2AfMMUrFgsFcIJyyad7cfFNNUYpom-S12rHMAVLLCeTxE&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DVVfVuKQamxpgFUSTX8ahppKouu38UYtk&client_id=1489867734562036 HTTP/1.1" 200 227
+[13/Jun/2014 04:00:52] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 04:00:54] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAJWMhsubLuVwgVR9NeHYlvTJg7BXz4lZCgcQvTVLk8ZB2JpCdEQZCDSC8R0sM8KgyZAYjh5FZB5FXIFWtEcxVLNl4Ku1Ol1PeeoxFu00QnveAMS8ZBQ5PDoOs6bEUuEJ94iXPon3QNMfu9NiWgTHmkMC4BNVAsYqhFDzZCKvuys70ZCt8O5W0eAZD HTTP/1.1" 200 293
+[13/Jun/2014 04:05:19] WARNING [django.request:145] Not Found: /articles/viewArticle/6/asd
+[13/Jun/2014 04:05:32] WARNING [django.request:145] Not Found: /articles/viewArticle/4asd
+[13/Jun/2014 04:05:43] WARNING [django.request:145] Not Found: /articles/viewArticle/6/asd
+[13/Jun/2014 04:06:02] WARNING [django.request:145] Not Found: /articles/viewArticle/6/favicon.png
+[13/Jun/2014 04:10:35] DEBUG [articles.views:443] Ajay -- save Slides Called
+[13/Jun/2014 04:10:35] DEBUG [articles.views:443] Ajay -- save Slides Called
+[13/Jun/2014 04:10:35] DEBUG [articles.views:467] tags are [u'comments']
+[13/Jun/2014 04:10:35] DEBUG [articles.views:467] tags are [u'comments']
+[13/Jun/2014 04:10:35] DEBUG [articles.views:490] Ajay -- save Slides saved
+[13/Jun/2014 04:10:35] DEBUG [articles.views:490] Ajay -- save Slides saved
+[13/Jun/2014 04:12:43] DEBUG [articles.views:443] Ajay -- save Slides Called
+[13/Jun/2014 04:12:43] DEBUG [articles.views:443] Ajay -- save Slides Called
+[13/Jun/2014 04:12:43] DEBUG [articles.views:467] tags are [u'comments']
+[13/Jun/2014 04:12:43] DEBUG [articles.views:467] tags are [u'comments']
+[13/Jun/2014 04:12:43] DEBUG [articles.views:490] Ajay -- save Slides saved
+[13/Jun/2014 04:12:43] DEBUG [articles.views:490] Ajay -- save Slides saved
+[13/Jun/2014 04:20:47] DEBUG [articles.views:443] Ajay -- save Slides Called
+[13/Jun/2014 04:20:47] DEBUG [articles.views:443] Ajay -- save Slides Called
+[13/Jun/2014 04:20:47] DEBUG [articles.views:467] tags are [u'comments']
+[13/Jun/2014 04:20:47] DEBUG [articles.views:467] tags are [u'comments']
+[13/Jun/2014 04:20:47] DEBUG [articles.views:490] Ajay -- save Slides saved
+[13/Jun/2014 04:20:47] DEBUG [articles.views:490] Ajay -- save Slides saved
+[13/Jun/2014 04:29:44] DEBUG [articles.views:443] Ajay -- save Slides Called
+[13/Jun/2014 04:29:44] DEBUG [articles.views:443] Ajay -- save Slides Called
+[13/Jun/2014 04:29:44] DEBUG [articles.views:467] tags are [u'comments']
+[13/Jun/2014 04:29:44] DEBUG [articles.views:467] tags are [u'comments']
+[13/Jun/2014 04:29:44] DEBUG [articles.views:490] Ajay -- save Slides saved
+[13/Jun/2014 04:29:44] DEBUG [articles.views:490] Ajay -- save Slides saved
+[13/Jun/2014 04:34:51] WARNING [django.request:145] Not Found: /articles/viewArticle/7/favicon.png
+[13/Jun/2014 04:35:48] DEBUG [articles.views:443] Ajay -- save Slides Called
+[13/Jun/2014 04:35:48] DEBUG [articles.views:443] Ajay -- save Slides Called
+[13/Jun/2014 04:35:48] DEBUG [articles.views:467] tags are [u'comments']
+[13/Jun/2014 04:35:48] DEBUG [articles.views:467] tags are [u'comments']
+[13/Jun/2014 04:35:48] DEBUG [articles.views:490] Ajay -- save Slides saved
+[13/Jun/2014 04:35:48] DEBUG [articles.views:490] Ajay -- save Slides saved
+[13/Jun/2014 04:36:18] DEBUG [articles.views:443] Ajay -- save Slides Called
+[13/Jun/2014 04:36:18] DEBUG [articles.views:443] Ajay -- save Slides Called
+[13/Jun/2014 04:36:18] DEBUG [articles.views:467] tags are [u'ids']
+[13/Jun/2014 04:36:18] DEBUG [articles.views:467] tags are [u'ids']
+[13/Jun/2014 04:36:18] DEBUG [articles.views:490] Ajay -- save Slides saved
+[13/Jun/2014 04:36:18] DEBUG [articles.views:490] Ajay -- save Slides saved
+[13/Jun/2014 04:38:28] DEBUG [articles.views:443] Ajay -- save Slides Called
+[13/Jun/2014 04:38:28] DEBUG [articles.views:443] Ajay -- save Slides Called
+[13/Jun/2014 04:38:28] DEBUG [articles.views:467] tags are [u'ids']
+[13/Jun/2014 04:38:28] DEBUG [articles.views:467] tags are [u'ids']
+[13/Jun/2014 04:38:28] DEBUG [articles.views:490] Ajay -- save Slides saved
+[13/Jun/2014 04:38:28] DEBUG [articles.views:490] Ajay -- save Slides saved
+[13/Jun/2014 06:56:11] ERROR [django.request:226] Internal Server Error: /logout/
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
     resolver_match = resolver.resolve(request.path_info)
@@ -316,47 +103,11 @@ Traceback (most recent call last):
     __import__(name)
   File "/ajay/Tanicode/Tanicode/Tanicode/urls.py", line 6, in <module>
     from articles import views
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 44
-    if(edit):
-            ^
-IndentationError: unindent does not match any outer indentation level
-[29/May/2014 08:03:41] ERROR [django.request:226] Internal Server Error: /admin/articles/
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
-    resolver_match = resolver.resolve(request.path_info)
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 318, in resolve
-    for pattern in self.url_patterns:
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 346, in url_patterns
-    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 341, in urlconf_module
-    self._urlconf_module = import_module(self.urlconf_name)
-  File "/Library/Python/2.7/site-packages/django/utils/importlib.py", line 40, in import_module
-    __import__(name)
-  File "/ajay/Tanicode/Tanicode/Tanicode/urls.py", line 6, in <module>
-    from articles import views
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 44
-    if(edit):
-            ^
-IndentationError: unindent does not match any outer indentation level
-[29/May/2014 08:03:57] ERROR [django.request:226] Internal Server Error: /admin/articles/
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
-    resolver_match = resolver.resolve(request.path_info)
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 318, in resolve
-    for pattern in self.url_patterns:
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 346, in url_patterns
-    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 341, in urlconf_module
-    self._urlconf_module = import_module(self.urlconf_name)
-  File "/Library/Python/2.7/site-packages/django/utils/importlib.py", line 40, in import_module
-    __import__(name)
-  File "/ajay/Tanicode/Tanicode/Tanicode/urls.py", line 6, in <module>
-    from articles import views
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 59
-    if request.GET
-                 ^
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 260
+    s = {'comment' : c.comment, 'date' : c.saved_time, 'user', c.user.name}
+                                                             ^
 SyntaxError: invalid syntax
-[29/May/2014 08:04:16] ERROR [django.request:226] Internal Server Error: /admin/articles/
+[13/Jun/2014 06:56:41] ERROR [django.request:226] Internal Server Error: /logout/
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
     resolver_match = resolver.resolve(request.path_info)
@@ -370,11 +121,11 @@ Traceback (most recent call last):
     __import__(name)
   File "/ajay/Tanicode/Tanicode/Tanicode/urls.py", line 6, in <module>
     from articles import views
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 60
-    articles = Article.objects.filter(user = request.user , is_published = True).order_by("-last_saved")
-                                                                                                       ^
-IndentationError: unindent does not match any outer indentation level
-[29/May/2014 08:04:28] ERROR [django.request:226] Internal Server Error: /admin/articles/
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 263
+    return HttpResponse( json.dumps( {'comments': retObjs) )
+                                                         ^
+SyntaxError: invalid syntax
+[13/Jun/2014 06:56:57] ERROR [django.request:226] Internal Server Error: /logout/
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
     resolver_match = resolver.resolve(request.path_info)
@@ -388,39 +139,85 @@ Traceback (most recent call last):
     __import__(name)
   File "/ajay/Tanicode/Tanicode/Tanicode/urls.py", line 6, in <module>
     from articles import views
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 61
-    articles = Article.objects.filter(user = request.user , is_published = True).order_by("-last_saved")
-                                                                                                       ^
-IndentationError: unindent does not match any outer indentation level
-[29/May/2014 08:04:47] ERROR [django.request:226] Internal Server Error: /admin/articles/series/
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 266
+    @login_required
+    ^
+SyntaxError: invalid syntax
+[13/Jun/2014 06:57:24] ERROR [django.request:226] Internal Server Error: /logout/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 318, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 346, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 341, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Python/2.7/site-packages/django/utils/importlib.py", line 40, in import_module
+    __import__(name)
+  File "/ajay/Tanicode/Tanicode/Tanicode/urls.py", line 6, in <module>
+    from articles import views
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 266
+    @login_required
+    ^
+SyntaxError: invalid syntax
+[13/Jun/2014 06:58:49] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 06:58:52] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQCwp8KHgXfe4bITLj0VN1g-_rNU-rORaQ7h36oRSV3LDsn_BWvLYhbBypGuKolCMQR1VAiXIzgYutQnPTBhO8ugyWDkgA64MH_GWqd1cxSHWCPn-DWEuYu8gEd9ZfrtCg0Ol25-XSVKPwzBHqNCiDCXtEvx0FB56wi318tn5t-MO6Otem53Pi6XpN5QYXeZWBu3IW4jWmRDdhOYeJf1A__jRmnuaOukWdOZOh98Jcmc7-2eRftqYKqm1G9FQIaatZe5NhVd4cjqrXlixPB2-PhqTJV0hob1ay_gchWBjGZbJCtAcVmhYrt74GsrYFR60YU&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DLQ6x3QhuqNitebRvFAn7Lkm7TKXMWsCW&client_id=1489867734562036 HTTP/1.1" 200 229
+[13/Jun/2014 06:58:52] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 06:58:53] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAK1zosWZBNIHfGnkI3Kb4bJc850hpPZAwZBpjhp4l4XksFi6PZCMlUujIO3ATXDzf39qPygzyw9BAX7uwGRQt6T5N7lnilvqlE156QBDjxsSjauZBRYye77DQ6Re01ZBDQxm10pnZAThFcGZBBdbfVltRVVEJHVxuByZCDD43JZCiDtVqf3MGnBL8ZD HTTP/1.1" 200 293
+[13/Jun/2014 07:00:19] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 07:01:19] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQBezfsxQnIJfDYrriCkxhGYv7ZGa0pN5XKdeB5SV8lkQvgBXLvlh3AKxmCZOxjbbQ5o7RN_0hUsiU7IUr27pGA-V_Wa4nUWPH0eTDVYqRsBVm9PpjUeORfw832ayrZYwGg7MPAyEpo4Et7PvhkTfahDahBswUwgcMMqccI3sSJBnKiTVbcFRgbPsCmjTqS-jWS5bI6y07N81HNbhO0mCtWM49MOHiNgZyn0U0W55GEjN_DzY-8DhSVQBu6E0AbNJzyEFmARLi4fuOyHLF_w3zpryGXztIZtVwwGRUztYDx6Ezp5HUCtATFNZx3aYwuGfRk&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DIHSw55AvB1ms5uT62dIwX9kKD60Q8mgN&client_id=1489867734562036 HTTP/1.1" 200 227
+[13/Jun/2014 07:01:20] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 07:01:23] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAEGjAFvIEOvtOG9jEzKIwnIyUW3ZBmbA1r38AuN2Qk2pLN2eNGZAiq9ZCQl0OPpZCNOy9YZCvvB8nAt1uuTAT1RLBacT7vgYMulBGHcp0PWrspUqU7eye9zb8aMCQScTQZCTzCiR4y0fX68C2GlD7n1diKfIV6YE7do2UPZBZCs3WvTur3FSEywZD HTTP/1.1" 200 293
+[13/Jun/2014 07:01:47] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 07:01:48] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQCNiB5RZ_QVJHcHp9hyqxzo2um-v2-pZkp3HcdvWZzjdoGiHogi-gUfF5Da2D8niBjhCCHny9Z4eNSzVFCP9YGR6IwPuo6jJ664PUxDmdzFBTYbwu2PVvIZy9ZRCW97adzk_7dXRvUjMcGXwLdxOlTy4XT792EnVMivP35keBZou3qlPKsqBfN1tV1R5d1RENfDEEywHbYUvTLYlaKW7ZKYlHfaRQLcuG4sVn2Xk7WaM9598mTIH3Z-GTBhduDhBwqGLdHeu5SmFhQ2guRz0VbBg0B2IV7oOK3AMybjBiuTAeKyqDNM0uWVDIVfk3t9i0Y&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DGF7UaXAq45k8BwyqwTJqd4s0BbfgIfFg&client_id=1489867734562036 HTTP/1.1" 200 225
+[13/Jun/2014 07:01:48] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 07:01:50] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAO2rpz9bPv9x8iGNW1KhRfzHykodmlnPkjMX5R04hdgIQK6mzKT2NnqIafv6YUZBHkKeEE4FMZBqUUsKeZCCZALs1ZA3QBQjFuRLM4bAe2Rtcri9utj9OuEYLypLEXVpzJtGe8T9gro0YrpwR9v3JlXllJOk9GGLiRcJmTGVwMxToYcZCOX5UZD HTTP/1.1" 200 293
+[13/Jun/2014 07:03:18] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 07:03:21] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQCd5t9tqSbZpEUXuyhHQWbOeXrSrEfnzMmzujbSCeKyuedG7_sEUPGH7kTVMZv5xzxfTqYPe8XpNqA5ixlNiFuJKe5qo23iuJnPTt7v2Db0-x3vA41ZfTS6nBLgStsK4Wvr2sU7D8RAa4F7BAz9_U4WDhirSgoe5KRIS1JHvt-nRgVCOFPL1JiJrgxmdmb9RFwzyjWIScKIap0Zdi4Tae-j6AOx7FBuT-noRCr5uxi-STk3bXQcM02GDE9Y_dvsDqsOImVV3hEO5sqmcbmdjgd4YFsbPhBTBFqXd1AafHej4gPtbfkl_mVrwFyZHe-2r9A&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DY0Qu04v7krt1lbu1qqnh06UFz6qOQWVJ&client_id=1489867734562036 HTTP/1.1" 200 229
+[13/Jun/2014 07:03:21] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 07:03:22] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAKuI8bswkOFGK74yzusAMBV6JdsjqG7ZAqWjmHNZCxA1kxivn5huRKoPb6tnB6GoNiJzdu3NBXFZCXjdM0Hu2sU5fJpSD2ZCQcTVGd5S2nDzF0HLUnGyZAZAfTzY3kkdZBZAPQTaxS4RC7FiNyShPeEUdo0ZByYyxJQOZApO5lTPf6UoRtaQgyES0ZD HTTP/1.1" 200 293
+[13/Jun/2014 07:08:02] WARNING [django.request:145] Not Found: /saveArticles
+[13/Jun/2014 07:11:25] WARNING [django.request:145] Not Found: /articles/saveArticles
+[13/Jun/2014 07:12:59] ERROR [django.request:226] Internal Server Error: /articles/saveComment
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/contrib/admin/options.py", line 430, in wrapper
-    return self.admin_site.admin_view(view)(*args, **kwargs)
-  File "/Library/Python/2.7/site-packages/django/utils/decorators.py", line 99, in _wrapped_view
-    response = view_func(request, *args, **kwargs)
-  File "/Library/Python/2.7/site-packages/django/views/decorators/cache.py", line 52, in _wrapped_view_func
-    response = view_func(request, *args, **kwargs)
-  File "/Library/Python/2.7/site-packages/django/contrib/admin/sites.py", line 198, in inner
-    return view(request, *args, **kwargs)
-  File "/Library/Python/2.7/site-packages/django/utils/decorators.py", line 29, in _wrapper
-    return bound_func(*args, **kwargs)
-  File "/Library/Python/2.7/site-packages/django/utils/decorators.py", line 99, in _wrapped_view
-    response = view_func(request, *args, **kwargs)
-  File "/Library/Python/2.7/site-packages/django/utils/decorators.py", line 25, in bound_func
-    return func(self, *args2, **kwargs2)
-  File "/Library/Python/2.7/site-packages/django/contrib/admin/options.py", line 1409, in changelist_view
-    'selection_note': _('0 of %(cnt)s selected') % {'cnt': len(cl.result_list)},
-  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 77, in __len__
-    self._fetch_all()
-  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 854, in _fetch_all
-    self._result_cache = list(self.iterator())
-  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 220, in iterator
-    for row in compiler.results_iter():
-  File "/Library/Python/2.7/site-packages/django/db/models/sql/compiler.py", line 710, in results_iter
-    for rows in self.execute_sql(MULTI):
-  File "/Library/Python/2.7/site-packages/django/db/models/sql/compiler.py", line 781, in execute_sql
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 246, in saveComment
+    c.article = Article.objects.get(pk=p)
+NameError: global name 'p' is not defined
+[13/Jun/2014 07:13:54] ERROR [django.request:226] Internal Server Error: /articles/saveComment
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 246, in saveComment
+    c.article = Article.objects.get(pk=p)
+NameError: global name 'p' is not defined
+[13/Jun/2014 07:14:37] ERROR [django.request:226] Internal Server Error: /articles/saveComment
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 248, in saveComment
+    c.save()
+  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 545, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 573, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 654, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/Library/Python/2.7/site-packages/django/db/models/base.py", line 687, in _do_insert
+    using=using, raw=raw)
+  File "/Library/Python/2.7/site-packages/django/db/models/manager.py", line 232, in _insert
+    return insert_query(self.model, objs, fields, **kwargs)
+  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 1511, in insert_query
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/Library/Python/2.7/site-packages/django/db/models/sql/compiler.py", line 898, in execute_sql
     cursor.execute(sql, params)
   File "/Library/Python/2.7/site-packages/django/db/backends/util.py", line 69, in execute
     return super(CursorDebugWrapper, self).execute(sql, params)
@@ -430,132 +227,27 @@ Traceback (most recent call last):
     six.reraise(dj_exc_type, dj_exc_value, traceback)
   File "/Library/Python/2.7/site-packages/django/db/backends/util.py", line 53, in execute
     return self.cursor.execute(sql, params)
-  File "/Library/Python/2.7/site-packages/django/db/backends/sqlite3/base.py", line 450, in execute
-    return Database.Cursor.execute(self, query, params)
-OperationalError: no such column: articles_series.rawJSON
-[29/May/2014 08:15:01] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:15:01] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:15:01] DEBUG [articles.views:54] object got
-[29/May/2014 08:15:01] DEBUG [articles.views:54] object got
-[29/May/2014 08:16:54] ERROR [django.request:226] Internal Server Error: /articles/createSeries
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 90, in get_response
-    response = middleware_method(request)
-  File "/Library/Python/2.7/site-packages/django/middleware/common.py", line 71, in process_request
-    if (not urlresolvers.is_valid_path(request.path_info, urlconf) and
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 573, in is_valid_path
-    resolve(path, urlconf)
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 453, in resolve
-    return get_resolver(urlconf).resolve(path)
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 318, in resolve
-    for pattern in self.url_patterns:
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 346, in url_patterns
-    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
-  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 341, in urlconf_module
-    self._urlconf_module = import_module(self.urlconf_name)
-  File "/Library/Python/2.7/site-packages/django/utils/importlib.py", line 40, in import_module
-    __import__(name)
-  File "/ajay/Tanicode/Tanicode/Tanicode/urls.py", line 6, in <module>
-    from articles import views
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 64
-    logger.debug("edit Params is " + str(editParams))
-                                                    	^
-IndentationError: unindent does not match any outer indentation level
-[29/May/2014 08:17:17] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:17:17] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:17:17] DEBUG [articles.views:54] object got
-[29/May/2014 08:17:17] DEBUG [articles.views:54] object got
-[29/May/2014 08:17:17] ERROR [django.request:226] Internal Server Error: /articles/createSeries
+IntegrityError: null value in column "comment" violates not-null constraint
+
+[13/Jun/2014 07:16:19] ERROR [django.request:226] Internal Server Error: /articles/saveComment
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
   File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
     return view_func(request, *args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 62, in createSeries
-    editParams = {"articles": articles,'aid' : aid, 'name' : name , 'zist': zist, 'tags': tags, 'sa' : sa}
-UnboundLocalError: local variable 'articles' referenced before assignment
-[29/May/2014 08:17:36] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:17:36] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:17:36] DEBUG [articles.views:54] object got
-[29/May/2014 08:17:36] DEBUG [articles.views:54] object got
-[29/May/2014 08:17:36] DEBUG [articles.views:65] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z1', 'name': u's1', 'tags': u't1', 'aid': 1, 'sa': u'{"articles":[{"name":"name","id":3},{"name":"promise made by jquery","id":2},{"name":"name ","id":1}]}'}
-[29/May/2014 08:17:36] DEBUG [articles.views:65] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z1', 'name': u's1', 'tags': u't1', 'aid': 1, 'sa': u'{"articles":[{"name":"name","id":3},{"name":"promise made by jquery","id":2},{"name":"name ","id":1}]}'}
-[29/May/2014 08:19:14] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:19:14] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:19:14] DEBUG [articles.views:54] object got
-[29/May/2014 08:19:14] DEBUG [articles.views:54] object got
-[29/May/2014 08:19:14] DEBUG [articles.views:65] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z1', 'name': u's1', 'tags': u't1', 'aid': 1, 'sa': u'{"articles":[{"name":"name","id":3},{"name":"promise made by jquery","id":2},{"name":"name ","id":1}]}'}
-[29/May/2014 08:19:14] DEBUG [articles.views:65] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z1', 'name': u's1', 'tags': u't1', 'aid': 1, 'sa': u'{"articles":[{"name":"name","id":3},{"name":"promise made by jquery","id":2},{"name":"name ","id":1}]}'}
-[29/May/2014 08:19:58] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:19:58] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:19:58] DEBUG [articles.views:54] object got
-[29/May/2014 08:19:58] DEBUG [articles.views:54] object got
-[29/May/2014 08:19:58] DEBUG [articles.views:65] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z1', 'name': u's1', 'tags': u't1', 'aid': 1, 'sa': u'{"articles":[{"name":"name","id":3},{"name":"promise made by jquery","id":2},{"name":"name ","id":1}]}'}
-[29/May/2014 08:19:58] DEBUG [articles.views:65] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z1', 'name': u's1', 'tags': u't1', 'aid': 1, 'sa': u'{"articles":[{"name":"name","id":3},{"name":"promise made by jquery","id":2},{"name":"name ","id":1}]}'}
-[29/May/2014 08:20:40] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:20:40] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:20:40] DEBUG [articles.views:54] object got
-[29/May/2014 08:20:40] DEBUG [articles.views:54] object got
-[29/May/2014 08:20:40] DEBUG [articles.views:65] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z1', 'name': u's1', 'tags': u't1', 'aid': 1, 'sa': u'{"articles":[{"name":"name","id":3},{"name":"promise made by jquery","id":2},{"name":"name ","id":1}]}'}
-[29/May/2014 08:20:40] DEBUG [articles.views:65] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z1', 'name': u's1', 'tags': u't1', 'aid': 1, 'sa': u'{"articles":[{"name":"name","id":3},{"name":"promise made by jquery","id":2},{"name":"name ","id":1}]}'}
-[29/May/2014 08:31:28] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:31:28] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:31:28] DEBUG [articles.views:54] object got
-[29/May/2014 08:31:28] DEBUG [articles.views:54] object got
-[29/May/2014 08:31:28] DEBUG [articles.views:65] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z1', 'name': u's1', 'tags': u't1', 'aid': 1, 'sa': u'{"articles":[{"name":"name","id":3},{"name":"promise made by jquery","id":2},{"name":"name ","id":1}]}'}
-[29/May/2014 08:31:28] DEBUG [articles.views:65] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z1', 'name': u's1', 'tags': u't1', 'aid': 1, 'sa': u'{"articles":[{"name":"name","id":3},{"name":"promise made by jquery","id":2},{"name":"name ","id":1}]}'}
-[29/May/2014 08:32:07] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:32:07] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:32:07] DEBUG [articles.views:54] object got
-[29/May/2014 08:32:07] DEBUG [articles.views:54] object got
-[29/May/2014 08:32:07] DEBUG [articles.views:65] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z1', 'name': u's1', 'tags': u't1', 'aid': 1, 'sa': u'{"articles":[{"name":"name","id":3},{"name":"promise made by jquery","id":2},{"name":"name ","id":1}]}'}
-[29/May/2014 08:32:07] DEBUG [articles.views:65] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z1', 'name': u's1', 'tags': u't1', 'aid': 1, 'sa': u'{"articles":[{"name":"name","id":3},{"name":"promise made by jquery","id":2},{"name":"name ","id":1}]}'}
-[29/May/2014 08:33:35] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:33:35] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:33:35] DEBUG [articles.views:54] object got
-[29/May/2014 08:33:35] DEBUG [articles.views:54] object got
-[29/May/2014 08:33:35] DEBUG [articles.views:65] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z1', 'name': u's1', 'tags': u't1', 'aid': 1, 'sa': u'{"articles":[{"name":"name","id":3},{"name":"promise made by jquery","id":2},{"name":"name ","id":1}]}'}
-[29/May/2014 08:33:35] DEBUG [articles.views:65] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z1', 'name': u's1', 'tags': u't1', 'aid': 1, 'sa': u'{"articles":[{"name":"name","id":3},{"name":"promise made by jquery","id":2},{"name":"name ","id":1}]}'}
-[29/May/2014 08:34:18] ERROR [django.request:226] Internal Server Error: /articles/updateSeries/
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 249, in saveComment
+    return HttpResponse( json.dumps( {'comment': comment, 'name': c.user.name, 'date' : c.saved_time} ) )
+  File "/Library/Python/2.7/site-packages/django/utils/functional.py", line 214, in inner
+    return func(self._wrapped, *args)
+AttributeError: 'User' object has no attribute 'name'
+[13/Jun/2014 07:17:38] ERROR [django.request:226] Internal Server Error: /articles/saveComment
 Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
   File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
     return view_func(request, *args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 93, in updateSeries
-    for a1 in al['articles'] :
-NameError: global name 'al' is not defined
-[29/May/2014 08:35:35] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:35:35] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:35:35] DEBUG [articles.views:54] object got
-[29/May/2014 08:35:35] DEBUG [articles.views:54] object got
-[29/May/2014 08:35:35] DEBUG [articles.views:65] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z1', 'name': u's1', 'tags': u't1', 'aid': 1, 'sa': u'{"articles":[{"name":"promise made by jquery","id":2},{"name":"name","id":3},{"name":"name ","id":1}]}'}
-[29/May/2014 08:35:35] DEBUG [articles.views:65] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z1', 'name': u's1', 'tags': u't1', 'aid': 1, 'sa': u'{"articles":[{"name":"promise made by jquery","id":2},{"name":"name","id":3},{"name":"name ","id":1}]}'}
-[29/May/2014 08:36:03] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:36:03] DEBUG [articles.views:44] edit is 123
-[29/May/2014 08:36:03] DEBUG [articles.views:54] object got
-[29/May/2014 08:36:03] DEBUG [articles.views:54] object got
-[29/May/2014 08:36:03] DEBUG [articles.views:65] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z2', 'name': u's2', 'tags': u't2', 'aid': 1, 'sa': u'{"articles":[{"name":"promise made by jquery","id":2},{"name":"name","id":3}]}'}
-[29/May/2014 08:36:03] DEBUG [articles.views:65] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z2', 'name': u's2', 'tags': u't2', 'aid': 1, 'sa': u'{"articles":[{"name":"promise made by jquery","id":2},{"name":"name","id":3}]}'}
-[29/May/2014 09:11:04] WARNING [django.request:145] Not Found: /articles/dashboardGetAllSeries
-[29/May/2014 09:12:11] WARNING [django.request:145] Not Found: /articles/dashboardGetAllSeries
-[29/May/2014 09:13:26] ERROR [django.request:226] Internal Server Error: /articles/dashboardGetAllSeries
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
-    return view_func(request, *args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 42, in dashboardGetAllSeries
-    l.append({'name': s.title, 'id' : s.pk, 'date' : s.last_saved, 'is_published' : s.is_published, "edit" : "/article/createSeries?edit=123&aid=" + s.pk})
-TypeError: cannot concatenate 'str' and 'int' objects
-[29/May/2014 09:14:04] ERROR [django.request:226] Internal Server Error: /articles/dashboardGetAllSeries
-Traceback (most recent call last):
-  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
-    return view_func(request, *args, **kwargs)
-  File "/ajay/Tanicode/Tanicode/articles/views.py", line 45, in dashboardGetAllSeries
-    return HttpResponse( json.dumps( l ) )
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 249, in saveComment
+    return HttpResponse( json.dumps( {'comment': comment, 'name': c.user.username, 'date' : c.saved_time} ) )
   File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/__init__.py", line 231, in dumps
     return _default_encoder.encode(obj)
   File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/encoder.py", line 201, in encode
@@ -564,12 +256,278 @@ Traceback (most recent call last):
     return _iterencode(o, 0)
   File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/encoder.py", line 178, in default
     raise TypeError(repr(o) + " is not JSON serializable")
-TypeError: datetime.date(2014, 5, 29) is not JSON serializable
-[29/May/2014 09:19:59] WARNING [django.request:145] Not Found: /article/createSeries
-[29/May/2014 09:20:13] DEBUG [articles.views:56] edit is 123
-[29/May/2014 09:20:13] DEBUG [articles.views:56] edit is 123
-[29/May/2014 09:20:13] DEBUG [articles.views:66] object got
-[29/May/2014 09:20:13] DEBUG [articles.views:66] object got
-[29/May/2014 09:20:13] DEBUG [articles.views:77] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z2', 'name': u's2', 'tags': u't2', 'aid': 1, 'sa': u'{"articles":[{"name":"promise made by jquery","id":2},{"name":"name","id":3}]}'}
-[29/May/2014 09:20:13] DEBUG [articles.views:77] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'z2', 'name': u's2', 'tags': u't2', 'aid': 1, 'sa': u'{"articles":[{"name":"promise made by jquery","id":2},{"name":"name","id":3}]}'}
-[29/May/2014 10:41:05] WARNING [django.request:145] Not Found: /articles/viewSeries/1/favicon.png
+TypeError: datetime.date(2014, 6, 13) is not JSON serializable
+[13/Jun/2014 07:22:25] ERROR [django.request:226] Internal Server Error: /articles/getComments
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 261, in getComments
+    retObjs[s]
+TypeError: list indices must be integers, not dict
+[13/Jun/2014 08:13:59] ERROR [django.request:226] Internal Server Error: /articles/getComments
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 255, in getComments
+    w = int ( request.GET.get("wid") )
+ValueError: invalid literal for int() with base 10: 'undefined'
+[13/Jun/2014 08:16:41] ERROR [django.request:226] Internal Server Error: /articles/getComments
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 255, in getComments
+    w = int ( request.GET.get("wid") )
+ValueError: invalid literal for int() with base 10: 'undefined'
+[13/Jun/2014 08:16:59] ERROR [django.request:226] Internal Server Error: /articles/saveComment
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 242, in saveComment
+    wid = int (request.POST.get('wid', None))
+TypeError: int() argument must be a string or a number, not 'NoneType'
+[13/Jun/2014 08:19:35] ERROR [django.request:226] Internal Server Error: /articles/saveComment
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Python/2.7/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 242, in saveComment
+    wid = int (request.POST.get('wid', None))
+TypeError: int() argument must be a string or a number, not 'NoneType'
+[13/Jun/2014 09:22:51] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 09:22:53] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQCUThq1voxjl9POtZspm9IW6g4JUzJ74YAWcGfPh0rqbbYiO6xilb1WDqSAR16mjoyYgTAeSL-DWdDqV48U7vL4R_cLdT5f_Pe2hfXBSKblsf5loVxtOBSk-A2YZpllWcxh0EhwGOMNHs6FGpnnBZgPLLrAa6WbyU7MD5yxwFhOV8BqsWBUWaAtrVyCa3rLudwaFA2dpaJrxwLe9Nehh_6wUptNPmlytwXErcVx3rhvS0xd3kK4jGT89N7TdR_L-UbOftDHsMvqurimh-TwvihBFWciL8_2GjtU9-I7PPP6n6KV5eQhLCNA-WsUH5ZVEjw&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DSABE9gbUMphTMvTpWHB00zatou1CcYFy&client_id=1489867734562036 HTTP/1.1" 200 228
+[13/Jun/2014 09:22:53] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 09:22:54] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAFOKgok1zTgGiVMMECO6bSznH8ib3ZBCUDIBFOJMyqMKmaP6tP4ZBmWkZCz3sjZBxiGcfODkZCUNAxTjAia8NSzag4dTRVFdqs5x8rF4RbNZBjgbsfQWDp8m8LEVgipHqVjpK4K6zNdkQNKd2gZC5P2sUZBahtzLkHZCtw6N39VBSSMCYzUHGrFwZD HTTP/1.1" 200 293
+[13/Jun/2014 10:16:21] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 10:16:23] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQDFkj0iguZRWpMU5yREEvMSe56qrcWyJkCKiORlJt-Ate_ICXV2jE4YnhY3QtosCwtesSHv1la0C1-1YF49x3PBV9D4z_jLO8LMfA6P30_zRBLgMGZ_ip0MGBmZ2Kvl1qUM08zY07eNdOPrLAZbHk_uAc5zpnkw0GwMhSvMmpuNYHJTTF29m6NTtuoW-C-LvGOuwltweK7RDvc9A-WANQ0oFK7Qscf4ZXZkfEO604qUsr3OmJAD8tdrplua2dVOmKDunrt_CvPfCDfoJ2-i-oNwaNS3djBQPPUe2LxzQkEgEu172YgNTKHE8FQKP-DJ4b8&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DVlQTLlWK5xlG6FhpVttufuWkKhBY3T3m&client_id=1489867734562036 HTTP/1.1" 200 227
+[13/Jun/2014 10:16:23] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 10:16:25] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAOtZA3bd21mi4T9R5oy4rHBIwgbk49Yt5XMv8ZCeJFX0xXOup9AgvOMSw73dZAcv2QzAqjy19o2KxjWeoABt0nNRWDPVxomSE9JFG0hqcaM9nGHU1pKXZCHhNkew5pCRTNUjltyoommRUGZAldL1OW9jEnsWJ7W7B0IUkg0XcNaZBG8IlkZBZCoZD HTTP/1.1" 200 293
+[13/Jun/2014 10:16:37] DEBUG [articles.views:407] Inside
+[13/Jun/2014 10:16:37] DEBUG [articles.views:407] Inside
+[13/Jun/2014 10:16:53] DEBUG [articles.views:407] Inside
+[13/Jun/2014 10:16:53] DEBUG [articles.views:407] Inside
+[13/Jun/2014 10:31:31] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:31:31] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:40:54] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:40:54] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:41:10] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:41:10] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:41:30] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:41:30] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:43:14] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:43:14] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:43:46] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:43:46] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:45:46] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:45:46] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:47:50] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:47:50] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:51:23] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:51:23] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:52:32] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:52:32] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:52:58] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:52:58] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:53:07] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:53:07] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:53:18] ERROR [django.request:226] Internal Server Error: /articles/getComments
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 255, in getComments
+    w = int ( request.GET.get("wid") )
+ValueError: invalid literal for int() with base 10: 'undefined'
+[13/Jun/2014 10:54:19] ERROR [django.request:226] Internal Server Error: /articles/getComments
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 255, in getComments
+    w = int ( request.GET.get("wid") )
+ValueError: invalid literal for int() with base 10: 'undefined'
+[13/Jun/2014 10:54:35] ERROR [django.request:226] Internal Server Error: /articles/getComments
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 255, in getComments
+    w = int ( request.GET.get("wid") )
+ValueError: invalid literal for int() with base 10: 'undefined'
+[13/Jun/2014 10:54:45] ERROR [django.request:226] Internal Server Error: /articles/getComments
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 255, in getComments
+    w = int ( request.GET.get("wid") )
+ValueError: invalid literal for int() with base 10: 'undefined'
+[13/Jun/2014 10:55:04] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 10:55:06] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQBuOVqodqNkZ8PCUsYL9QyIadSuV0rqVHFsW9yMG4wVUqTQAt3YzzGyYQHzUVeM13iW8Lg-vHvN00uQQvj0p6MQ1g16zmLH30120JNSNb1HNpOMS65lBle2l7dN_wKqmefbu78msZysCKZrtxza4nKK1lsdgKRnFIg882XoF3OQJw0nzPZ8ZtfzYlSOxs1WgYTqEIwFemNQLcVwrHeBotKPB0oApos6k65t2mWLCWJySjYWvINPlkEh3Su_zQYUXSNqmYOr4P2aNT5k_SKJhplBfh6f6v2JyOzZwoI8iPgajDx5MsrA1Mud3-YWzNDBCWI&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DwOZ6BWSlQQExsgbTWlsC8eScrM2YlGTG&client_id=1489867734562036 HTTP/1.1" 200 229
+[13/Jun/2014 10:55:06] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 10:55:07] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAMH6K7ftZATEUlGKsHAIdEB0CZCL3jdnbvc2Vo8aBxCdnsXHkcSPOETDoIv1oPRavKLzwxq1e6CFvPq0586ZAYRcPuaOAe2ZA0DbG7r44T9sQC995ZAiiIWjLaW811IYxPINaNjZCZBudQec0Fg8mg3uWyZAZBhnohHUZAR2gloe9smjSTX5B22VUZD HTTP/1.1" 200 293
+[13/Jun/2014 10:57:35] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:57:35] DEBUG [articles.views:408] Inside
+[13/Jun/2014 10:57:56] ERROR [django.request:226] Internal Server Error: /articles/getComments
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 255, in getComments
+    w = int ( request.GET.get("wid") )
+ValueError: invalid literal for int() with base 10: 'undefined'
+[13/Jun/2014 10:58:00] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 10:58:03] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQB-l6dBA86RfuzPqyPyJffaJ8GRlqeD4wZ5EjBhphiNuezRCD74Z1ysD5Zcdb0Ho1mqqc-OWTODcLsuApAJuJHj3EOjsy52oHwEJSFCd8Bp3GSKRRBZ6Ow_csDXJPH7GjElSCrHlYdv5yWdnQyv42SPDumLhuRoj9V4mdUduMcBkRsCcZS0bSChm8lA5oaRwzi_OzvfluqRqfUg6viK1fnscH2EZYA41aOx4oRjcW3yXFOew8HXSRVpZKBnbkGrxMSvNLsNhcfxKcf0IjZy1QxwrlDhU5Dw_dnlKvEEXvBKexrUBZeXZYRvriEmL9OYt7A&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DZ7O4gSeXw3QKQXk5BOmZy5UEbb509PpA&client_id=1489867734562036 HTTP/1.1" 200 225
+[13/Jun/2014 10:58:03] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 10:58:13] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAE1pZAFhwCMLSogMsJe7slVykUVrgI8Ln1SZAH7vvS2Irk4zXpaD4CQYWUhda0fk02tKHdTGAnCGsAvupzzFm2PZCcuDSmnJmuCfLzUx5wdICyFZCV7kZAZBG6Wb1S61nIilkkWXVonWgggu7Kv8644qSBMQ2t4KQGgLDDglin9uVEXc8RoIsZD HTTP/1.1" 200 293
+[13/Jun/2014 11:34:51] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:34:51] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:34:51] ERROR [django.request:226] Internal Server Error: /articles/getArticleSlidesAjax
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 409, in getArticleSlidesAjax
+    a = Article.objects.get(pk=p)
+  File "/Library/Python/2.7/site-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 307, in get
+    self.model._meta.object_name)
+DoesNotExist: Article matching query does not exist.
+[13/Jun/2014 11:35:54] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:35:54] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:36:33] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:36:33] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:37:18] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:37:18] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:41:49] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:41:49] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:45:00] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:45:00] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:45:04] ERROR [django.request:226] Internal Server Error: /articles/getComments
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 255, in getComments
+    w = int ( request.GET.get("wid") )
+ValueError: invalid literal for int() with base 10: 'undefined'
+[13/Jun/2014 11:45:20] ERROR [django.request:226] Internal Server Error: /articles/getComments
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 255, in getComments
+    w = int ( request.GET.get("wid") )
+ValueError: invalid literal for int() with base 10: 'undefined'
+[13/Jun/2014 11:45:30] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:45:30] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:45:42] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:45:42] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:45:54] ERROR [django.request:226] Internal Server Error: /articles/getComments
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 255, in getComments
+    w = int ( request.GET.get("wid") )
+ValueError: invalid literal for int() with base 10: 'undefined'
+[13/Jun/2014 11:46:08] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:46:08] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:46:23] ERROR [django.request:226] Internal Server Error: /articles/getComments
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 255, in getComments
+    w = int ( request.GET.get("wid") )
+ValueError: invalid literal for int() with base 10: 'undefined'
+[13/Jun/2014 11:46:30] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 11:46:32] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQBbtylqDpJAnSAdDnaYcDIplKJfUFY_4PiBvgdlewzdgO0sTZ0Nvxir1khuQRuTF6gVyUTmK8PSjUdpecIYiIZdItjQ-CSKpaIOPm27P9RiiaL-1IQ3JMRpMK2GyFJ5lEGfwp1o45v9ucH68D8Cz0jt460SEva7q2wTiTf9D1vnpAH2Mr8r9SKMyS3eucCOFdNgsHSN4TQeZcgZOsHLGGZrgefFTr0p1kSbNlCq4lxSYrn4Eki7fG3EVPFwBZboM83grpr57KU9e1LQlQiVQ9SFzfv1Ih7TC0t0dblkH3vjtf_9joen8LNuOWGKYWO9wyU&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DOED2RiNhp9BZ4U5AO9j6AYw8H7TvB7hW&client_id=1489867734562036 HTTP/1.1" 200 227
+[13/Jun/2014 11:46:32] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 11:46:33] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAEN6zsPWmsFK6sF02XMc7ZAxFIISfxhFyOBsg1ZCWNKmO4fK7p04p1AxHkERmmjfV9wRvR2aleraCTGXKPolrXJzyRd4ABi3ZAZC9ZCp7RIUDSZAqvnZAf9V4n5OIttqh4L71GIPsBz1gJj2pdhFGtDizwUaHtWG0vIkLiVZBmGriKFX1BphJssZD HTTP/1.1" 200 293
+[13/Jun/2014 11:46:33] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:46:33] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:46:37] ERROR [django.request:226] Internal Server Error: /articles/getComments
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 255, in getComments
+    w = int ( request.GET.get("wid") )
+ValueError: invalid literal for int() with base 10: 'undefined'
+[13/Jun/2014 11:50:16] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:50:16] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:51:05] ERROR [django.request:226] Internal Server Error: /articles/getComments
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 255, in getComments
+    w = int ( request.GET.get("wid") )
+ValueError: invalid literal for int() with base 10: 'undefined'
+[13/Jun/2014 11:52:24] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:52:24] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:52:44] ERROR [django.request:226] Internal Server Error: /articles/getComments
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 255, in getComments
+    w = int ( request.GET.get("wid") )
+ValueError: invalid literal for int() with base 10: 'undefined'
+[13/Jun/2014 11:56:56] DEBUG [articles.views:138] object got
+[13/Jun/2014 11:56:56] DEBUG [articles.views:138] object got
+[13/Jun/2014 11:56:56] DEBUG [articles.views:149] User AjayPalSingh
+[13/Jun/2014 11:56:56] DEBUG [articles.views:149] User AjayPalSingh
+[13/Jun/2014 11:56:56] DEBUG [articles.views:150] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'zist', 'name': u'first Series', 'tags': u'series zist {{BEGINNER}}', 'aid': 1, 'sa': u'{"articles":[{"name":"get_or_create","id":4},{"name":"Full-text search with PostgreSQL and Django","id":1}]}'}
+[13/Jun/2014 11:56:56] DEBUG [articles.views:150] edit Params is {'articles': [<Article: Article object>, <Article: Article object>, <Article: Article object>, <Article: Article object>, <Article: Article object>], 'zist': u'zist', 'name': u'first Series', 'tags': u'series zist {{BEGINNER}}', 'aid': 1, 'sa': u'{"articles":[{"name":"get_or_create","id":4},{"name":"Full-text search with PostgreSQL and Django","id":1}]}'}
+[13/Jun/2014 11:57:45] WARNING [django.request:145] Not Found: /articles/viewSeries/1/first-series
+[13/Jun/2014 11:57:58] WARNING [django.request:145] Not Found: /articles/viewSeries/1/first-series
+[13/Jun/2014 11:58:18] DEBUG [articles.views:408] Inside
+[13/Jun/2014 11:58:18] DEBUG [articles.views:408] Inside
+[13/Jun/2014 12:03:59] DEBUG [articles.views:408] Inside
+[13/Jun/2014 12:03:59] DEBUG [articles.views:408] Inside
+[13/Jun/2014 12:06:15] DEBUG [articles.views:408] Inside
+[13/Jun/2014 12:06:15] DEBUG [articles.views:408] Inside
+[14/Jun/2014 11:35:53] WARNING [django.request:145] Not Found: /articles/viewAlgo/1/favicon.png
+[14/Jun/2014 12:16:24] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:16:24] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:18:33] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:18:33] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:22:00] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:22:00] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:22:04] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:22:04] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:22:57] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:22:57] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:23:19] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:23:19] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:25:05] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:25:05] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:25:20] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:25:20] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:25:24] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:25:24] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:25:42] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:25:42] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:33:34] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:33:34] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:33:42] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:33:42] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:34:03] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:34:03] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:34:12] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:34:12] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:35:56] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:35:56] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:36:04] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:36:04] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:42:16] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:42:16] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:50:31] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:50:31] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:52:48] DEBUG [articles.views:408] Inside
+[14/Jun/2014 12:52:48] DEBUG [articles.views:408] Inside
+[14/Jun/2014 13:00:21] DEBUG [articles.views:408] Inside
+[14/Jun/2014 13:00:21] DEBUG [articles.views:408] Inside
+[14/Jun/2014 14:59:03] ERROR [django.request:226] Internal Server Error: /articles/viewArticle/2/name
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 372, in viewArticle
+    a = Article.objects.get(pk=p)
+  File "/Library/Python/2.7/site-packages/django/db/models/manager.py", line 151, in get
+    return self.get_queryset().get(*args, **kwargs)
+  File "/Library/Python/2.7/site-packages/django/db/models/query.py", line 307, in get
+    self.model._meta.object_name)
+DoesNotExist: Article matching query does not exist.

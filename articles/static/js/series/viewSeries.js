@@ -67,7 +67,14 @@ tc.koModel = {
         return false;
 	},
 
-	
+	showSpriteTemplate : function(){
+		
+		if( tc.koModel.previewCurrentSlide() && tc.koModel.previewCurrentSlide().data.TYPE == "SPRITE" ){
+			return true;
+		} 
+		return false;
+	},
+
 }
 
 //articleMetaData
@@ -133,7 +140,12 @@ function attachHandlers(){
 			populateHTML(commentsCache[wid]);
 			$('#txtComments').val('');
 		})
-	})
+	});
+	$('#myModal').on('shown.bs.modal', function() {
+        window.setTimeout(function(){
+        	$('#myModal').modal('hide');
+        }, 1000)
+    })
 }
 
 
@@ -214,6 +226,7 @@ function initView(){
 
 tc.preview = function(){
    tc.overlayInitArticle();
+   $('#myModal').modal('show');
    //$('#jstreejstreeHolder').css('height', $('#editor').css('height'));
 }
 
@@ -242,6 +255,9 @@ tc.overlayInitArticle = function(){
 			});
 		});
 	});
+
+
+
 	$('#overlay').show();	
 }
 

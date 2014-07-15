@@ -16,8 +16,6 @@
 	<link href="/static/css/article.css" rel="stylesheet">
     
     <script type="text/javascript">
-        window.metadata = {{ metadata|safe }}
-        window.savedSlides = {{ slides|safe }}
         window.aid = {{ aid|safe }}
 
     </script>
@@ -128,6 +126,21 @@ background: #FFFFA3;
 }    
 
 
+#preview_sprite{
+    height: 400px;
+    width: 500px;
+    position: relative;
+}
+
+#spritePlayer {
+    z-index: 2000;
+    position: absolute;
+    margin-left: 100px;
+    margin-bottom: 30px;
+}
+
+
+
 #scrollbar1 { width: 240px; clear: both; margin: 5px 0 2px; }
 .viewport { width: 225px; height: 200px; overflow: hidden; position: relative; }
 .overview { width: 225px;list-style: none; position: absolute; left: 0; top: 0; }
@@ -221,7 +234,7 @@ background: #FFFFA3;
                             <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="javascript: return tc.onNameNextClick();">Next</button>
                         <span>
                     </div>
-                    <div id="div_slide_name" class="row" data-bind="visible: showTemplate('TEXT|CODE|IMAGE')">
+                    <div id="div_slide_name" class="row" data-bind="visible: showTemplate('TEXT|CODE|IMAGE|SPRITE')">
                         <div class="col-lg-6">
                             <input type="text" class="form-control"  data-bind="value: currentSlide().data.name"/>
                         </div>
@@ -241,8 +254,8 @@ background: #FFFFA3;
                         <div id="code_editor"> </div>
                     </div>
 
-                    <div id="div_image_editor" data-bind="visible: showTemplate('IMAGE')">
-						<div data-bind="visible: showTemplate('IMAGE')">
+                    <div id="div_image_editor" data-bind="visible: showTemplate('IMAGE|SPRITE')">
+						<div data-bind="visible: showTemplate('IMAGE|SPRITE')">
                             <span >
                                 <span id = "file-uploader"></span>
                             </span>
@@ -285,65 +298,74 @@ background: #FFFFA3;
 	    						<button type="button" class="btn btn-default" data-bind="click: deleteWatch">Delete this watch.</button>
 
 							</span>
+
+                            <span data-bind='visible: showSpriteTemplate()' >
+                                 <input id="sprite_height" type="text" class="form-control" placeholder="Height of Sprite" data-bind="value: currentSlide() ? currentSlide().data.height : ''"/><br>
+                                <textarea style="width:100%" rows="10" id="watch" data-bind="value: currentSlide()?currentSlide().data.text: ''"></textarea>
+                                
+                            </span>
 					</div>
                 </div>
             </div>
         </div>
     </div>
+    <div>
     <!--/.container-->
 
-	<!--------------------- OVERLAY STARTS HERE ----------------------------------------->
+	
 		<div id="overlay"> 
-			<div >
-					
- <div class="navbar navbar-fixed-bottom">
-        <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="#">Tanituts</a>
-            </div>
+            <div >
+                <div class="main-content-section">
+					<span data-bind="visible: showPreviewTemplate('TEXT|CODE')">
+						<div id="editor"></div>
+					</span>
+					<span data-bind="visible: showPreviewTemplate('IMAGE')">
+						<div id="preview_board" data-bind="visible: previewCurrentSlide() ? previewCurrentSlide().data.src : false">
+							<img id = "preview_board_image" height="400" width="500" data-bind="imgSrc: previewCurrentSlide() ? previewCurrentSlide().data.src : '' "/>
+						</div>
+					</span>
+                    <span data-bind="visible: showPreviewTemplate('SPRITE')">
+                        <div id="preview_sprite" >
+                            <div id="spritePlayer" data-bind="visible: showPreviewTemplate('SPRITE')">
+                                <span class="label label-info" > <a href="#" onclick="javascipt: tcp.UIManager.currentSlide.setSpriteImage();"> Replay </a> </span>
+                                <span class="label label-info" > <a href="#" onclick="javascipt: tcp.UIManager.currentSlide.stopSprite();"> Stop </a> </span>
+                            </div>        
 
+                        </div>
+                    </span>
+
+				</div>
+				<div class="main-content-section ">
+					<div id="overlay_watch" class="watch" data-bind="visible: showPreviewWatchTemplate()">
+						<span id="preview_watch" data-bind="text: previewWatch() ? previewWatch().text : '' "></span>
+					</div>
+                    <div id="overlay_watch" class="watch" data-bind="visible: showPreviewTemplate('SPRITE')">
+                        <span id="sprite_watch" data-bind="text: showSpriteTemplate() ? currentSlide().data.text : '' "></span>
+                    </div>
+				</div>
+			</div>
+
+            
+ <div class="navbar">
+        <nav class="navbar-default navbar-fixed-bottom" role="navigation">
+          <div class="container-fluid player">
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
-                <li><a href="#" onClick="javascript:tcp.UIManager.previous();"><span class="glyphicon glyphicon-arrow-left"></span>Previous Slide</a></li>
-                <li><a href="#" onClick="javascript:tcp.UIManager.next();">Next Slide<span class="glyphicon glyphicon-arrow-right" ></span></a></li>
-                
-                    <li class="dropdown">
+                <li><a href="#" onClick="javascript:tcp.UIManager.previous();"><img height="40" width="50" src="/static/images/tanituts/back.png" /></a></li>
+                <li><a href="#" onClick="javascript:tcp.UIManager.next();"><img height="40" width="50" src="/static/images/tanituts/fwd.png" /> </a></li>
+                <li> Jump to Slide</li>
+                    <li class="dropdown" style="margin-top:5px;">
                       <a href="#" class="dropdown-toggle" id="pv_dd_a" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
                       <ul class="dropdown-menu" id="pv_dd">
                       </ul>
                     </li>
-                <li><a id="preview_close" href="#" >close</a></li>
+                <li style="margin-top:5px;"><a id="preview_close" href="#" >close</a></li>
               </ul>
             </div>
           </div>
         </nav>
      </div>
 
-
-
-                    <div class="main-content-section">
-						<span data-bind="visible: showPreviewTemplate('TEXT|CODE')">
-							<div id="editor"></div>
-						</span>
-						<span data-bind="visible: showPreviewTemplate('IMAGE')">
-							<div id="preview_board" data-bind="visible: previewCurrentSlide() ? previewCurrentSlide().data.src : false">
-								<img id = "preview_board_image" height="400" width="500" data-bind="imgSrc: previewCurrentSlide() ? previewCurrentSlide().data.src : '' "/>
-							</div>
-						</span>
-					</div>
-					<div class="main-content-section ">
-						<div id="overlay_watch" class="watch" data-bind="visible: showPreviewWatchTemplate()">
-								<span id="preview_watch" data-bind="text: previewWatch() ? previewWatch().text : '' "></span>
-						</div>
-					</div>
-			</div>
         </div>
     <!--------------------- OVERLAY ENDS HERE ----------------------------------------->	
 

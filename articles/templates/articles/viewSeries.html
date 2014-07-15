@@ -1,233 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="favicon.png">
-    <title>Blog Express - Don't Blog, Express It!!</title>
-    <!-- Bootstrap core CSS -->
-    <link href="/static/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="/static/css/fileuploader.css" rel="stylesheet">
-	<link href="/static/css/jstree/style.css" rel="stylesheet">
-	<link href="/static/css/slider/slider.css" rel="stylesheet">
-	<link href="/static/css/article.css" rel="stylesheet">
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="ie8-responsive-file-warning.js"></script><![endif]-->
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="favicon.png">
+  <title>Blog Express - Don't Blog, Express It!!</title>
+  <!-- Bootstrap core CSS -->
+  <link href="/static/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="/static/css/fileuploader.css" rel="stylesheet">
+  <link href="/static/css/jstree/style.css" rel="stylesheet">
+  <link href="/static/css/slider/slider.css" rel="stylesheet">
+  <link href="/static/css/article.css" rel="stylesheet">
+  <!-- Just for debugging purposes. Don't actually copy this line! -->
+  <!--[if lt IE 9]><script src="ie8-responsive-file-warning.js"></script><![endif]-->
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="/static/js/bootstrap/html5shiv.js"></script>
       <script src="/static/js/bootstrap/respond.min.js"></script>
-    <![endif]-->
-    <script type="text/javascript">
+      <![endif]-->
+      <script type="text/javascript">
     	//window.metaData = {{ metadata|safe }};
       //window.savedSlides = {{ slides|safe }};
       window.aid = {{ aid|safe }};
       window.toc = {{object.articles | safe}};
       window.title = "{{object.title | safe}}";
-    </script>
-<style>
+      </script>
+      <style>
 
 
-/******************************* Overlay css properties ***************************************/
-#overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /*background-color: #000;*/
-    filter:alpha(opacity=50);
-    -moz-opacity:0.9;
-    -khtml-opacity: 0.9;
-    opacity: 0.9;
-}
+      /******************************* Overlay css properties ***************************************/
+      #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /*background-color: #000;*/
+        filter:alpha(opacity=50);
+        -moz-opacity:0.9;
+        -khtml-opacity: 0.9;
+        opacity: 0.9;
+      }
 
-/******************************* Overlay css properties ***************************************/
+      /******************************* Overlay css properties ***************************************/
 
-#text_editor {
-    /** Setting height is also important, otherwise editor wont showup**/
-     height: 350px; 
-     font-size: px;
-      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
-      line-height:1.0;
-}
-#editor {
-    /** Setting height is also important, otherwise editor wont showup**/
-     height: 350px; 
-}
-
-
-._jsPlumb_connector { z-index:100; }
-._jsPlumb_endpoint { z-index:100; }
-._jsPlumb_overlay { z-index:100; }
+      #text_editor {
+        /** Setting height is also important, otherwise editor wont showup**/
+        height: 350px; 
+        font-size: px;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+        line-height:1.0;
+      }
+      #editor {
+        /** Setting height is also important, otherwise editor wont showup**/
+        height: 350px; 
+      }
 
 
-.ace_active_line {
-background: #FFFFA3;
-}
+      ._jsPlumb_connector { z-index:100; }
+      ._jsPlumb_endpoint { z-index:100; }
+      ._jsPlumb_overlay { z-index:100; }
+
+
+      .ace_active_line {
+        background: #FFFFA3;
+      }
 
 
 
-.ace_gutter-cell.ace_breakpoint{ 
-	border-radius: 20px 0px 0px 20px; 
-	box-shadow: 0px 0px 1px 1px red inset; 
-} 
+      .ace_gutter-cell.ace_breakpoint{ 
+       border-radius: 20px 0px 0px 20px; 
+       box-shadow: 0px 0px 1px 1px red inset; 
+     } 
 
-#board {
-	width: 300px;
-	height: 350px;
-	border: 1px dotted black;
-}
+     #board {
+       width: 300px;
+       height: 350px;
+       border: 1px dotted black;
+     }
 
-.tc_containers {
-    float: left;
-    padding: 5px;
-    border: 1px dotted black;
-    overflow: auto;
-}
+     .tc_containers {
+      float: left;
+      padding: 5px;
+      border: 1px dotted black;
+      overflow: auto;
+    }
 
-.tc_box {
-    position: absolute;
-}
+    .tc_box {
+      position: absolute;
+    }
 
-#tc_tree_container{
-    display:none;
-}    
-
-
-#scrollbar1 { width: 240px; clear: both; margin: 5px 0 2px; }
-.viewport { width: 225px; height: 200px; overflow: hidden; position: relative; }
-.overview { width: 225px;list-style: none; position: absolute; left: 0; top: 0; }
-.thumb .end,
-.thumb { background-color: #003D5D; }
-.scrollbar { position: relative; float: right; width: 15px; }
-.track { background-color: #D8EEFD; height: 100%; width:13px; position: relative; padding: 0 1px; }
-.thumb { height: 20px; width: 13px; cursor: pointer; overflow: hidden; position: absolute; top: 0; }
-.thumb .end { overflow: hidden; height: 5px; width: 13px; }
-.disable{ display: none; }
-.noSelect { user-select: none; -o-user-select: none; -moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none; }
+    #tc_tree_container{
+      display:none;
+    }    
 
 
-.nav_bar_hide {
-  display : none;
-}
+    #scrollbar1 { width: 240px; clear: both; margin: 5px 0 2px; }
+    .viewport { width: 225px; height: 200px; overflow: hidden; position: relative; }
+    .overview { width: 225px;list-style: none; position: absolute; left: 0; top: 0; }
+    .thumb .end,
+    .thumb { background-color: #003D5D; }
+    .scrollbar { position: relative; float: right; width: 15px; }
+    .track { background-color: #D8EEFD; height: 100%; width:13px; position: relative; padding: 0 1px; }
+    .thumb { height: 20px; width: 13px; cursor: pointer; overflow: hidden; position: absolute; top: 0; }
+    .thumb .end { overflow: hidden; height: 5px; width: 13px; }
+    .disable{ display: none; }
+    .noSelect { user-select: none; -o-user-select: none; -moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none; }
 
-.nav_bar_show {
-  display : block;
-}
 
-</style>
-</head>
-<body>
-		<div id="overlay"> 
-         <div >
-            <nav class="navbar navbar-default navbar-fixed" role="banner">
-              <div class="container-fluid">
-                <div class="navbar-header">
-                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand" href="/">Tanituts</a>
-                </div>
+    .chanpterName {
+    position:absolute;
+    width:400px;
+    left: 50%;
+    margin-left: -200px;
+    text-align: center;
+    vertical-align: middle;
+    }
 
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  <ul class="nav navbar-nav">
-                    <li id="nav_bar_previous"><a  href="#" onClick="javascript:tcp.UIManager.previous();"><span class="glyphicon glyphicon-arrow-left"></span>Previous</a></li>
-                    <li id="nav_bar_next"><a href="#" onClick="javascript:tcp.UIManager.next();">Next<span class="glyphicon glyphicon-arrow-right" ></span></a></li>
-                    
-                        <li class="dropdown" id="nav_bar_article_toc">
-                          <a href="#" class="dropdown-toggle" id="pv_dd_a" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                          <ul class="dropdown-menu" id="pv_dd">
-                          </ul>
-                        </li>
-                        <li><a href="#" id="nav_toc" onClick="javascript:animationManager.tocSelected()"  style="display:none;">Table of Content</a></li>
+    </style>
+  </head>
+  <body>
 
-                  </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                      <li><a id="popComments" href="#" style="display:none;">Comments</a></li>
-                    </ul>
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 id="modal_name" class="modal-title">Modal title</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="overlay"> 
+     <div >
+      <nav class="navbar navbar-default navbar-fixed" role="banner">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Tanituts</a>
+          </div>
 
-                </div>
-              </div>
-            </nav>
-         </div>
-         <div id="toc" >
-              <div class="row">
-                <div class="col-md-12">
-                    <div  class = "col-sm-12">
-                        <table id="series_toc" class="table table-striped">
-                          <thead>
-                              <tr>
-                                  <td width="100%" class="success main_Color" align="center"><h1 ><span data-bind="text: articleName"><span></h1></td>
-                              </tr>
-                          </thead>
-                          <!-- ko foreach: seriesTOC -->
-                          <tbody>
-                              <td> <a href="#" data-bind="attr: {'id': 'toc_' + $data.id}"> <span data-bind="text: ($index() + 1)">
-                              </span>)&nbsp;&nbsp;&nbsp;&nbsp;<span data-bind="text: $data.name"></span></a></td>
-                          </tbody>
-                          <!-- /ko -->
-                          </table>              
-                    </div>
-                </div>
-              </div>
-         </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="#" id="nav_toc" onClick="javascript:animationManager.tocSelected()"  style="display:none;">Table of Content</a></li>
+              <li class="navbar-brand chanpterName" id="current_chapter"></li>
 
-            <div id="main_ui" style="display:none">
-                  <div class="main-content-wrapper">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a id="popComments" href="#" style="display:none;">Comments</a></li>
+            </ul>
+
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div id="toc" >
+      <div class="row">
+        <div class="col-md-12">
+          <div  class = "col-sm-12">
+            <table id="series_toc" class="table table-striped">
+              <thead>
+                <tr>
+                  <td width="100%" class="success main_Color" align="center"><h1 ><span data-bind="text: articleName"><span></h1></td>
+                </tr>
+              </thead>
+              <!-- ko foreach: seriesTOC -->
+              <tbody>
+                <td> <a href="#" data-bind="attr: {'id': 'toc_' + $data.id}"> <span data-bind="text: ($index() + 1)">
+                </span>)&nbsp;&nbsp;&nbsp;&nbsp;<span data-bind="text: $data.name"></span></a></td>
+              </tbody>
+              <!-- /ko -->
+            </table>              
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="main_ui" style="display:none">
+      <div class="main-content-wrapper">
                   <!-- 
                     <span data-bind="text: previewCurrentSlide() ? previewCurrentSlide().data.name : ''" ></span>
                   -->
                   <div class="main-content-section" style="padding: 0px;">
-      						<span data-bind="visible: showPreviewTemplate('TEXT|CODE')">
-      							<div id="editor"></div>
-      						</span>
-      						<span data-bind="visible: showPreviewTemplate('IMAGE')">
-      							<div id="preview_board" data-bind="visible: previewCurrentSlide() ? previewCurrentSlide().data.src : false">
-      								<img id = "preview_board_image" height="400" width="500" data-bind="imgSrc: previewCurrentSlide() ? previewCurrentSlide().data.src : '' "/>
-      							</div>
-      						</span>
-                  
+                    <span data-bind="visible: showPreviewTemplate('TEXT|CODE')">
+                     <div id="editor"></div>
+                   </span>
+                   <span data-bind="visible: showPreviewTemplate('IMAGE')">
+                     <div id="preview_board" data-bind="visible: previewCurrentSlide() ? previewCurrentSlide().data.src : false">
+                      <img style="margin-left:20px;" id = "preview_board_image" height="400" width="500" data-bind="imgSrc: previewCurrentSlide() ? previewCurrentSlide().data.src : '' "/>
+                    </div>
+                  </span>
+                  <span data-bind="visible: showPreviewTemplate('SPRITE')">
+                    <div id="preview_sprite" >
+                      <div id="spritePlayer" data-bind="visible: showPreviewTemplate('SPRITE')" class="spritePlayerContainer">
+                        <span> <a href="#" onclick="javascipt: tcp.SpriteTimer.restart();"> <img src="/static/images/tanituts/replay.jpeg" width="50" height="50"/></a> </span>
+                        <span > <a href="#" onclick="javascipt: tcp.UIManager.manager.currentSlide.toggleSprite();"> 
+                          <img id="sprite_player" src="/static/images/tanituts/pause.jpeg" width="50" height="50"/>
+                        </a> </span>
+                      </div>        
 
-      					</div>
-      					<div class="main-content-section " style="padding: 0px;">
-      						<div id="overlay_watch" class="watch" data-bind="visible: showPreviewWatchTemplate()">
-      								<span id="preview_watch" data-bind="text: previewWatch() ? previewWatch().text : '' "></span>
-      						</div>
-                  
-      					</div>
-           </div>
-			   </div>
+                    </div>
+                  </span>
 
 
-      <div class="comment_outer_div" style="display:none;z-index:1300;">
-      <div class="comments_header_center">
-          Comments
-          <span id="close_comments" class="comments_header_right glyphicon glyphicon-remove"></span>
-      </div>
-      <div class="comment_comments">
+                </div>
+                <div class="main-content-section " style="padding: 0px;">
+                    <div class="watch" style="text-align:left;background-color:white;padding:0px;" data-bind="visible:  showPreviewTemplate('TEXT')">
+                      <img id="text_img" src="/static/images/tanituts/do.png"/>
+                    </div>
 
-      </div>
-      <div class="comment_post_div">
-        {% if user.is_authenticated %}
-          <textarea id="txtComments" class="form-control" rows="3"></textarea>
-          <button type="button" id="postComment" class="btn btn-primary">Post Comment</button>
-        {% else %}
-        <div class-"comment_post">
-          <div class="comment_sign_in"><button id="signIn" type="button" class="btn btn-primary">Sign In</button></a></div>
-        </div>
-        {% endif %}
+                  <div id="overlay_watch" class="watch" data-bind="visible: showPreviewWatchTemplate()">
+                    <span id="preview_watch" data-bind="text: previewWatch() ? previewWatch().text : '' "></span>
+                  </div>
+                  <div id="overlay_watch" class="watch" data-bind="visible: showPreviewTemplate('SPRITE')">
+                    <span id="sprite_watch" data-bind="text: showSpriteTemplate() ? previewCurrentSlide().data.text : '' "></span>
+                  </div>
 
-      </div>
-    </div>
-      </div>
+                </div>
+              </div>
+              <div class="">
+                <nav class="navbar-default navbar-fixed-bottom" role="navigation">
+                  <div class="container-fluid player">
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                      <ul class="nav navbar-nav">
+                        <li><a href="#" onClick="javascript:tcp.UIManager.previous();"><img height="40" width="50" src="/static/images/tanituts/back.png" /></a></li>
+                        <li><a href="#" onClick="javascript:tcp.UIManager.next();"><img height="40" width="50" src="/static/images/tanituts/fwd.png" /> </a></li>
+                        <li style="color:black;"> Current Slide</li>
+                        <li class="dropdown" style="margin-top:5px;font-size:20px;">
+                          <a href="#" class="dropdown-toggle" id="pv_dd_a" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                          <ul class="dropdown-menu" id="pv_dd">
+                          </ul>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </nav>
+              </div>
+
+            </div>
+
+            <div class="comment_outer_div" style="display:none;z-index:1300;">
+              <div class="comments_header_center">
+                Comments
+                <span id="close_comments" class="comments_header_right glyphicon glyphicon-remove"></span>
+              </div>
+              <div class="comment_comments">
+
+              </div>
+              <div class="comment_post_div">
+                {% if user.is_authenticated %}
+                <textarea id="txtComments" class="form-control" rows="3"></textarea>
+                <button type="button" id="postComment" class="btn btn-primary">Post Comment</button>
+                {% else %}
+                <div class-"comment_post">
+                  <div class="comment_sign_in"><button id="signIn" type="button" class="btn btn-primary">Sign In</button></a></div>
+                </div>
+                {% endif %}
+
+              </div>
+            </div>
+          </div>
 
     <!-- Bootstrap core JavaScript
 
@@ -236,24 +278,24 @@ background: #FFFFA3;
     <script type='text/javascript' src='/static/js/jquery/jquery.js'></script>
     <script src="/static/js/bootstrap/bootstrap.min.js"></script>
     <script src="/static/js/bootstrap/offcanvas.js"></script>
-	<script src="/static/js/ace-js/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/static/js/drag/drag.js"></script>
-	<script src="/static/js/drag/drag-live.js"></script>
-	<script src="/static/js/pubsub/pubsub.js"></script>
-	<script src="/static/js/jquery-plugins/tinyscrollbar.js"></script>
-	<script src="/static/js/fileuploader.js"></script>
-	<script src="/static/js/underscore/underscore.js"></script>
+    <script src="/static/js/ace-js/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/drag/drag.js"></script>
+    <script src="/static/js/drag/drag-live.js"></script>
+    <script src="/static/js/pubsub/pubsub.js"></script>
+    <script src="/static/js/jquery-plugins/tinyscrollbar.js"></script>
+    <script src="/static/js/fileuploader.js"></script>
+    <script src="/static/js/underscore/underscore.js"></script>
     <script src="/static/js/jstree/jstree.js"></script>
-	<script src="/static/js/slider/bootstrap-slider.js"></script>
-	<script src="/static/js/ko/ko.js"></script>
-	<script src="/static/js/common.js"></script>
-	<script src="/static/js/series/viewSeries.js"></script>
-  <script src="/static/js/jquery-transit/jquery.transit.min.js"></script>
+    <script src="/static/js/slider/bootstrap-slider.js"></script>
+    <script src="/static/js/ko/ko.js"></script>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/series/viewSeries.js"></script>
+    <script src="/static/js/jquery-transit/jquery.transit.min.js"></script>
 
-	<script src="/static/js/series/previewSeries.js"></script>
-  <script src="/static/js/jsPlumb/jquery.jsPlumb-1.5.5.js"></script>
-  <script src="/static/js/jmpress/jmpress.all.min.js"></script>
-  <script language="javascript">
-  </script>
-</body>
-</html>
+    <script src="/static/js/series/previewSeries.js"></script>
+    <script src="/static/js/jsPlumb/jquery.jsPlumb-1.5.5.js"></script>
+    <script src="/static/js/jmpress/jmpress.all.min.js"></script>
+    <script language="javascript">
+    </script>
+  </body>
+  </html>

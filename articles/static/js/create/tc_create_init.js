@@ -37,6 +37,7 @@
 			new NewSlideOption("Text Slide"),
 			new NewSlideOption("Code Slide"),
 			new NewSlideOption("Image Slide"),
+			new NewSlideOption("Sprite Slide"),
 		    ]),
 	    
 	    //It is later overridden in document ready function.
@@ -75,6 +76,14 @@
 			return false
 		},
 		
+		showSpriteTemplate : function(){
+			
+			if( tc.koModel.currentSlide() && tc.koModel.currentSlide().data.TYPE == "SPRITE" ){
+				return true;
+			} 
+			return false;
+		},
+
 		showWatchTemplate : function(){
 	        if( tc.koModel.watch()){
 	            return true;
@@ -85,6 +94,9 @@
 		showPreviewWatchTemplate : function(){
 	        if( tc.koModel.previewWatch()){
 	            return true;
+	        }
+	        else if( tc.koModel.previewCurrentSlide() && tc.koModel.previewCurrentSlide().data.type == "SPRITE" ){
+	        	return true;
 	        }
 	        return false;
 		},
@@ -475,10 +487,34 @@
 	tc.TextSlide.prototype = new tc.baseSlide();
 	tc.TextSlide.prototype.constructor = tc.TextSlide;
 
+	tc.SpriteSlide = function(){
+		this.TYPE = "SPRITE",
+		this.name = ko.observable('New Sprite Slide');
+		this.src = ko.observable();
+		this.height = ko.observable('');
+		this.text = ko.observable(''),
+		this.syncUI = function(){
+		};
+
+		this.syncData = function(){
+		};
+
+		this.cloneFrom = function(d){
+			this.name( d.name );
+			this.src ( d.src );
+			this.height ( d.height );
+			this.text ( d.text );
+		};
+
+	}
+	tc.SpriteSlide.prototype = new tc.baseSlide();
+	tc.SpriteSlide.prototype.constructor = tc.SpriteSlide;
+
+
 	tc.ImageSlide = function(){
 		this.TYPE = "IMAGE",
 		this.name = ko.observable('Name for the new Image Slide');
-		this.src = ko.observable();;
+		this.src = ko.observable();
 		this.watches = new Array();
 
 		this.cloneFrom = function(d){
@@ -979,6 +1015,9 @@
 			else if( s == "Image Slide" ){
 				tc.UIManager.newSlide = new tc.Slide(new tc.ImageSlide());
 			}
+			else if( s == "Sprite Slide"){
+				tc.UIManager.newSlide = new tc.Slide(new tc.SpriteSlide());
+			}
 			tc.cacheManager.addSlide(tc.UIManager.newSlide, new tc.state(true, false))
 			tc.koModel.slides.push(tc.UIManager.newSlide);
 	        tc.UIManager.changeSlide();
@@ -1177,6 +1216,9 @@
 				if( s.data.TYPE == "TEXT"){
 					html += s.data.text;
 				}
+				else if(s.data.TYPE == "SPRITE"){
+
+				}
 				else
 				{
 					for(var i = 0;i < s.data.watches.length; i++){
@@ -1260,17 +1302,28 @@
 	    setMode();
 	    tc.UIManager.attachEvents();
 		if(tc.mode == "create"){
-	    	create_ready()
+	    	create_ready();
+	    	postReady()
 	    }
 	    else
 	    {
-	    	edit_ready()
+	    	$.ajax({
+				  dataType: "json",
+				  url: '/articles/getArticleSlidesAjax?aid=' + window.aid,
+				  success: function(res){
+				  	//res = $.parseJSON(res)
+				  	window.metadata = $.parseJSON(res['metadata'])
+				    window.savedSlides = $.parseJSON(res['slides'])
+				    edit_ready();
+				}
+			});
+	    	//edit_ready()
 	    }
+	})
 
-	    ko.applyBindings(tc.koModel);
-	    //$('#scrollbar1').tinyscrollbar();
-
-	    tc.initHelpHandlers();
+	function postReady(){
+		ko.applyBindings(tc.koModel);
+		tc.initHelpHandlers();
 	    createUploader();
 
 	    $('#preview_close').click(function(){
@@ -1279,11 +1332,11 @@
 
 	    	tcp.close();
 	    })
-	})
+	}
 
 	function setMode(){
 		tc.mode = "create"
-		if(window.metadata && window.metadata != ''){
+		if(window.aid){
 			tc.mode = "edit";
 		}
 	}
@@ -1296,7 +1349,7 @@
 
 	tc.copyProperties = ['name', 'uid', 'TYPE']
 	function edit_ready(){
-		window.sj = $.parseJSON(metadata)
+		window.sj = $.parseJSON(window.metadata)
 		artDetailsData = $.parseJSON( sj['articleMetaData'] );
 		window.slides =  $.parseJSON($.parseJSON( window.savedSlides ));
 		window.firstSlide = sj['firstSlide'] ;
@@ -1316,6 +1369,9 @@
 				else if( elem.data.TYPE == "IMAGE"){
 					d = new tc.ImageSlide();
 				}
+				else if( elem.data.TYPE == "SPRITE"){
+					d = new tc.SpriteSlide();
+				}
 
 				d.cloneFrom(elem.data);
 
@@ -1325,26 +1381,14 @@
 				tc.cacheManager.addSlide(s, new tc.state(true, true))
 			}
 		);
-		/*//set the properties of the first slide from the article data
-		tc.koModel.slides()[0].data.text = firstSlide.text;
-		if( firstSlide.watches){
-			tc.koModel.slides()[0].data.watches = firstSlide.watches;
-		}
-
-		//tc.cc(firstSlide)
-
-		tc.cacheManager[firstSlide.uid].state.syncedWithServer = true;	
-		*/
 		$('#tc_tree_container').show();
 		//tc.UIManager.addNewSlide("Text Slide");
 		tc.UIManager.changeSlide(tc.koModel.slides()[0])
 		tc.koModel.articleDetails.data.showNextButton(false)
 		tc.koModel.helpTemplateID('select_slide');
 		$('#bs_navbar').css('visibility', 'visible')
-
-		/*tc.koModel.previewSlides = ko.observableArray();
-		tc.articleDetailsHolder.data = tc.articleDetails;
-		tc.koModel.articleDetails = tc.articleDetailsHolder;*/
+		//window.setTimeout( postReady, 10);
+		postReady();
 	}
 
 

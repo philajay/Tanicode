@@ -1,0 +1,608 @@
+[10/Jun/2014 03:40:17] ERROR [django.request:226] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 318, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 346, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 341, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Python/2.7/site-packages/django/utils/importlib.py", line 40, in import_module
+    __import__(name)
+  File "/ajay/Tanicode/Tanicode/Tanicode/urls.py", line 6, in <module>
+    from articles import views
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 50
+    else:
+        ^
+IndentationError: unindent does not match any outer indentation level
+[10/Jun/2014 03:41:37] ERROR [django.request:226] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 55, in index
+    form = searchArticles()
+TypeError: searchArticles() takes exactly 1 argument (0 given)
+[10/Jun/2014 03:44:37] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 35, in searchArticles
+    contacts = paginator.page(page)
+NameError: global name 'paginator' is not defined
+[10/Jun/2014 03:46:11] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 03:50:02] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 30, in searchArticles
+    logger.debug("going to search for " + search)
+TypeError: cannot concatenate 'str' and 'NoneType' objects
+[10/Jun/2014 03:50:30] DEBUG [articles.views:30] going to search for None
+[10/Jun/2014 03:50:30] DEBUG [articles.views:30] going to search for None
+[10/Jun/2014 03:50:30] DEBUG [articles.views:35] 1
+[10/Jun/2014 03:50:30] DEBUG [articles.views:35] 1
+[10/Jun/2014 03:50:30] DEBUG [articles.views:37] 2
+[10/Jun/2014 03:50:30] DEBUG [articles.views:37] 2
+[10/Jun/2014 03:50:30] DEBUG [articles.views:41] 3
+[10/Jun/2014 03:50:30] DEBUG [articles.views:41] 3
+[10/Jun/2014 03:50:30] DEBUG [articles.views:53] 6
+[10/Jun/2014 03:50:30] DEBUG [articles.views:53] 6
+[10/Jun/2014 03:50:30] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 03:52:13] DEBUG [articles.views:30] going to search for search
+[10/Jun/2014 03:52:13] DEBUG [articles.views:30] going to search for search
+[10/Jun/2014 03:52:13] DEBUG [articles.views:35] 1
+[10/Jun/2014 03:52:13] DEBUG [articles.views:35] 1
+[10/Jun/2014 03:52:13] DEBUG [articles.views:37] 2
+[10/Jun/2014 03:52:13] DEBUG [articles.views:37] 2
+[10/Jun/2014 03:52:13] DEBUG [articles.views:41] 3
+[10/Jun/2014 03:52:13] DEBUG [articles.views:41] 3
+[10/Jun/2014 03:52:13] DEBUG [articles.views:53] 6
+[10/Jun/2014 03:52:13] DEBUG [articles.views:53] 6
+[10/Jun/2014 03:52:13] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 03:55:21] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 03:55:21] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 03:55:21] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 03:55:21] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 03:55:21] DEBUG [articles.views:36] 1
+[10/Jun/2014 03:55:21] DEBUG [articles.views:36] 1
+[10/Jun/2014 03:55:21] DEBUG [articles.views:38] 2
+[10/Jun/2014 03:55:21] DEBUG [articles.views:38] 2
+[10/Jun/2014 03:55:21] DEBUG [articles.views:42] 3
+[10/Jun/2014 03:55:21] DEBUG [articles.views:42] 3
+[10/Jun/2014 03:55:21] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 03:55:21] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 03:55:21] DEBUG [articles.views:54] 6
+[10/Jun/2014 03:55:21] DEBUG [articles.views:54] 6
+[10/Jun/2014 03:55:21] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 03:57:45] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 03:57:45] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 03:57:45] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 03:57:45] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 03:57:45] DEBUG [articles.views:36] 1
+[10/Jun/2014 03:57:45] DEBUG [articles.views:36] 1
+[10/Jun/2014 03:57:45] DEBUG [articles.views:38] 2
+[10/Jun/2014 03:57:45] DEBUG [articles.views:38] 2
+[10/Jun/2014 03:57:45] DEBUG [articles.views:42] 3
+[10/Jun/2014 03:57:45] DEBUG [articles.views:42] 3
+[10/Jun/2014 03:57:45] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 03:57:45] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 03:57:45] DEBUG [articles.views:57] 6
+[10/Jun/2014 03:57:45] DEBUG [articles.views:57] 6
+[10/Jun/2014 03:57:45] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:00:00] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:00:00] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:00:00] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:00:00] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:00:00] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:00:00] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:00:00] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:00:00] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:00:00] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:00:00] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:00:00] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:00:00] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:00:00] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:00:00] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:00:00] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:00:52] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:00:52] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:00:52] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:00:52] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:00:52] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:00:52] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:00:52] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:00:52] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:00:52] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:00:52] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:00:52] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:00:52] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:00:52] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:00:52] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:00:52] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:00:55] WARNING [django.request:145] Not Found: /articles/viewArticle/1/1/full-text-search-with-postgresql-and-django
+[10/Jun/2014 04:01:01] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:01:01] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:01:01] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:01:01] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:01:01] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:01:17] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:01:17] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:01:17] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:01:17] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:01:17] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:01:17] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:01:17] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:01:17] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:01:17] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:01:17] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:01:17] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:01:17] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:01:17] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:01:17] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:01:17] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:01:22] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:01:22] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:01:22] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:01:22] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:01:22] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:02:32] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:02:32] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:02:32] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:02:32] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:02:32] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:02:32] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:02:32] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:02:32] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:02:32] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:02:32] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:02:32] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:02:32] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:02:32] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:02:32] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:02:32] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:02:37] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:02:37] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:02:37] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:02:37] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:02:37] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:02:37] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:02:37] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:02:37] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:02:37] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:02:37] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:02:37] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:02:37] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:02:37] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:02:37] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:02:37] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:04:07] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:04:07] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:04:07] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:04:07] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:04:07] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:04:07] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:04:07] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:04:07] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:04:07] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:04:07] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:04:08] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:04:08] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:04:08] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:04:08] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:04:08] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:04:39] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:04:39] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:04:39] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:04:39] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:04:39] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:05:45] WARNING [django.request:145] Not Found: /ngo
+[10/Jun/2014 04:05:52] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:05:52] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:05:52] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:05:52] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:05:52] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:05:52] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:05:53] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:05:53] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:05:53] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:05:53] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:05:53] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:05:53] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:05:53] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:05:53] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:05:53] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:05:57] WARNING [django.request:99] Forbidden (CSRF token missing or incorrect.): /articles/searchArticles/
+[10/Jun/2014 04:06:18] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:06:18] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:06:18] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:06:18] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:06:18] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:06:18] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:06:18] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:06:18] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:06:18] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:06:18] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:06:18] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:06:18] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:06:18] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:06:18] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:06:18] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:06:23] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:06:23] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:06:23] DEBUG [articles.views:31] going to search for django
+[10/Jun/2014 04:06:23] DEBUG [articles.views:31] going to search for django
+[10/Jun/2014 04:06:23] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:06:23] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:06:23] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:06:23] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:06:23] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:06:23] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:06:24] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:06:24] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:06:24] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:06:24] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:06:24] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:07:02] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:07:02] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:07:02] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:07:02] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:07:02] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:07:02] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:07:02] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:07:02] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:07:02] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:07:02] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:07:02] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:07:02] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:07:02] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:07:02] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:07:02] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:07:14] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:07:14] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:07:14] DEBUG [articles.views:31] going to search for django
+[10/Jun/2014 04:07:14] DEBUG [articles.views:31] going to search for django
+[10/Jun/2014 04:07:14] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:07:14] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:07:14] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:07:14] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:07:14] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:07:14] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:07:14] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:07:14] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:07:14] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:07:14] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:07:14] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:07:56] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:07:56] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:07:56] DEBUG [articles.views:31] going to search for django
+[10/Jun/2014 04:07:56] DEBUG [articles.views:31] going to search for django
+[10/Jun/2014 04:07:56] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:07:56] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:07:56] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:07:56] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:07:56] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:07:56] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:07:56] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:07:56] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:07:56] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:07:56] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:07:56] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:08:16] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:08:16] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:08:16] DEBUG [articles.views:31] going to search for django
+[10/Jun/2014 04:08:16] DEBUG [articles.views:31] going to search for django
+[10/Jun/2014 04:08:16] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:08:16] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:08:16] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:08:16] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:08:16] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:08:16] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:08:16] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:08:16] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:08:16] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:08:16] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:08:16] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:08:37] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:08:37] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:08:37] DEBUG [articles.views:31] going to search for django
+[10/Jun/2014 04:08:37] DEBUG [articles.views:31] going to search for django
+[10/Jun/2014 04:08:37] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:08:37] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:08:37] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:08:37] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:08:37] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:08:37] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:08:37] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:08:37] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:08:37] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:08:37] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:08:37] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:08:43] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:08:43] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:08:43] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:08:43] DEBUG [articles.views:31] going to search for search
+[10/Jun/2014 04:08:43] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:08:43] DEBUG [articles.views:36] 1
+[10/Jun/2014 04:08:43] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:08:43] DEBUG [articles.views:38] 2
+[10/Jun/2014 04:08:43] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:08:43] DEBUG [articles.views:42] 3
+[10/Jun/2014 04:08:44] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:08:44] DEBUG [articles.views:28] Going to do the search
+[10/Jun/2014 04:08:44] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:08:44] DEBUG [articles.views:57] 6
+[10/Jun/2014 04:08:44] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/favicon.png
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 132, in get_response
+    raise ValueError("The view %s.%s didn't return an HttpResponse object." % (callback.__module__, view_name))
+ValueError: The view articles.views.searchArticles didn't return an HttpResponse object.
+[10/Jun/2014 04:20:25] WARNING [django.request:99] Forbidden (CSRF token missing or incorrect.): /articles/searchSeries/
+[10/Jun/2014 04:22:49] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 45, in searchArticles
+    template = loader.get_template('articles/searchArticles.html')
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 138, in get_template
+    template, origin = find_template(template_name)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 127, in find_template
+    source, display_name = loader(name, dirs)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 43, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 49, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "/Library/Python/2.7/site-packages/django/template/loader.py", line 149, in get_template_from_string
+    return Template(source, origin, name)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 125, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 153, in compile_string
+    return parser.parse()
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 278, in parse
+    compiled_result = compile_func(self, token)
+  File "/Library/Python/2.7/site-packages/django/template/defaulttags.py", line 942, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "/Library/Python/2.7/site-packages/django/template/base.py", line 285, in parse
+    self.unclosed_block_tag(parse_until)
+  File "/Library/Python/2.7/site-packages/django/template/debug.py", line 65, in unclosed_block_tag
+    raise self.source_error(source, msg)
+TemplateSyntaxError: Unclosed tag 'if'. Looking for one of: elif, else, endif 
+[10/Jun/2014 04:24:46] WARNING [django.request:99] Forbidden (CSRF token missing or incorrect.): /articles/searchSeries/
+[10/Jun/2014 04:43:56] WARNING [django.request:99] Forbidden (CSRF token missing or incorrect.): /articles/searchArticles/
+[10/Jun/2014 04:46:02] ERROR [django.request:226] Internal Server Error: /articles/create
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 90, in get_response
+    response = middleware_method(request)
+  File "/Library/Python/2.7/site-packages/django/middleware/common.py", line 71, in process_request
+    if (not urlresolvers.is_valid_path(request.path_info, urlconf) and
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 573, in is_valid_path
+    resolve(path, urlconf)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 453, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 318, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 346, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 341, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Python/2.7/site-packages/django/utils/importlib.py", line 40, in import_module
+    __import__(name)
+  File "/ajay/Tanicode/Tanicode/Tanicode/urls.py", line 6, in <module>
+    from articles import views
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 52
+    context = RequestContext(request, { 'user': request.user
+                                                            ^
+IndentationError: unindent does not match any outer indentation level
+[10/Jun/2014 04:46:05] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 318, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 346, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 341, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Python/2.7/site-packages/django/utils/importlib.py", line 40, in import_module
+    __import__(name)
+  File "/ajay/Tanicode/Tanicode/Tanicode/urls.py", line 6, in <module>
+    from articles import views
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 52
+    context = RequestContext(request, { 'user': request.user
+                                                            ^
+IndentationError: unindent does not match any outer indentation level
+[10/Jun/2014 04:46:45] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 318, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 346, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 341, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Python/2.7/site-packages/django/utils/importlib.py", line 40, in import_module
+    __import__(name)
+  File "/ajay/Tanicode/Tanicode/Tanicode/urls.py", line 6, in <module>
+    from articles import views
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 51
+    context = RequestContext(request, { 'user': request.user})
+                                                             ^
+IndentationError: unindent does not match any outer indentation level
+[10/Jun/2014 04:48:01] ERROR [django.request:226] Internal Server Error: /articles/searchSeries/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 59, in searchSeries
+    searchResults = Series.objects.search(search)
+NameError: global name 'search' is not defined
+[10/Jun/2014 04:48:38] ERROR [django.request:226] Internal Server Error: /articles/searchSeries/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 318, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 346, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 341, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Python/2.7/site-packages/django/utils/importlib.py", line 40, in import_module
+    __import__(name)
+  File "/ajay/Tanicode/Tanicode/Tanicode/urls.py", line 6, in <module>
+    from articles import views
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 60
+    searchResults = Series.objects.search(search)
+                                                ^
+IndentationError: unindent does not match any outer indentation level
+[10/Jun/2014 04:48:55] ERROR [django.request:226] Internal Server Error: /articles/searchSeries/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 318, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 346, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Python/2.7/site-packages/django/core/urlresolvers.py", line 341, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Python/2.7/site-packages/django/utils/importlib.py", line 40, in import_module
+    __import__(name)
+  File "/ajay/Tanicode/Tanicode/Tanicode/urls.py", line 6, in <module>
+    from articles import views
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 61
+    paginator = Paginator(searchResults, 20) # Show 25 contacts per page
+                                                                       ^
+IndentationError: unindent does not match any outer indentation level
+[10/Jun/2014 04:50:17] DEBUG [articles.views:367] Inside
+[10/Jun/2014 04:50:17] DEBUG [articles.views:367] Inside
+[10/Jun/2014 04:51:01] WARNING [django.request:145] Not Found: /admin/dashboard/
+[10/Jun/2014 04:51:11] WARNING [django.request:145] Not Found: /dashboard/favicon.png
+[10/Jun/2014 05:00:03] WARNING [django.request:145] Not Found: /articles/viewArticles/1/full-text-search-with-postgresql-and-django
+[10/Jun/2014 05:00:15] WARNING [django.request:145] Not Found: /articles/viewArticles/4/get_or_create
+[10/Jun/2014 05:00:24] WARNING [django.request:145] Not Found: /articles/viewArticles/1/full-text-search-with-postgresql-and-django
+[10/Jun/2014 05:23:58] DEBUG [articles.views:50] and the dict is {'noResult': False, 'user': <SimpleLazyObject: <function <lambda> at 0xd38a70>>, 'results': <Page 1 of 1>}
+[10/Jun/2014 05:23:58] DEBUG [articles.views:50] and the dict is {'noResult': False, 'user': <SimpleLazyObject: <function <lambda> at 0xd38a70>>, 'results': <Page 1 of 1>}
+[10/Jun/2014 05:26:47] ERROR [django.request:226] Internal Server Error: /articles/searchArticles/
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/ajay/Tanicode/Tanicode/articles/views.py", line 50, in searchArticles
+    'results' : results , 'noResult' : noResult}))
+UnboundLocalError: local variable 'results' referenced before assignment
+[10/Jun/2014 05:27:18] DEBUG [articles.views:51] and the dict is {'noResult': True, 'user': <SimpleLazyObject: <function <lambda> at 0xcc5ab0>>, 'results': None}
+[10/Jun/2014 05:27:18] DEBUG [articles.views:51] and the dict is {'noResult': True, 'user': <SimpleLazyObject: <function <lambda> at 0xcc5ab0>>, 'results': None}
+[13/Jun/2014 03:25:46] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:25:48] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:25:48] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQDhtH8eR6YBqs4tYyUcHS0eKZe1a5tkcBr6JOCm5Qhzm1K_zsxl5rS03nQ_XvRXDkUYWtSBcjOSEkgks-DLmP--xWRLSSeCPd-_U5DABWh4u2cF0_oTcH8AePzMnJKp8ksOTpB4XrxXYkDTLoPZ1-vG83WZc6U4UDQ8aCRk3c8NvHB0jMyihO2l4l_FoAawYNmhotCwP9yOAFNOIj8B0p_CbQUPxNG-8onC2jjSLHMRovVlBUiW8c0LRfkwevygKzitY_sY2ll1hyA7_jfM0FYO24S3juOTQmJUayxYvEVSnma15lujoUK9Nw6zYX1TVw4&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DiX7JL8oZP8iamuYKeubMCpVT5AGtI48z&client_id=1489867734562036 HTTP/1.1" 200 222
+[13/Jun/2014 03:25:48] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:25:48] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:25:49] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQBaTKJsogQGZNa8QncOR10KOruVTOQVcn_YwPd2IEpha-RLQyQi6fGUlPe3X6oTCuEKM2saGdwXhop3s5Nnbm2hFASXUD0ZnSiLbscVs_L38tGzsrtreeqbWEanqDL8Hnc6hiOSctqpINZaDudjdvW1htnJCsAZ0JrkFuAxrycJAoPg17hIjZlmBgIiwLEWj3YewlgFBiM96KyzzZJvaB_U2iQ2ELofa6JxA7F6O8vEURkO_C9GBK9o0IkFgRpq-vcD8bKTFgQA3T98dDBEahYebo6yLMfDZk-MKlQIFR9Dagj-WnQ432RSWdgzyQIVL4Q&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DiX7JL8oZP8iamuYKeubMCpVT5AGtI48z&client_id=1489867734562036 HTTP/1.1" 200 231
+[13/Jun/2014 03:25:49] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:25:49] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBADxR09FZCyFihPuC09K9vQOxdQcDW5bOKAnFeRVvmUarT0gl70ZA9BdZBQJXiaWYUgUJqyXtkipQTfE6R36nyMO4JEVLVhvAKOT087fGnXTyYtMljuAlPIs0RvIlzLEGdtvS9IBY2rl3EiMQY7aqygswPz97ti4OejxDc7O5OovAYfH83EZD HTTP/1.1" 200 293
+[13/Jun/2014 03:25:50] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQDFtcd9BkYKU5W9CRHSLMdMYwOkzGj7IupW7bFgavpuO4H4ASyr5MfHAz6t630roPsPI8NxYqiyDbiHLHPejkT5e6FDvhyVqGz_7qWCJvl9d3THHmy7zgIHSNHerOCa7asa-vEdMUDqHUeO0deyMDiGDSAceocTlustTrHx-rRZ-DONNqKAbOP-mo93YrbXPKOi5jt6dkmhWuiiVBm8ijK-jVaovb81hxyeFqWKeFmdDs2yVPyYs3IVCVEpPT6-Va5L07e9MjDkl8rxGTh-JcTBhsdSjgc9jgBceO9DsXe8OwmrIFETyKPye3AqdFf35rA&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DiX7JL8oZP8iamuYKeubMCpVT5AGtI48z&client_id=1489867734562036 HTTP/1.1" 200 226
+[13/Jun/2014 03:25:50] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:25:50] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAO5hGhDK8UPD81fRZCmZA1MiNZBC1RrmE8TEzdZCZB4C9nuo0GbUGFlsJBRaRk6EgZBJoZBzHSgHboWfeumDZBx2u5V5aeuamBto6uxAobyF7FR5YxxHvZAnwjRkMFqmZBoujW3CQ7ZBZBAgKwE5YMqIR5Ksyl6f5spfulYqb6IG1j7hDl9j88qVXtcZD HTTP/1.1" 200 293
+[13/Jun/2014 03:25:51] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAOMk7HKOaDM21FcU8vZCLOraLCjqdyZACRUh7dkwL9AjTx4FyXuZA3R0jjmSYrjlbhciyHjVOnmP5Mq2Wjd8HblKtSlMyyUkwUVKsr4X1ZBk2mM5ujxwrGv2EuWlzPMox3PDW2ZAqP9P7O2ptHyUXljLd6Fh5nJlbtaZCRdyBZAwSHC4r6jiRYZD HTTP/1.1" 200 293
+[13/Jun/2014 03:26:54] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:26:56] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQDBEvA03P42SSl1OCNRuVDTjrulfyGqZ1bPZOROAgcFZPs1HoXyOmqFnN6DThOQ7cubMmOzq0wYbPIcyfpSw-61zNoQKj0QXwyTsQMlxSab7zHKQZ9NprERA6r4xI8NUdJ94Tk5Ai8Vw26HCjgor1FVLRpEpuTwrYbMxMzZh-m2X1czHsMkH0iaSMbC-MQRRZAO9EmqdsGaP1i6LmkZDcLF12ifmhgZqMco0IEG1enS3QuP2MDirBNq_xSPZFQybmPfhsEX2edwB7H49zKXApW_vmii4G52RFYtorhr1j8J5LphFOVWqq6B7kwq8bMFHUo&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DiX7JL8oZP8iamuYKeubMCpVT5AGtI48z&client_id=1489867734562036 HTTP/1.1" 200 226
+[13/Jun/2014 03:26:56] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:26:58] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAD7zPa2SGLz8GOefjIIibleHZBmZBZA5cm81NQZAoPuCZBfnZBMf32WXHLWqVlEQJIrPsnh1aINClNvtrfUlgpW3LlHKoLGwyPxrHca2REe806znm2MsaETCHcH0VklrJDgbdbqObpStjHS9WYYBS0ZA1xuN1cltwfqmAMAHuHzMmjLaIPObz4ZD HTTP/1.1" 200 293
+[13/Jun/2014 03:27:53] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:27:56] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQCjAnetzZnz6UND_U5CN4tFzKRRUIdFKNb6Go2RKTcLkxhMDkvAAUSnQON1jiREL8Vc7UHxpRV0tm-2k10xnRvxqdhYQJpkgK2rEDqR1u6gG8r3m9pt9Ss1rByxE144dCkjZI9zlP5F7-q2SzQ9ELMqIwRO5MA9kqJ9ECFF1g4uK-dT4McIue8zGrfQYAr_JqRctLQt44_7-wW4UOF4YXAO25CNBEiVrcthW6TVHV7oUtvZNoAvb0o2EvGAVCg5X1v59AU8gViF1pV_SE9aZboIBdYx0vhLR0U7Gt4oAQcfb6r4fGCMWiPH3ieaSYmVmcg&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DiX7JL8oZP8iamuYKeubMCpVT5AGtI48z&client_id=1489867734562036 HTTP/1.1" 200 227
+[13/Jun/2014 03:27:56] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:27:58] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAAZBZByxkZBPo6D4G8YYDZAYYFLbj8sn7GojwGNHoyVRhuPt83PXBKpoXm2OnG1CbU6aO551sqZAzV5dnWONxFW1ZBLfVoTF27QmqK2ZCxGuGv3L4wW8VANQG2JGxTytGnnBzo5oKQUiio0ZBfE8A9CDeSj8b1vyFTE8E3FVCCVG96KTKauj4pQZD HTTP/1.1" 200 293
+[13/Jun/2014 03:28:23] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:28:24] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQDeLyrOWzc6K5ol_vSYkFAYJ9VOl1j5xJAISE1KAmjXMGuq0KGXZYm4JryfprtqE4Jw7APTShRBqcl99yGsgJYvBBUsoh-kohfgdqHebkWk1seHKknaQd0dkR8f9FxCfgg4t4j4uPOxOwSB4K3lJ-vmU5QMwbCUrSFzat27HJaCImhiVYO8PreZPdrMEAtX-jTTJbaLgFb6U_0N8tzDkCX0x8LUsXRgbYTGr89h7sdtxVqA-vHT_ExtkjnZ0mXboYFmhgty4fW1DrBgGkFDyccC3oiXejigQbCSVtK0pmkkzhsXorMjA5KtVF1dH7-KvFQ&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DiX7JL8oZP8iamuYKeubMCpVT5AGtI48z&client_id=1489867734562036 HTTP/1.1" 200 228
+[13/Jun/2014 03:28:24] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:28:25] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAGqFYBIKjzfl2yh6KoZBhoYYBskbAyQaZC94vZBDfqaGTnN5GDoWLkZCUx0l7rsA8mYXPgRGHjoXEM23UsMAF0b0gFSwvmS5us3nDNWyZBAe4LkExPWLZAmHvMCfjZARf37FdVclevdmC67asSkLDa4nzZAapIMz7APrBO8ZArXKq6VmvCsFNrdoZD HTTP/1.1" 200 293
+[13/Jun/2014 03:29:34] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:29:37] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /oauth/access_token?code=AQBdjYn_rKPEjzFBxH-THjjHuT7nzXZxEgS1PRoMtJR8Dss6JvS1b-NgWoVQUR7KgD6FyDb7BV_k7WbNKUikzBo8DRkgLx_fZUXD4jMpyMYcO-7v1Ie4tWZSI4pZFaFUtuQ5DNfvkVBxCt6NEtyAbCjfoPjeCuZnZFf4bOpDVagnUSSjstQDkUfVjCrmJrLVnHDn8zUZFu50CTfB7YS1yutYVn7QGmnd67nPLDoSk39pgsFre-ZFuVqba0Yb7GAnLrtd7xU-1RumNGyprBST5ae7SzN3ABIMs7gbZIDxudj_WBTdm-zN-wvbjBzFm_l630I&client_secret=d2684b032a9224117f9c6df398604f62&redirect_uri=http%3A%2F%2Fphilajay.webfactional.com%3A8000%2Fcomplete%2Ffacebook%2F%3Fredirect_state%3DiX7JL8oZP8iamuYKeubMCpVT5AGtI48z&client_id=1489867734562036 HTTP/1.1" 200 224
+[13/Jun/2014 03:29:37] INFO [requests.packages.urllib3.connectionpool:635] Starting new HTTPS connection (1): graph.facebook.com
+[13/Jun/2014 03:29:38] DEBUG [requests.packages.urllib3.connectionpool:344] "GET /me?access_token=CAAVLBt0UtPQBAE4pPgDwilIqeW9IMqqwHYSyVTTbX1pMMC4ZBvlkipMIQ8FkwiZBlZBxr3sE4g0ZCIYDOgzInqVlmrEbwcXkUhwqK8KcK8o1ovisuqMd6nUpbcHCCWGyVQfUUlipxoS8MUDh0sMtGSoRnG4rtKaOYBBBNt1dTYk91TvWWHGx0ZABw7uWbIKgZD HTTP/1.1" 200 293

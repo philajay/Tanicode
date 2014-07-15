@@ -70,19 +70,161 @@ tcp.tcEditor = {
 }
 
 
+tcp.TextSlideHelper = function(html){
+	this.index = 0;
+	this.html = html;
+	this.parsedHTML = $.parseHTML(html);
+	this.nodes = new Array();
+	this.show = function(i){
+		tcp.tcEditor.setTextMode();
+		if(this.nodes.length == 0 ){
+			tcp.tcEditor.setValue(this.html)
+		}
+		else{
+			var s = ''
+			for(var j = i; j >= 0; j--){
+				s += this.nodes[j].content + "\n\n";
+			}
+			var o = this.nodes[i];
+			if( o.class == "question" ){
+				this.showQuestion(s);		
+			}
+			else {
+				this.showAnswer(s);		
+			}
+		}
+	};
+	this.goToLastWatch = function(){
+		if( this.nodes.length == 0 ) {
+			return null;
+		}
+		this.index = this.nodes.length;
+		return this.previous();
+	};
+	this.showQuestion = function(o){
+		tcp.tcEditor.setValue(o);
+		$('#text_img').attr('src', "/static/images/tanituts/why.png");
+	};
+	this.showAnswer = function(o){
+		tcp.tcEditor.setValue(o);
+		$('#text_img').attr('src', "/static/images/tanituts/do.png");
+	};
+	this.next = function(){
+		if( this.nodes.length == 0 ) {
+			return null;
+		}
+		this.index++;
+		if(this.index >= this.nodes.length){
+			return null;
+		}
+		this.show(this.index)
+		return {}
+	};
+	this.previous = function(){
+		if( this.nodes.length == 0 ) {
+			return null;
+		}
+		this.index--;
+		if(this.index <= -1){
+			return null;
+		}
+		this.show(this.index)
+		return {}
+	};
+	this.parse = function(){
+		var index = 0;
+		$.each( this.parsedHTML, function(i, el){
+				//if( el.tagName == "p"){
+					try{
+						cls = $.trim($(el).attr('class'))
+						if( cls == "question" || cls == "answer" ){
+							tcp.UIManager.manager.currentSlide.textSlideHelper.nodes.push({'class': cls, 'id': index, 'content': $(el).html()})
+						}
+						index++;
+					}
+					catch(e){
+					}
+				}
+
+			//}  
+		)
+	};
+
+}
+
+tcp.Timer = function(){
+	this.init = function(){
+		this.curPx = 0;
+		this.frameHeight = 400;
+		this.spriteHeight = tcp.UIManager.manager.currentSlide.data.height;
+		this.paused = false;
+		this.timer;
+	}
+	this.restart = function(){
+		this.stop();
+		this.reInit();
+		this.run();
+		$('#sprite_player').attr('src', "/static/images/tanituts/pause.jpeg");
+	};
+	this.reInit = function(){
+		this.curPx = 0;
+		this.frameHeight = 400;
+		this.spriteHeight = tcp.UIManager.manager.currentSlide.data.height;
+		this.paused = false;
+		this.timer;
+	};
+	this.stop = function(){
+		if( tcp.SpriteTimerID){
+			clearTimeout(tcp.SpriteTimerID);
+		}
+	};
+	this.run = function(){
+		console.log("Run called!!!!!")
+		this.runEx();
+	};
+	this.runEx = function(){
+		if( tcp.SpriteTimer.paused ){
+			tcp.SpriteTimerID = setTimeout(tcp.SpriteTimer.runEx, 3000);
+			return;	
+		}
+		s =  '0px -'+ tcp.SpriteTimer.curPx +'px';
+		$('#preview_sprite').css('backgroundPosition',s );
+		tcp.SpriteTimer.curPx = tcp.SpriteTimer.curPx + tcp.SpriteTimer.frameHeight;
+		if ( tcp.SpriteTimer.curPx >= tcp.SpriteTimer.spriteHeight) {
+			tcp.SpriteTimer.reInit();
+			return;
+		}
+		tcp.SpriteTimerID = setTimeout(tcp.SpriteTimer.runEx, 3000)	
+
+	}
+
+	this.play = function(){
+		this.paused = false;
+	};
+	this.pause = function(){
+		this.paused = true;
+	};
+}
 
 
 tcp.Slide = function(data){
 	this.data = data;
 	tc.koModel.previewSlides.push(this);
 	this.index = 0;
+	this.textSlideHelper;
 
 	this.syncUI = function(){
 		tc.koModel.previewCurrentSlide( this )
 		this.index = 0;
 		tcp.UIManager.manager.imageWatchDiv.hide();
 		tc.koModel.previewWatch(null);
-		if(this.data.TYPE != "IMAGE")
+		if(this.data.TYPE == "TEXT"){
+			tcp.tcEditor.setTextMode();
+			this.textSlideHelper = new tcp.TextSlideHelper(this.data.text);
+			this.textSlideHelper.parse();
+			this.textSlideHelper.show(0);
+		}
+		else if(this.data.TYPE == "CODE" )
 			{
 				//tc.tcEditor.resetLang(this.data.TYPE);
 				tcp.tcEditor.setValue(this.data.text)
@@ -104,17 +246,37 @@ tcp.Slide = function(data){
 					}
 					tcp.tcEditor.aceEditor.session.setScrollLeft(0);
 				}
-				else {
-					tcp.tcEditor.setTextMode();
-					
-				}
 			}
+		else if(this.data.TYPE == "SPRITE"){
+			
+			window.setTimeout( this.setSpriteImage, 10 )
+			//this.showSpriteAnim();
+		}
 		else{
 				//tcp.offset = $('#preview_board').offset();
 				if ( this.data.watches.length > 0){
 					w = this.data.watches[this.index];
 					window.setTimeout( this.showImageWatch, 10 )
 				}
+		}
+	};
+	this.setSpriteImage = function(){
+		$('#preview_sprite').css('background-image', 'url('+ tc.koModel.previewCurrentSlide().data.src +')')
+		if( !tcp.SpriteTimer){
+			tcp.SpriteTimer = new tcp.Timer();
+		}
+		tcp.SpriteTimer.init();
+		tcp.SpriteTimer.run();
+	};
+	this.toggleSprite = function(){
+		var v = $('#sprite_player').attr('src');
+		if( v == "/static/images/tanituts/pause.jpeg"){
+			tcp.SpriteTimer.pause();
+			$('#sprite_player').attr('src', "/static/images/tanituts/play.jpeg");
+		}
+		else{
+			tcp.SpriteTimer.play();
+			$('#sprite_player').attr('src', "/static/images/tanituts/pause.jpeg");
 		}
 	};
 
@@ -184,6 +346,9 @@ tcp.Slide = function(data){
 
 	this.next = function(){
 		if(this.data.TYPE == "TEXT"){
+			return this.textSlideHelper.next()
+		}
+		if(this.data.TYPE == "SPRITE"){
 			return null;
 		}
 		temp = this.index + 1
@@ -203,7 +368,7 @@ tcp.Slide = function(data){
 	
 	this.previous = function(){
 		if(this.data.TYPE == "TEXT"){
-			return null;
+			return this.textSlideHelper.previous()
 		}
 		temp = this.index - 1
 		if(temp < 0 )
@@ -223,7 +388,7 @@ tcp.Slide = function(data){
 
 	this.goToLastWatch = function(){
 		if(this.data.TYPE == "TEXT"){
-			return null;
+			return this.textSlideHelper.goToLastWatch();
 		}
 
 		if( ! this.data.watches ){
@@ -254,6 +419,10 @@ tcp.Slide = function(data){
 		if(this.data.TYPE == "IMAGE"){
 			jsPlumb.hide(tcp.UIManager.manager.imageWatchDiv);
 		}//jsPlumb.hide($('.ace_active-line'));
+		if(this.data.TYPE == "SPRITE"){
+			tcp.SpriteTimer.stop();
+		}
+
 	};
 	
 	this.changeSlide = function(){
@@ -295,6 +464,12 @@ tcp.StandardUIManager = {
 		}
 		this.currentSlide = t;
 		this.changeTextSlideHelper();
+		$('#modal_name').html(this.currentSlide.data.name)
+		//$('#myModal').modal('show');
+		/*
+		window.setTimeout(function(){
+			$('#myModal').modal('hide');
+		}, 10)*/
 	},
 	changeTextSlideHelper : function (res) {
 		if( res ){

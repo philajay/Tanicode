@@ -65,6 +65,13 @@ tc.koModel = {
         }
         return false;
 	},
+	showSpriteTemplate : function(){
+		
+		if( tc.koModel.previewCurrentSlide() && tc.koModel.previewCurrentSlide().data.TYPE == "SPRITE" ){
+			return true;
+		} 
+		return false;
+	},
 
 	
 }
@@ -74,6 +81,19 @@ tc.koModel = {
 //firstSlide
 
 $( document ).ready(function(){
+	$.ajax({
+		  dataType: "json",
+		  url: '/articles/getArticleSlidesAjax?aid=' + window.aid,
+		  success: function(res){
+		  	//res = $.parseJSON(res)
+		  	window.metaData = $.parseJSON(res['metadata'])
+		    window.savedSlides = $.parseJSON(res['slides'])
+		    readyEx();
+		}
+	});
+})
+
+function readyEx(){
 	window.sj = $.parseJSON(metaData)
 	artDetailsData = $.parseJSON( sj['articleMetaData'] );
 	//window.slides =  sj['slidesMetaData'] ;
@@ -87,7 +107,7 @@ $( document ).ready(function(){
     tc.preview();
     goToWatch();
     attachHandlers();
-})
+}
 
 function attachHandlers(){
 	$("#popComments").on('click', function(){

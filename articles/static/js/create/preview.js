@@ -51,6 +51,80 @@ tcp.tcEditor = {
 	},
 
 }
+tcp.TextSlideHelper = function(html){
+	this.index = 0;
+	this.html = html;
+	this.parsedHTML = $.parseHTML(html);
+	this.nodes = new Array();
+	this.show = function(i){
+		tcp.tcEditor.setTextMode();
+		if(this.nodes.length == 0 ){
+			tcp.tcEditor.setValue(this.html)
+		}
+		else{
+			var s = ''
+			for(var j = i; j >= 0; j--){
+				s += this.nodes[j].content + "\n\n";
+			}
+			var o = this.nodes[i];
+			if( o.class == "question" ){
+				this.showQuestion(s);		
+			}
+			else {
+				this.showAnswer(s);		
+			}
+		}
+	};
+	this.showQuestion = function(o){
+		tcp.tcEditor.setValue(o);
+		$('#text_img').attr('src', "/static/images/tanituts/why.png");
+	};
+	this.showAnswer = function(o){
+		tcp.tcEditor.setValue(o);
+		$('#text_img').attr('src', "/static/images/tanituts/do.png");
+	};
+	this.next = function(){
+		if( this.nodes.length == 0 ) {
+			return null;
+		}
+		this.index++;
+		if(this.index >= this.nodes.length){
+			return null;
+		}
+		this.show(this.index)
+		return {}
+	};
+	this.previous = function(){
+		if( this.nodes.length == 0 ) {
+			return null;
+		}
+		this.index--;
+		if(this.index <= -1){
+			return null;
+		}
+		this.show(this.index)
+		return {}
+	};
+	this.parse = function(){
+		var index = 0;
+		$.each( this.parsedHTML, function(i, el){
+				//if( el.tagName == "p"){
+					try{
+						cls = $.trim($(el).attr('class'))
+						if( cls == "question" || cls == "answer" ){
+							tcp.UIManager.currentSlide.textSlideHelper.nodes.push({'class': cls, 'id': index, 'content': $(el).html()})
+						}
+						index++;
+					}
+					catch(e){
+					}
+				}
+
+			//}  
+		)
+	};
+
+}
 
 
 
@@ -60,6 +134,8 @@ tcp.Slide = function(data, uid){
 	this.uid = uid;
 	tc.koModel.previewSlides.push(this);
 	this.index = 0;
+	this.SpriteTimer = null;
+	this.textSlideHelper;
 
 	this.syncUI = function(){
 		this.index = 0;
@@ -73,23 +149,32 @@ tcp.Slide = function(data, uid){
 	
 	this.syncUIDeferred = function(){
 		tc.koModel.previewCurrentSlide( this )
-		
-		if(this.data.TYPE != "IMAGE")
+		if(this.data.TYPE == "TEXT"){
+			tcp.tcEditor.setTextMode();
+			this.textSlideHelper = new tcp.TextSlideHelper(this.data.text);
+			this.textSlideHelper.parse();
+			this.textSlideHelper.show(0);
+		}
+		else if(this.data.TYPE == "CODE" )
 			{
 				//tc.tcEditor.resetLang(this.data.TYPE);
 				tcp.tcEditor.setValue(this.data.text)
 				tcp.tcEditor.setCodeMode();
 				//tcp.tcEditor.aceEditor.session.setUseWrapMode(false);
-				if(this.data.TYPE == "CODE"){
-					if ( this.data.watches.length > 0){ 
-						w = this.data.watches[this.index];
-						this.showCodeWatch(w)
-					}
+				if ( this.data.watches.length > 0){ 
+					w = this.data.watches[this.index];
+					this.showCodeWatch(w)
 				}
-				else {
+			
+				/*else {
 					tcp.tcEditor.setTextMode();
-				}
+				}*/
 			}
+		else if(this.data.TYPE == "SPRITE"){
+			
+			window.setTimeout( this.setSpriteImage, 10 )
+			//this.showSpriteAnim();
+		}
 		else{
 				//tcp.offset = $('#preview_board').offset();
 				if ( this.data.watches.length > 0){
@@ -97,6 +182,36 @@ tcp.Slide = function(data, uid){
 					window.setTimeout( this.showImageWatch, 10 )
 				}
 		}
+	};
+
+	this.stopSprite = function(){
+		if( tcp.SpriteTimer){
+			clearTimeout(tcp.SpriteTimer);
+		}
+	};
+	this.setSpriteImage = function(){
+		$('#preview_sprite').css('background-image', 'url('+ tc.koModel.previewCurrentSlide().data.src() +')')
+		
+		tcp.UIManager.currentSlide.stopSprite();
+		runner = tcp.UIManager.currentSlide.showSpriteAnim();		
+		runner();
+	};
+	this.showSpriteAnim = function(){
+		curPx = 0;
+		frameHeight = 400;
+		spriteHeight = tcp.UIManager.currentSlide.data.height();
+		function spriteRunner(){
+			s =  '0px -'+ curPx +'px';
+			$('#preview_sprite').css('backgroundPosition',s );
+			curPx = curPx + frameHeight;
+			if ( curPx >= spriteHeight) {
+				return;
+			}
+			
+			tcp.SpriteTimer = setTimeout(spriteRunner, 3000)	
+		}
+
+		return spriteRunner;
 	};
 
 	this.showCodeWatch = function(w){
@@ -135,10 +250,15 @@ tcp.Slide = function(data, uid){
 	};
 
 	this.next = function(){
-		if(this.data.TYPE == "TEXT"){
+		if(this.data.TYPE == "SPRITE"){
 			return null;
 		}
 		temp = this.index + 1
+
+		if(this.data.TYPE == "TEXT"){
+			return this.textSlideHelper.next()
+		}
+
 		if(temp >= this.data.watches.length)
 			return null;
 		this.index++
@@ -155,6 +275,9 @@ tcp.Slide = function(data, uid){
 	
 	this.previous = function(){
 		if(this.data.TYPE == "TEXT"){
+			return this.textSlideHelper.previous()
+		}
+		if(this.data.TYPE == "SPRITE"){
 			return null;
 		}
 		temp = this.index - 1

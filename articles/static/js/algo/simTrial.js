@@ -489,8 +489,8 @@ simWatchMgr = {
     if( steps[i].answer ){
         var html =   '<div class="stepContainer">'
                 + '<div class="row"><div class="col-md-12">' 
-                + '<div class = "col-sm-10"><div> <div class="triangle-isosceles right">'+ steps[i].answer + '</div></div></div>' 
-                + '<div class = "col-sm-2"><img src="/static/images/tuts/tanituts.jpeg" /></div>'
+                + '<div class = "col-sm-10"><div> <div class="triangle-isosceles right" style="text-align: left;">'+ steps[i].answer + '</div></div></div>' 
+                + '<div class = "col-sm-2"><img src="/static/images/tanituts/ch.png" /></div>'
                 + '</div></div></div>';
           $("#main_ui").prepend(html);
         //window.setTimeout(this.populateCells, 10)
@@ -499,7 +499,7 @@ simWatchMgr = {
 		else if( steps[i].question ){
         var html =   '<div class="stepContainer">'
                 + '<div class="row"><div class="col-md-12">' 
-                + '<div class = "col-sm-2"><img src="/static/images/tuts/you.jpeg" /></div>'
+                + '<div class = "col-sm-2" style="text-align: right;"><img src="/static/images/tanituts/question.png" /></div>'
                 +  '<div class = "col-sm-10"><p class="thoughtLeft">'+ steps[i].question + '</p></div>' 
                 + '</div></div></div>';
           $("#main_ui").prepend(html);

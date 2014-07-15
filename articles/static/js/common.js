@@ -154,7 +154,7 @@ $.ajaxSetup({
             xhr.setRequestHeader("X-CSRFToken", csrftoken);
         }
         else {
-            alert("couldnt work")
+            //alert("couldnt work")
         }
     }
 });
@@ -167,3 +167,5 @@ function getParameterByName(name) {
         results = regex.exec(location.search);
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
+
+

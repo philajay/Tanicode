@@ -59,7 +59,7 @@
 
 .main-content-wrapper{ width:100%; float:left; }
 .main-content-tree{ width:18%; float:left; background: white}
-.main-content-section{ width:50%; float:left; padding: 20px;}
+.main-content-section{ width:50%; float:left; padding: 20px; }
 
 .watch {border-radius:5px; background:#FFFFA3; color:black; padding:20px}
 
@@ -142,7 +142,7 @@ letter-spacing:.06em;
 p.thoughtLeft:before {
 content:"";
 position:absolute; /*see the support section below for more info*/
-top:40px; /*distance from the bottom of the bubble*/
+top:10px; /*distance from the bottom of the bubble*/
 left:-40px; /*distance from the left edge of the bubble*/
 background:#f3961c;
 width:30px; /*same as the height*/
@@ -161,7 +161,7 @@ box-shadow: -3px 3px 8px #989898;
 p.thoughtLeft:after {
 content:"";
 position:absolute;
-top:55px;
+top:0px;
 left:-60px;
 width:15px;
 height:15px;
@@ -398,7 +398,14 @@ background:linear-gradient(#fac868, #f3961c);
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
     color: #483e7b;
-    background-color: #ffffff;
+    /*background-color: #ffffff;*/
+        background:#f7a944; /*fallback colour for non-supporting browsers*/
+    background:-webkit-gradient(linear, 0 0, 0 100%, from(#fac868), to(#f3961c));
+    background:-moz-linear-gradient(#fac868, #f3961c);
+    background:-o-linear-gradient(#fac868, #f3961c);
+    background:linear-gradient(#fac868, #f3961c);
+    border-color: rgb(255, 255, 163);
+
   }
 }
 
@@ -494,3 +501,91 @@ background:linear-gradient(#fac868, #f3961c);
 }
 
 /****************************************************** Comments End here ******************************************/
+
+
+
+
+
+
+.player {
+    padding: 10px;
+    border-color: black;
+    border: solid 1px;
+    position:absolute;
+    border-radius: 45px;
+    width:800px;
+    left: 50%;
+    margin-left: -400px;
+    height: 80px;
+    background:#f7a944; /*fallback colour for non-supporting browsers*/
+    background:-webkit-gradient(linear, 0 0, 0 100%, from(#fac868), to(#f3961c));
+    background:-moz-linear-gradient(#fac868, #f3961c);
+    background:-o-linear-gradient(#fac868, #f3961c);
+    background:linear-gradient(#fac868, #f3961c);
+    border-color: rgb(255, 255, 163);
+    color: white;
+    bottom:10px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 60px;  
+    z-index: 2000;
+    opacity: .8;
+}
+
+
+
+#preview_sprite{
+    height: 400px;
+    width: 500px;
+    position: relative;
+    float: left;
+    padding: 20px;
+}
+
+.spritePlayerContainer {
+    padding: 10px;
+    border-color: black;
+    border: solid 1px;
+    position:absolute;
+    border-radius: 45px;
+    width:200px;
+    left: 50%;
+    margin-left: -100px;
+    height: 80px;
+    background:#f7a944; /*fallback colour for non-supporting browsers*/
+    background:-webkit-gradient(linear, 0 0, 0 100%, from(#fac868), to(#f3961c));
+    background:-moz-linear-gradient(#fac868, #f3961c);
+    background:-o-linear-gradient(#fac868, #f3961c);
+    background:linear-gradient(#fac868, #f3961c);
+    border-color: rgb(255, 255, 163);
+    color: white;
+    bottom:0px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 60px;  
+    z-index: 2000;
+    opacity: .8; 
+}
+
+#spritePlayer {
+    z-index: 2000;
+    position: absolute;
+    bottom: 0px;
+    left: 175px;
+}
+
+
+/********************************* Text Slide Layout *********************************/
+.stepContainer {
+  position: relative;
+  width : 100%;
+  padding: 20px;
+  /*border: 1px solid;*/
+  float: left;
+}
+
+.bg {
+  background-color: rgb(255, 255, 163);
+}
+
+/********************************* Text Slide Layout *********************************/
