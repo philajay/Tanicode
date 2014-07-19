@@ -603,15 +603,20 @@
 						w.queued(w);
 						w.queued = null;
 					}
-					window.setTimeout(function(){
-						w.getDiv().show();
-					}, 10);
+					tc.koModel.currentSlide().data.ShowImageDiv(w);
 
 					
 				}
 			}
 
 		};
+
+		this.ShowImageDiv = function(w){
+			w = w;
+			window.setTimeout(function(){
+				w.getDiv().show();
+			}, 10);
+		}
 		
 		this.syncData = function(){
 		    this.clearAllWatches();

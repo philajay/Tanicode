@@ -106,10 +106,11 @@ tcp.TextSlideHelper = function(html){
 		if( this.nodes.length == 0 ) {
 			return null;
 		}
-		this.index++;
-		if(this.index >= this.nodes.length){
+		temp = this.index + 1;
+		if(temp >= this.nodes.length){
 			return null;
 		}
+		this.index++;
 		this.show(this.index)
 		return {}
 	};
@@ -125,10 +126,11 @@ tcp.TextSlideHelper = function(html){
 		if( this.nodes.length == 0 ) {
 			return null;
 		}
-		this.index--;
-		if(this.index <= -1){
+		temp = this.index - 1;
+		if(temp <= -1){
 			return null;
 		}
+		this.index--;
 		this.show(this.index)
 		return {}
 	};
@@ -159,8 +161,9 @@ tcp.Timer = function(){
 		this.curPx = 0;
 		this.frameHeight = 400;
 		this.spriteHeight = tcp.UIManager.manager.currentSlide.data.height;
-		this.paused = false;
-		this.timer;
+		//this.paused = false;
+		//this.timer;
+		this.index = -1;
 	}
 	this.restart = function(){
 		this.stop();
@@ -169,36 +172,58 @@ tcp.Timer = function(){
 		$('#sprite_player').attr('src', "/static/images/tanituts/pause.jpeg");
 	};
 	this.reInit = function(){
-		this.curPx = 0;
-		this.frameHeight = 400;
-		this.spriteHeight = tcp.UIManager.manager.currentSlide.data.height;
-		this.paused = false;
-		this.timer;
+		this.index = 0;
+	};
+	this.backward = function(){
+		if( this.index - 1 < 0 ){
+			return;
+		}
+		this.index--;
+		this.runEx();
+		return {};
+	};
+	this.forward = function(){
+
+		if( tcp.UIManager.manager.currentSlide.data.delayed ){
+			tcp.UIManager.manager.currentSlide.data.delayed = null;
+			this.goToLastWatch();
+			return;
+		}
+
+
+		if ( ((this.index + 1) * tcp.SpriteTimer.frameHeight)  >= tcp.SpriteTimer.spriteHeight) {
+			return;
+		}		
+		this.index++;
+		this.runEx();
+		return {};
 	};
 	this.stop = function(){
-		if( tcp.SpriteTimerID){
-			clearTimeout(tcp.SpriteTimerID);
-		}
 	};
 	this.run = function(){
-		console.log("Run called!!!!!")
 		this.runEx();
 	};
 	this.runEx = function(){
-		if( tcp.SpriteTimer.paused ){
-			tcp.SpriteTimerID = setTimeout(tcp.SpriteTimer.runEx, 3000);
-			return;	
-		}
+		tcp.SpriteTimer.curPx = this.index * tcp.SpriteTimer.frameHeight;
 		s =  '0px -'+ tcp.SpriteTimer.curPx +'px';
 		$('#preview_sprite').css('backgroundPosition',s );
-		tcp.SpriteTimer.curPx = tcp.SpriteTimer.curPx + tcp.SpriteTimer.frameHeight;
-		if ( tcp.SpriteTimer.curPx >= tcp.SpriteTimer.spriteHeight) {
-			tcp.SpriteTimer.reInit();
-			return;
-		}
-		tcp.SpriteTimerID = setTimeout(tcp.SpriteTimer.runEx, 3000)	
+	};
 
-	}
+	this.next = function(){
+		return this.forward();
+	};
+	this.previous = function(){
+		return this.backward();
+	};
+
+	this.goToLastWatch = function(){
+		
+		this.index = tcp.SpriteTimer.spriteHeight / tcp.SpriteTimer.frameHeight;
+		this.index = this.index - 1;
+		tcp.SpriteTimer.runEx()
+		//window.setTimeout( tcp.SpriteTimer.runEx(), 100 )
+		//console.log("goToLastWatch")
+	};
 
 	this.play = function(){
 		this.paused = false;
@@ -207,7 +232,6 @@ tcp.Timer = function(){
 		this.paused = true;
 	};
 }
-
 
 
 tcp.Slide = function(data){
@@ -270,7 +294,7 @@ tcp.Slide = function(data){
 		}
 		tcp.SpriteTimer.init();
 
-		tcp.SpriteTimer.run();
+		tcp.SpriteTimer.forward();
 	};
 	this.toggleSprite = function(){
 		var v = $('#sprite_player').attr('src');
@@ -350,7 +374,7 @@ tcp.Slide = function(data){
 			return this.textSlideHelper.next()
 		}
 		if(this.data.TYPE == "SPRITE"){
-			return null;
+			return tcp.SpriteTimer.forward();
 		}
 
 		temp = this.index + 1
@@ -390,6 +414,10 @@ tcp.Slide = function(data){
 		if(this.data.TYPE == "TEXT"){
 			return this.textSlideHelper.previous()
 		}
+		if(this.data.TYPE == "SPRITE"){
+			return tcp.SpriteTimer.previous();
+		}
+
 		temp = this.index - 1
 		if(temp < 0 )
 			return null;
@@ -409,6 +437,12 @@ tcp.Slide = function(data){
 		if(this.data.TYPE == "TEXT"){
 			return this.textSlideHelper.goToLastWatch();
 		}
+
+		if(this.data.TYPE == "SPRITE"){
+			tcp.UIManager.manager.currentSlide.data.delayed = {};
+			return {}
+		}
+
 
 		if( ! this.data.watches ){
 			return {}
