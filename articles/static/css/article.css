@@ -589,3 +589,24 @@ background:linear-gradient(#fac868, #f3961c);
 }
 
 /********************************* Text Slide Layout *********************************/
+
+.pv_dd {
+    height: 500px;
+    overflow: auto; 
+}
+
+  $('#pv_dd').css("height", "500px");
+  $('#pv_dd').css("overflow", "auto");
+
+
+/************************* SCROLL BAR ISSUE ON MAC ***********************************/
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.5);
+    box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+/************************* SCROLL BAR ISSUE ON MAC ***********************************/

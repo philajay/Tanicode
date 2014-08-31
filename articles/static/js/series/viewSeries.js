@@ -256,6 +256,8 @@ tc.overlayInitArticle = function(){
 		});
 	});
 
+	$('#pv_dd').css("height", "500px");
+	$('#pv_dd').css("overflow", "auto");
 
 
 	$('#overlay').show();	

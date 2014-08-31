@@ -538,7 +538,7 @@ tcp.StandardUIManager = {
 			d = $.parseJSON(res)
 			this.currentSlide.data = d.data
 		}
-		$('#pv_dd_a').html(this.currentSlide.data.name + '<b class="caret"></b>');
+		$('#pv_dd_a').html( (this.index + 1) + ") " +  this.currentSlide.data.name + '<b class="caret"></b>');
 		this.currentSlide.syncUI();
 		this.currentSlide.show();
 	},
